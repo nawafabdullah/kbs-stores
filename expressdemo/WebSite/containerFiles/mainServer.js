@@ -2,7 +2,9 @@ const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
-
+const cors = require('cors');
+const helmet = require('helmet');
+const morgan = require('morgan');
 const app = express();
 const router = express.Router();
 const { InsertToDB } = require('./public/UsersService/sign-up/signup');
@@ -13,6 +15,9 @@ const util = require('util'),
     fs = require('fs'),
     fsp = fs.promises;
 
+app.use(cors());
+app.use(helmet());
+app.use(morgan('combined'));
 app.listen(mServerConfig.PORT);
 app.use("/", router);
 app.use(express.static(__dirname + '/public/home'));

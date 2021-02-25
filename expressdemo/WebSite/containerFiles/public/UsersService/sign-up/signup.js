@@ -1,8 +1,34 @@
+const {getDatabase} = require('../../../../../MongoDB/containerFiles/mongo');
+const {dbConfig} = require('../../../../../dbConfig/db.config')
+onst collectionName = `${dbConfig.DBADMINCOLL}`;
+
+async function insertAd(ad) {
+  const database = await getDatabase();
+  const {insertedId} = await database.collection(collectionName).insertOne(ad);
+  return insertedId;
+}
+
+async function getAds() {
+  const database = await getDatabase();
+  return await database.collection(collectionName).find({}).toArray();
+}
+
+module.exports = {
+  insertAd,
+  getAds,
+};
+
+
+
+
+
+
+/*
 const express = require("express");
 const { MongoClient } = require("mongodb");
 const bodyParser = require("body-parser");
 const { Encrypt } = require('./EncryptionHandler/Encrypt');
-const { dbConfig } = require('../../../../../dbConfig/db.config');
+const { dbConfig } = require('../../dbConfig/db.config');
 const dbUrl = `${dbConfig.HOST}:${dbConfig.PORT}/`;
 let conn;
 
@@ -40,8 +66,11 @@ async function InsertToDB(userData) {
   );
   */
 
+/*
 
   return;
 }
 
 exports.InsertToDB = InsertToDB;
+
+*/
