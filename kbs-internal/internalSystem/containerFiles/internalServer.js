@@ -17,7 +17,7 @@ const util = require('util'),
 
 app.use(cors());
 app.use(helmet());
-app.use(morgan('combined'));
+//app.use(morgan('combined'));
 app.listen(mServerConfig.PORT);
 app.use("/", router);
 app.use(express.static(__dirname + '/public/home'));
