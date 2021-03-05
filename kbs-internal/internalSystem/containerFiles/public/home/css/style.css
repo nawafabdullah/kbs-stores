@@ -14,7 +14,6 @@
 @import url(animate.min.css);
 @import url(normalize.css);
 @import url(meanmenu.css);
-@import url(owl.carousel.min.css);
 @import url(slick.css);
 @import url(jquery-ui.css);
 @import url(nice-select.css);
@@ -431,7 +430,7 @@ a.readmore_bt {
 .header {
   font-family: poppins;
   padding: 10px 0px;
-  background: url(../images/hea.png);
+
   background-repeat: no-repeat;
   background-size: 100% 100%;
   background-position: center center;
@@ -439,7 +438,7 @@ a.readmore_bt {
 
 .logo {
   float: right;
- 
+
   padding-top: 20px;
 }
 
@@ -1073,21 +1072,8 @@ ul.top_icon li a {
 .sub-down li {
   background: #ffffff;
 }
-.main-menu ul > li .sub-down li a {
-  color: #114c7d;
-  font-size: 15px;
-  text-transform: capitalize;
-  font-weight: 300;
-  padding: 12px 5px;
-  position: relative;
-  border-bottom: solid #eee 1px;
-}
-.main-menu ul > li .sub-down li a::before {
-}
-.main-menu ul > li .sub-down li a:hover {
-  color: #111111;
-}
-.main-menu ul > li .sub-down li a:hover::before {
+
+menu ul > li .sub-down li a:hover::before {
 }
 .main-menu ul li:first-child {
   margin-left: 0;
@@ -1567,7 +1553,7 @@ input[type="radio"] .styled:checked + label::after {
   position: absolute;
   margin-bottom: -111px;
   z-index: 999;
-  background: #ff0000;
+  background: #333;
   width: 100%;
   position: relative;
 }
@@ -1575,22 +1561,22 @@ input[type="radio"] .styled:checked + label::after {
   position: absolute;
   content: "";
   top: 11px;
-  background: url(../icon/wfe4.png);
-  background-repeat: repeat;
   width: 50px;
   height: 50px;
   background-repeat: no-repeat;
   left: -38px;
 }
+
+.location_icon_bottum ul {
+  text-align: center;
+}
+
 .location_icon_bottum ul li {
   display: inline-block;
   padding: 17px 10px;
   color: #fff;
   font-size: 15px;
   font-weight: 500;
-}
-.location_icon_bottum ul li img {
-  padding-right: 10px;
 }
 
 /** banner **/
@@ -1705,68 +1691,12 @@ ul.social_icon li a:hover {
 .about {
   padding-top: 90px;
   padding-bottom: 84px;
-  background: url(../images/aboutbg.jpg);
-  background-position-x: 0%;
-  background-position-y: 0%;
-  background-repeat: repeat;
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  background-position: center center;
 }
 
-.about .about_img figure {
-  margin: 0px;
+#store_pic {
+  float: left;
 }
 
-.about .about_box {
-  text-align: right;
-  padding-top: 130px;
-}
-
-.about .about_box h3 {
-  font-weight: bold;
-  font-size: 30px;
-  color: #888687;
-  line-height: 32px;
-  padding-bottom: 7px;
-  display: block;
-}
-
-.about .about_box span {
-  font-weight: bold;
-  font-size: 50px;
-  line-height: 58px;
-  color: #23242a;
-  padding-bottom: 10px;
-  display: block;
-}
-
-.about .about_box p {
-  font-size: 17px;
-  line-height: 30px;
-  color: #23242a;
-}
-
-.about_box_ span {
-  font-weight: bold;
-  font-size: 50px;
-  line-height: 58px;
-  color: #23242a;
-  padding-bottom: 10px;
-  display: block;
-}
-
-.about_box_ {
-  text-align: left;
-  padding-top: 130px;
-}
-
-.about_box_ p {
-  font-size: 17px;
-  line-height: 30px;
-  color: #23242a;
-}
 /** end about **/
 
 .clients {
