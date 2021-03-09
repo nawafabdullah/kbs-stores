@@ -1,20 +1,34 @@
 const { getDatabase } = require('../../../../../mongoDB/containerFiles/mongo');
 const { dbConfig } = require('../../../../../dbConfig/db.config');
-//const collectionName = `${dbConfig.DBADMINCOLL}`;
+const dbAminscollection = `${dbConfig.DBADMINCOLL}`;
 
-async function InsertUser(collectionName, userData) {
+async function InsertUser(userData) {
   const database = await getDatabase();
+
+
   try {
-    const { insertedId } = await database.collection(collectionName).insertOne(userData);
+    const { insertedId } = await database.collection(dbAminscollection).insertOne(userData);
+    console.log(" User Inserted Succesfully With ID" + insertedId);
     return insertedId;
   } catch (error) {
-    console.log("An Error Occured");
+    console.log("An Error Occured, Could Not Insert The New User");
   }
 }
 
 async function getAds() {
   const database = await getDatabase();
   return await database.collection(collectionName).find({}).toArray();
+}
+
+
+async function AuthorizeEntry() {
+
+  let userName = prompt("Mr. Khalid, please enter your USERNAME");
+  let password = prompt("Mr. Khalid, please enter your PASSWORD");
+
+
+
+
 }
 
 module.exports = {
