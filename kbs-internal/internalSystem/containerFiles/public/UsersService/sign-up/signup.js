@@ -1,13 +1,15 @@
 const { getDatabase } = require('../../../../../mongoDB/containerFiles/mongo');
 const { dbConfig } = require('../../../../../dbConfig/db.config');
-const dbAminscollection = `${dbConfig.DBADMINCOLL}`;
+const dbAminsCollection = `${dbConfig.DBADMINCOLL}`;
+const dbOwenersCollections = `${dbConfig.DBOWNERCOLL}`;
+
 
 async function InsertUser(userData) {
   const database = await getDatabase();
 
 
   try {
-    const { insertedId } = await database.collection(dbAminscollection).insertOne(userData);
+    const { insertedId } = await database.collection(dbAminsCollection).insertOne(userData);
     console.log(" User Inserted Succesfully With ID" + insertedId);
     return insertedId;
   } catch (error) {
@@ -25,6 +27,18 @@ async function AuthorizeEntry() {
 
   let userName = prompt("Mr. Khalid, please enter your USERNAME");
   let password = prompt("Mr. Khalid, please enter your PASSWORD");
+
+
+
+
+
+}
+
+async function CompareToAuthorize(obj) {
+
+  const database = await getDatabase();
+  await database.collection(collectionName).find({}).toArray();
+
 
 
 

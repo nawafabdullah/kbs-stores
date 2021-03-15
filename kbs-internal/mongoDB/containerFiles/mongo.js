@@ -1,9 +1,9 @@
 const { MongoClient } = require('mongodb');
-const { dbConfig } = require ('../../dbConfig/db.config');
+const { dbConfig } = require('../../dbConfig/db.config');
 let database = null;
 
 async function startDatabase() {
-    const dbUrl = `${dbConfig.HOST}:${dbConfig.PORT}/`;
+    const dbUrl = `${dbConfig.HOST}:${dbConfig.PORT}/admin`;
     const connection = await MongoClient.connect(dbUrl, { useNewUrlParser: true });
     database = connection.db();
 }
