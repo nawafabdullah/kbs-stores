@@ -9,7 +9,6 @@ const dbUrl = `${dbConfig.HOST}:${dbConfig.PORT}/`;
 ConstructDatabases();
 
 async function GetdbOwnerInfo() {
-
     // This json object is used to configure what data will be retrieved from command line.
     var prompt_attributes = [
         {
@@ -42,7 +41,7 @@ async function GetdbOwnerInfo() {
     prompt.get(prompt_attributes, function (err, result) {
         if (err) {
             console.log(err);
-            return 1;
+            return 0;
         } else {
             console.log('Command-line received data:');
             // Get user input from result object.
@@ -54,18 +53,15 @@ async function GetdbOwnerInfo() {
             console.log(message);
         }
     });
-
 }
 
 async function ConstructDatabases() {
-
+    let qcollName, collName;
     const collectionsArr = [
         `${dbConfig.DBADMINCOLL}`,
         `${dbConfig.USERADMINCOLL}`,
         `${dbConfig.DBOWNERCOLL}`,
     ];
-
-    let qcollName, collName;
     const conn = await MongoClient.connect(dbUrl, { useUnifiedTopology: true });
     const db = await conn.db(`${dbConfig.ADMINDB}`);
     let i;
@@ -74,28 +70,20 @@ async function ConstructDatabases() {
         collName = await qcollName.replace(/['"]+/g, '');
         let collCreation = await db.createCollection(collName, { capped: false });
         console.log("Created? " + collCreation);
-        console.log(`${collName} Collection Created Successfully.... \n`);
-        console.log(
-            "=========================================================================="
-        );
-        /*
-        if (error) {
-            console.log(
-                `An Error Occurred While Creating ${collName} collection.. \n\n+${error} \n `
-            );
+        if (collCreation) {
+            console.log(`${collName} Collection Created Successfully.... \n`);
             console.log(
                 "=========================================================================="
             );
+        } else {
+            console.log(`Could not create ${collName}`);
         }
-        */
     }
-    console.log("AFTER LOOP");
-
     conn.close();
     return 1;
 }
 
-async function InsertDBOwner(userData) {
+async function InsertdbOwner(userData) {
     const database = await getDatabase();
 
 

@@ -6,7 +6,7 @@ const dbUrl = `${dbConfig.HOST}:${dbConfig.PORT}/`;
 
 async function DeleteAll() {
     let qcollName, collName;
-    const dbsArr = [
+    const collectionsArr = [
         `${dbConfig.DBADMINCOLL}`,
         `${dbConfig.USERADMINCOLL}`,
         `${dbConfig.DBOWNERCOLL}`,
@@ -14,16 +14,26 @@ async function DeleteAll() {
 
     const conn = await MongoClient.connect(dbUrl, { useUnifiedTopology: true });
     const db = await conn.db(`${dbConfig.ADMINDB}`);
-
-    dbsArr.forEach(async (dbElement) => {
-        qcollName = await stringify(dbElement);
-        collName = await qcollName.replace(/['"]+/g, '')
-        db.collection(collName).drop(function (err, delOK) {
-            if (err) throw err;
-            if (delOK) console.log(`${collName} Collection deleted`);
-            conn.close();
-        });
-    });
+    let i;
+    for (i = 0; i < collectionsArr.length; i++) {
+        qcollName = await stringify(collectionsArr[i]);
+        collName = await qcollName.replace(/['"]+/g, '');
+        let collDeletion = await db.dropCollection(collName, { capped: false });
+        console.log("deleted? " + collDeletion);
+        if (collDeletion) {
+            console.log(`${collName} Collection Deleted Successfully.... \n`);
+            console.log(
+                "=========================================================================="
+            );
+            console.log(
+                "=========================================================================="
+            );
+        } else {
+            console.log(`Could not delete ${collName}`);
+        }
+    }
+    conn.close();
+    return 1;
 }
 
 DeleteAll();
