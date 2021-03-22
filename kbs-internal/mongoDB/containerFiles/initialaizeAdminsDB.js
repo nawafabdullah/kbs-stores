@@ -6,7 +6,7 @@ const { roleConfig } = require("../../dbConfig/roles.config");
 const dbUrl = `${dbConfig.HOST}:${dbConfig.PORT}/`;
 
 
-ConstructDatabases();
+GetdbOwnerInfo()
 
 async function GetdbOwnerInfo() {
     // This json object is used to configure what data will be retrieved from command line.
@@ -85,14 +85,14 @@ async function ConstructDatabases() {
 
 async function InsertdbOwner(userData) {
     const database = await getDatabase();
-
-
+    const username = userData.username;
+    const password = userData.password;
     try {
-        const { insertedId } = await database.collection(dbAminsCollection).insertOne(userData);
+        const { insertedId } = await database.collection(`${dbConfig.DBOWNERCOLL}`).insertOne(userData);
         console.log(" User Inserted Succesfully With ID" + insertedId);
         return insertedId;
     } catch (error) {
-        console.log("An Error Occured, Could Not Insert The New User");
+        console.log("An Error Occured, Could Not Insert The New Database Owner");
     }
 }
 

@@ -11,6 +11,5 @@ init:
 	@sleep 2
 	@nodemon ./internalSystem/containerFiles/internalServer.js
 	
-
 clean:
 	@node ./mongoDB/containerFiles/removeCollections.js
