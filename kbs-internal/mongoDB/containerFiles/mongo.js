@@ -1,19 +1,29 @@
 const { MongoClient } = require('mongodb');
 const { dbConfig } = require('../../dbConfig/db.config');
 let database = null;
-
-async function startDatabase() {
-    const dbUrl = `${dbConfig.HOST}:${dbConfig.PORT}/admin`;
-    const connection = await MongoClient.connect(dbUrl, { useNewUrlParser: true });
+let connection = null;
+async function StartDatabase(dbName) {
+    const dbUrl = `${dbConfig.HOST}:${dbConfig.PORT}/${dbName}`;
+    connection = await MongoClient.connect(dbUrl, { useNewUrlParser: true }, { useUnifiedTopology: true });
     database = connection.db();
 }
 
-async function getDatabase() {
-    if (!database) await startDatabase();
+async function GetDatabase(dbName) {
+    if (!database) await StartDatabase(dbName);
     return database;
 }
 
+async function CloseConnection() {
+    if (!connection) {
+        console.log("No Active Connections");
+        return;
+    }
+    console.log("closing connection...");
+    connection.close();
+}
+
 module.exports = {
-    getDatabase,
-    startDatabase,
+    GetDatabase,
+    StartDatabase,
+    CloseConnection
 };

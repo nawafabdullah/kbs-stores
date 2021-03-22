@@ -2,11 +2,44 @@ const { MongoClient } = require("mongodb");
 var prompt = require('prompt');
 const stringify = require('stringify-object');
 const { dbConfig } = require("../../dbConfig/db.config");
+const { GetDatabase, CloseConnection } = require("./mongo");
 const { roleConfig } = require("../../dbConfig/roles.config");
 const dbUrl = `${dbConfig.HOST}:${dbConfig.PORT}/`;
 
+const admin = "admin";
 
-GetdbOwnerInfo()
+async function ConstructDatabases() {
+    let qcollName, collName;
+    const collectionsArr = [
+        `${dbConfig.DBADMINCOLL}`,
+        `${dbConfig.USERADMINCOLL}`,
+        `${dbConfig.DBOWNERCOLL}`,
+    ];
+    const conn = await MongoClient.connect(dbUrl, { useUnifiedTopology: true });
+    //const db = await conn.db(`${dbConfig.ADMINDB}`);
+    const db = await GetDatabase(admin);
+    let i;
+    for (i = 0; i < collectionsArr.length; i++) {
+        qcollName = await stringify(collectionsArr[i]);
+        collName = await qcollName.replace(/['"]+/g, '');
+        let collCreation = await db.createCollection(collName, { capped: false });
+        console.log("Created? " + collCreation);
+        if (collCreation) {
+            console.log(`${collName} Collection Created Successfully.... \n`);
+            console.log(
+                "=========================================================================="
+            );
+        } else {
+            console.log(`Could not create ${collName}`);
+        }
+    }
+
+    GetdbOwnerInfo();
+
+    conn.close();
+    //CloseConnection();
+    return 1;
+}
 
 async function GetdbOwnerInfo() {
     // This json object is used to configure what data will be retrieved from command line.
@@ -25,74 +58,37 @@ async function GetdbOwnerInfo() {
             // Do not show password when user input.
             hidden: true
         }
-        /*
-        ,
-        {
-            // The third input text is assigned to email variable.
-            name: 'email',
-            // Display email address when user input.
-            hidden: false
-        }
-        */
     ];
     // Start the prompt to read user input.
     prompt.start();
     // Prompt and get user input then display those data in console.
-    prompt.get(prompt_attributes, function (err, result) {
+    prompt.get(prompt_attributes, async function (err, result) {
         if (err) {
             console.log(err);
             return 0;
         } else {
             console.log('Command-line received data:');
             // Get user input from result object.
-            var username = result.username;
-            var password = result.password;
-            //var email = result.email;
-            var message = "  Username : " + username + " , Password : " + password;
-            // Display user input in console log.
-            console.log(message);
+            InsertdbOwner(result);
+            return;
         }
+        return;
     });
-}
-
-async function ConstructDatabases() {
-    let qcollName, collName;
-    const collectionsArr = [
-        `${dbConfig.DBADMINCOLL}`,
-        `${dbConfig.USERADMINCOLL}`,
-        `${dbConfig.DBOWNERCOLL}`,
-    ];
-    const conn = await MongoClient.connect(dbUrl, { useUnifiedTopology: true });
-    const db = await conn.db(`${dbConfig.ADMINDB}`);
-    let i;
-    for (i = 0; i < collectionsArr.length; i++) {
-        qcollName = await stringify(collectionsArr[i]);
-        collName = await qcollName.replace(/['"]+/g, '');
-        let collCreation = await db.createCollection(collName, { capped: false });
-        console.log("Created? " + collCreation);
-        if (collCreation) {
-            console.log(`${collName} Collection Created Successfully.... \n`);
-            console.log(
-                "=========================================================================="
-            );
-        } else {
-            console.log(`Could not create ${collName}`);
-        }
-    }
-    conn.close();
-    return 1;
+    return;
 }
 
 async function InsertdbOwner(userData) {
-    const database = await getDatabase();
+    const database = await GetDatabase(admin);
     const username = userData.username;
     const password = userData.password;
     try {
         const { insertedId } = await database.collection(`${dbConfig.DBOWNERCOLL}`).insertOne(userData);
-        console.log(" User Inserted Succesfully With ID" + insertedId);
-        return insertedId;
+        console.log(" DataBase Owner Inserted Succesfully With ID: " + insertedId);
+        return;
     } catch (error) {
-        console.log("An Error Occured, Could Not Insert The New Database Owner");
+        console.log("An Error Occured, Could Not Insert The New Database Owner" + error);
     }
+    return 1;
 }
 
+ConstructDatabases();
