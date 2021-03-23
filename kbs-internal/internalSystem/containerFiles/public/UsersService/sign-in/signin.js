@@ -1,13 +1,17 @@
-const express = require("express");
-const { MongoClient } = require("mongodb");
-const bodyParser = require("body-parser");
-const { Decrypt } = require('./DecryptionHandler/Decrypt');
+const { GetDatabase, CloseConnection } = require('../../../../../mongoDB/containerFiles/mongo');
 const { dbConfig } = require('../../../../../mainConfig/db.config');
-const dbUrl = `${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.APPDB}`;
-let conn;
+const {Decrypt} = require('../../../../../encryptionHandler/Decrypt');
 
-//// needs work ////////
-//authenticate input against database
-
-
-//exports.RetrieveFromDB = RetrieveFromDB;
+async function RetrieveUser(userData, dbPath) {
+    const database = await GetDatabase(dbConfig.ADMINDB);
+    let password = await Decrypt(userData.username, userData.password);
+    
+    try {
+      const { insertedId } = await database.collection(`${dbPath}`).insertOne(userData);
+      console.log(" DataBase User Inserted Succesfully With ID: " + insertedId);
+      CloseConnection();
+    } catch (error) {
+      console.log("An Error Occured, Could Not Insert The New Database User " + error);
+    }
+    return 1;
+  }
