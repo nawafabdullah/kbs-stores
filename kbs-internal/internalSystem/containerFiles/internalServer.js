@@ -8,6 +8,7 @@ const morgan = require('morgan');
 const app = express();
 const router = express.Router();
 const { InsertUser } = require('./public/UsersService/sign-up/signup');
+const { dbConfig } = require("../../mainConfig/db.config");
 //const { RetrieveFromDB } = require('./');
 const { mServerConfig } = require('../../mainConfig/mainServer.config');
 const util = require('util'),
@@ -34,7 +35,7 @@ router.route("/signup")
     })
     .post(urlencodedParser, async function (req, res) {
         console.log("request recieved to insert");
-        let insertion = await InsertUser(req.body);
+        let insertion = await InsertUser(req.body, dbConfig.DBADMINCOLL);
         res.writeHead(301, {
             content: "Success",
             Location: "/",

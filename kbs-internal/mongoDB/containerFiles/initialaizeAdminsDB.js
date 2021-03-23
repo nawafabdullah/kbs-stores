@@ -1,12 +1,11 @@
 const { MongoClient } = require("mongodb");
 var prompt = require('prompt');
 const stringify = require('stringify-object');
+const {InsertUser, admin} = require('../../internalSystem/containerFiles/public/UsersService/sign-up/signup');
 const { dbConfig } = require("../../mainConfig/db.config");
 const { GetDatabase, CloseConnection } = require("./mongo");
 const { roleConfig } = require("../../mainConfig/roles.config");
 const dbUrl = `${dbConfig.HOST}:${dbConfig.PORT}/`;
-
-const admin = "admin";
 
 async function ConstructDatabases() {
     let qcollName, collName;
@@ -16,7 +15,6 @@ async function ConstructDatabases() {
         `${dbConfig.DBOWNERCOLL}`,
     ];
     const conn = await MongoClient.connect(dbUrl, { useUnifiedTopology: true });
-    //const db = await conn.db(`${dbConfig.ADMINDB}`);
     const db = await GetDatabase(admin);
     let i;
     for (i = 0; i < collectionsArr.length; i++) {
@@ -35,7 +33,6 @@ async function ConstructDatabases() {
     }
 
     GetdbOwnerInfo();
-
     conn.close();
     //CloseConnection();
     return 1;
@@ -69,24 +66,10 @@ async function GetdbOwnerInfo() {
         } else {
             console.log('Command-line received data:');
             // Get user input from result object.
-            InsertdbOwner(result);
+            InsertUser(result,dbConfig.DBOWNERCOLL);
         }
         return 1;
     });
-    return 1;
-}
-
-async function InsertdbOwner(userData) {
-    const database = await GetDatabase(admin);
-    const username = userData.username;
-    const password = userData.password;
-    try {
-        const { insertedId } = await database.collection(`${dbConfig.DBOWNERCOLL}`).insertOne(userData);
-        console.log(" DataBase Owner Inserted Succesfully With ID: " + insertedId);
-        CloseConnection();
-    } catch (error) {
-        console.log("An Error Occured, Could Not Insert The New Database Owner" + error);
-    }
     return 1;
 }
 

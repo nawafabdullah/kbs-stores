@@ -1,20 +1,18 @@
-const { GetDatabase } = require('../../../../../mongoDB/containerFiles/mongo');
+const { GetDatabase, CloseConnection } = require('../../../../../mongoDB/containerFiles/mongo');
 const { dbConfig } = require('../../../../../mainConfig/db.config');
-const dbAminsCollection = `${dbConfig.HOST}:${dbConfig.PORT}/`;
-const dbOwenersCollections = `${dbConfig.DBOWNERCOLL}`;
 
+const admin = "admin";
 
-async function InsertUser(userData) {
-  const database = await GetDatabase();
-
-
+async function InsertUser(userData, dbPath) {
+  const database = await GetDatabase(dbConfig.);
   try {
-    const { insertedId } = await database.collection(dbAminsCollection).insertOne(userData);
-    console.log(" User Inserted Succesfully With ID" + insertedId);
-    return insertedId;
+    const { insertedId } = await database.collection(`${dbPath}`).insertOne(userData);
+    console.log(" DataBase Owner Inserted Succesfully With ID: " + insertedId);
+    CloseConnection();
   } catch (error) {
-    console.log("An Error Occured, Could Not Insert The New User");
+    console.log("An Error Occured, Could Not Insert The New Database User " + error);
   }
+  return 1;
 }
 
 async function getAds() {
@@ -48,6 +46,7 @@ async function CompareToAuthorize(obj) {
 module.exports = {
   InsertUser,
   getAds,
+  admin
 };
 
 
