@@ -1,7 +1,7 @@
 const { MongoClient } = require("mongodb");
 const stringify = require('stringify-object')
-const { dbConfig } = require("../../dbConfig/db.config");
-const { roleConfig } = require("../../dbConfig/roles.config");
+const { dbConfig } = require("../../mainConfig/db.config");
+const { roleConfig } = require("../../mainConfig/roles.config");
 const dbUrl = `${dbConfig.HOST}:${dbConfig.PORT}/`;
 
 async function DeleteAll() {

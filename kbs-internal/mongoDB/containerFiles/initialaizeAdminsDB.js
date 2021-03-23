@@ -1,9 +1,9 @@
 const { MongoClient } = require("mongodb");
 var prompt = require('prompt');
 const stringify = require('stringify-object');
-const { dbConfig } = require("../../dbConfig/db.config");
+const { dbConfig } = require("../../mainConfig/db.config");
 const { GetDatabase, CloseConnection } = require("./mongo");
-const { roleConfig } = require("../../dbConfig/roles.config");
+const { roleConfig } = require("../../mainConfig/roles.config");
 const dbUrl = `${dbConfig.HOST}:${dbConfig.PORT}/`;
 
 const admin = "admin";
@@ -70,11 +70,10 @@ async function GetdbOwnerInfo() {
             console.log('Command-line received data:');
             // Get user input from result object.
             InsertdbOwner(result);
-            return;
         }
-        return;
+        return 1;
     });
-    return;
+    return 1;
 }
 
 async function InsertdbOwner(userData) {
@@ -84,7 +83,7 @@ async function InsertdbOwner(userData) {
     try {
         const { insertedId } = await database.collection(`${dbConfig.DBOWNERCOLL}`).insertOne(userData);
         console.log(" DataBase Owner Inserted Succesfully With ID: " + insertedId);
-        return;
+        CloseConnection();
     } catch (error) {
         console.log("An Error Occured, Could Not Insert The New Database Owner" + error);
     }
