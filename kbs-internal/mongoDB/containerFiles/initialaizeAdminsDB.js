@@ -1,7 +1,7 @@
 const { MongoClient } = require("mongodb");
 var prompt = require('prompt');
 const stringify = require('stringify-object');
-const {InsertUser, admin} = require('../../internalSystem/containerFiles/public/UsersService/sign-up/signup');
+const { InsertUser } = require('../../internalSystem/containerFiles/public/UsersService/sign-up/signup');
 const { dbConfig } = require("../../mainConfig/db.config");
 const { GetDatabase, CloseConnection } = require("./mongo");
 const { roleConfig } = require("../../mainConfig/roles.config");
@@ -15,7 +15,7 @@ async function ConstructDatabases() {
         `${dbConfig.DBOWNERCOLL}`,
     ];
     const conn = await MongoClient.connect(dbUrl, { useUnifiedTopology: true });
-    const db = await GetDatabase(admin);
+    const db = await GetDatabase(dbConfig.ADMINDB);
     let i;
     for (i = 0; i < collectionsArr.length; i++) {
         qcollName = await stringify(collectionsArr[i]);
@@ -66,7 +66,7 @@ async function GetdbOwnerInfo() {
         } else {
             console.log('Command-line received data:');
             // Get user input from result object.
-            InsertUser(result,dbConfig.DBOWNERCOLL);
+            InsertUser(result, dbConfig.DBOWNERCOLL);
         }
         return 1;
     });

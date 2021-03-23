@@ -1,10 +1,10 @@
 const { GetDatabase, CloseConnection } = require('../../../../../mongoDB/containerFiles/mongo');
 const { dbConfig } = require('../../../../../mainConfig/db.config');
 
-const admin = "admin";
+//const admin = "admin";
 
 async function InsertUser(userData, dbPath) {
-  const database = await GetDatabase(dbConfig.);
+  const database = await GetDatabase(dbConfig.ADMINDB);
   try {
     const { insertedId } = await database.collection(`${dbPath}`).insertOne(userData);
     console.log(" DataBase Owner Inserted Succesfully With ID: " + insertedId);
@@ -45,8 +45,7 @@ async function CompareToAuthorize(obj) {
 
 module.exports = {
   InsertUser,
-  getAds,
-  admin
+  getAds
 };
 
 
