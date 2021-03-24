@@ -1,12 +1,12 @@
 const { GetDatabase, CloseConnection } = require('../../../../../mongoDB/containerFiles/mongo');
 const { dbConfig } = require('../../../../../mainConfig/db.config');
-const {Encrypt} = require('../../../../../encryptionHandler/Encrypt');
+const { Encrypt } = require('../../../../../encryptionHandler/Encrypt');
 //const admin = "admin"; 
 
 async function InsertUser(userData, dbPath) {
   const database = await GetDatabase(dbConfig.ADMINDB);
   let password = await Encrypt(userData.password);
-  userData['password'] = password; 
+  userData['password'] = password;
   try {
     const { insertedId } = await database.collection(`${dbPath}`).insertOne(userData);
     console.log(" DataBase User Inserted Succesfully With ID: " + insertedId);
@@ -15,11 +15,6 @@ async function InsertUser(userData, dbPath) {
     console.log("An Error Occured, Could Not Insert The New Database User " + error);
   }
   return 1;
-}
-
-async function getAds() {
-  const database = await GetDatabase();
-  return await database.collection(collectionName).find({}).toArray();
 }
 
 
@@ -46,8 +41,7 @@ async function CompareToAuthorize(obj) {
 }
 
 module.exports = {
-  InsertUser,
-  getAds
+  InsertUser
 };
 
 

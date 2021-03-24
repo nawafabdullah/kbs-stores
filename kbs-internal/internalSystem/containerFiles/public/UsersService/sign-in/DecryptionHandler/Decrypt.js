@@ -9,4 +9,6 @@ async function Compare(EncryptedPass, EnteredPass) { // updated
 
 }
 
+
+
 exports.Compare = Compare;

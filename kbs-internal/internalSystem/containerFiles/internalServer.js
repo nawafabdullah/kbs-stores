@@ -9,7 +9,7 @@ const app = express();
 const router = express.Router();
 const { InsertUser } = require('./public/UsersService/sign-up/signup');
 const { dbConfig } = require("../../mainConfig/db.config");
-//const { RetrieveFromDB } = require('./');
+const { RetrieveUser } = require('../containerFiles/public/UsersService/sign-in/signin');
 const { mServerConfig } = require('../../mainConfig/mainServer.config');
 const util = require('util'),
     request = util.promisify(require('request')),
@@ -49,7 +49,7 @@ router.route("/signin")
     })
     .post(urlencodedParser, async function (req, res) {
         console.log(" request recieved to retrieve");
-        RetrieveFromDB(req.body);
+        RetrieveUser(dbConfig.DBOWNERCOLL);
         res.writeHead(301, {
             content: "Success",
             Location: "/",
