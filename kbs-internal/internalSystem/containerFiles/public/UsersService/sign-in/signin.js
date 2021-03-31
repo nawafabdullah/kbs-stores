@@ -16,10 +16,12 @@ async function RetrieveUser(userData, dbPath) {
   return 1;
 }
 
-async function RetrieveUser(dbPath) {
+async function RetrieveUser(dbPath, userData) {
   const database = await GetDatabase(dbConfig.ADMINDB);
+  const username = userData.username;
+  const password = userData.password;
   let userExists = await database.collection(`${dbPath}`).findOne(
-    { username: "khalid omar  " }
+    { username: username }
     //,{ _id: 0, 'name.first': 0, birth: 0 }
   );
   console.log("Users Array Contains: " + userExists);

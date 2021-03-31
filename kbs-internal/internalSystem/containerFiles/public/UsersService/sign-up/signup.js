@@ -20,9 +20,10 @@ async function InsertUser(userData, dbPath) {
 
 async function AuthorizeEntry() {
 
-  let userName = prompt("Mr. Khalid, please enter your USERNAME");
+  let username = prompt("Mr. Khalid, please enter your USERNAME");
   let password = prompt("Mr. Khalid, please enter your PASSWORD");
 
+  let userData = { username: username, password: password };
 
 
 
