@@ -4,14 +4,17 @@ const { Decrypt } = require('../../../../../encryptionHandler/Decrypt');
 
 async function RetrieveUser(userData, dbPath) {
   const database = await GetDatabase(dbConfig.ADMINDB);
-  let password = await Decrypt(userData.password);
+  const username = userData.username;
+  let password = userData.password;
+  password = await Decrypt(userData, dbPath);
 
+  if (password == )
   try {
-    const { insertedId } = await database.collection(`${dbPath}`).insertOne(userData);
-    console.log(" DataBase User Inserted Succesfully With ID: " + insertedId);
+    const { retrievedID } = await database.collection(`${dbPath}`).insertOne(userData);
+    console.log(" DataBase User Found With ID: " + retrievedID);
     CloseConnection();
   } catch (error) {
-    console.log("An Error Occured, Could Not Insert The New Database User " + error);
+    console.log("An Error Occured, Could Not Retrieve The Requested Database User " + error);
   }
   return 1;
 }
@@ -20,17 +23,8 @@ async function RetrieveUser(dbPath, userData) {
   const database = await GetDatabase(dbConfig.ADMINDB);
   const username = userData.username;
   const password = userData.password;
-  let userExists = await database.collection(`${dbPath}`).findOne(
-    { username: username }
-    //,{ _id: 0, 'name.first': 0, birth: 0 }
-  );
-  console.log("Users Array Contains: " + userExists);
-  if (userExists) {
-    return userExists;
-  } else {
-    alert("User Does Not Exist");
-    return 0;
-  }
+  
+  
 }
 
 module.exports = {
