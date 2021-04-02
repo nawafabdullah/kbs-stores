@@ -49,7 +49,7 @@ router.route("/signin")
     })
     .post(urlencodedParser, async function (req, res) {
         console.log(" request recieved to retrieve");
-        RetrieveUser(dbConfig.DBOWNERCOLL);
+        RetrieveUser(req.body, dbConfig.DBADMINCOLL);
         res.writeHead(301, {
             content: "Success",
             Location: "/",
