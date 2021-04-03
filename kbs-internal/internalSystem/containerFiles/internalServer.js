@@ -35,6 +35,7 @@ router.route("/signup")
     })
     .post(urlencodedParser, async function (req, res) {
         console.log("request recieved to insert");
+
         let insertion = await InsertUser(req.body, dbConfig.DBADMINCOLL);
         res.writeHead(301, {
             content: "Success",
@@ -49,6 +50,21 @@ router.route("/signin")
     })
     .post(urlencodedParser, async function (req, res) {
         console.log(" request recieved to retrieve");
+        res.redirect('https://app.example.io');
+        RetrieveUser(req.body, dbConfig.DBADMINCOLL);
+        res.writeHead(301, {
+            content: "Success",
+            Location: "/",
+        });
+        res.end("Success");
+    })
+
+    router.route("/authoraize")
+    .get(function (req, res) {
+        res.sendFile(path.join(__dirname + "/public/UsersService/authoraize/"));
+    })
+    .post(urlencodedParser, async function (req, res) {
+        console.log(" request recieved to authoraize");
         RetrieveUser(req.body, dbConfig.DBADMINCOLL);
         res.writeHead(301, {
             content: "Success",
