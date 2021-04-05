@@ -1,7 +1,7 @@
 use admin
 db.createRole(
    {
-     role: "Admin",
+     role: "SuperAdmin",
      privileges: [
        { resource: { cluster: true }, actions: [ "addShard" ] },
        { resource: { db: "config", collection: "" }, actions: [ "find", "update", "insert", "remove" ] },
@@ -9,6 +9,8 @@ db.createRole(
        { resource: { db: "", collection: "" }, actions: [ "find" ] }
      ],
      roles: [
+       { role: "read", db: "admin" }, 
+       { role: "read", db: "admin" },
        { role: "read", db: "admin" }
      ]
    },
