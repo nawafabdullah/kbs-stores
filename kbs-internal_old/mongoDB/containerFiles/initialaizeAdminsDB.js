@@ -2,21 +2,20 @@ const { MongoClient } = require("mongodb");
 var prompt = require('prompt');
 const stringify = require('stringify-object');
 const { InsertUser } = require('../../internalSystem/containerFiles/public/UsersService/sign-up/signup');
-const { dbConfig } = require("../../mainConfig/db.config");
+//const { dbConfig } = require("../../mainConfig/db.config");
 const { GetDatabase, CloseConnection } = require("./mongo");
-const { roleConfig } = require("../../mainConfig/roles.config");
-const dbUrl = `${dbConfig.HOST}:${dbConfig.PORT}/`;
+//const { roleConfig } = require("../../mainConfig/roles.config");
+const dbUrl = `${process.env.DBCONFIG.HOST}:${process.env.DBCONFIG.PORT}/`;
 
 async function ConstructDatabases() {
     let qcollName, collName;
     const collectionsArr = [
-        `${dbConfig.DBADMINCOLL}`,
-        `${dbConfig.USERADMINCOLL}`,
-        `${dbConfig.DBOWNERCOLL}`,
+        `${process.env.DBCONFIG.DBADMINCOLL}`,
+        `${process.env.DBCONFIG.USERADMINCOLL}`,
+        `${process.env.DBCONFIG.DBOWNERCOLL}`,
     ];
     const conn = await MongoClient.connect(dbUrl, { useUnifiedTopology: true });
-    const db = await GetDatabase(dbConfig.ADMINDB);
-    let i;
+       let i;
     for (i = 0; i < collectionsArr.length; i++) {
         qcollName = await stringify(collectionsArr[i]);
         collName = await qcollName.replace(/['"]+/g, '');
@@ -35,7 +34,7 @@ async function ConstructDatabases() {
     GetdbOwnerInfo();
     conn.close();
     //CloseConnection();
-    return 1;
+    return true;
 }
 
 async function GetdbOwnerInfo() {
@@ -66,7 +65,7 @@ async function GetdbOwnerInfo() {
         } else {
             console.log('Command-line received data:');
             // Get user input from result object.
-            InsertUser(result, dbConfig.DBOWNERCOLL);
+            InsertUser(result, 001);
         }
         return 1;
     });
