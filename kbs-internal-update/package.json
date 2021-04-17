@@ -1,0 +1,23 @@
+{
+  "name": "kbs-internal",
+  "version": "1.0.0",
+  "description": "run store's inventory and other needs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Nawaf A H",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "express-jwt": "^6.0.0",
+    "jsonwebtoken": "^8.4.0",
+    "rootpath": "^0.1.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
