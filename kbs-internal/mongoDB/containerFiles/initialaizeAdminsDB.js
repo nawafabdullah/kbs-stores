@@ -5,8 +5,8 @@ const { InsertUser } = require('../../internalSystem/containerFiles/public/Users
 //const { dbConfig } = require("../../mainConfig/db.config");
 const { GetDatabase, CloseConnection } = require("./mongo");
 //const { roleConfig } = require("../../mainConfig/roles.config");
-const dbUrl = "mongodb://localhost:27017/"
-//const dbUrl = process.env.DBHOST;
+const dbUrl = "mongodb://localhost:27017/admin"
+//const dbUrl = Stringfy(process.env.DBHOST + ":" + process.env.DBPORT + "/");
 
 async function ConstructDatabases() {
     let qcollName, collName;
@@ -15,12 +15,13 @@ async function ConstructDatabases() {
         `${process.env.USERADMINCOLL}`,
         `${process.env.DBOWNERCOLL}`,
     ];
-    const conn = await MongoClient.connect(dbUrl, { useUnifiedTopology: true });
-       let i;
+    const database = await MongoClient.connect(dbUrl, { useUnifiedTopology: true });
+    let i;
+    let conn = await database.db(stringify(process.env.ADMINDB));
     for (i = 0; i < collectionsArr.length; i++) {
         qcollName = await stringify(collectionsArr[i]);
         collName = await qcollName.replace(/['"]+/g, '');
-        let collCreation = await db.createCollection(collName, { capped: false });
+        let collCreation = await conn.createCollection(collName, { capped: false });
         console.log("Created? " + collCreation);
         if (collCreation) {
             console.log(`${collName} Collection Created Successfully.... \n`);
