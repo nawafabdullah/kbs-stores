@@ -2,22 +2,24 @@ const { MongoClient } = require("mongodb");
 var prompt = require('prompt');
 const stringify = require('stringify-object');
 const { InsertUser } = require('../../internalSystem/containerFiles/public/UsersService/sign-up/signup');
-//const { dbConfig } = require("../../mainConfig/db.config");
+const { dbConfig } = require("../../mainConfig/db.config");
 const { GetDatabase, CloseConnection } = require("./mongo");
 //const { roleConfig } = require("../../mainConfig/roles.config");
-const dbUrl = "mongodb://localhost:27017/admin"
+//const dbUrl = "mongodb://localhost:27017/admin";
+const dbUrl = `${dbConfig.HOST}/${dbConfig.PORT}:${dbConfig.NAME}/`;
+
 //const dbUrl = Stringfy(process.env.DBHOST + ":" + process.env.DBPORT + "/");
 
 async function ConstructDatabases() {
     let qcollName, collName;
     const collectionsArr = [
-        `${process.env.DBADMINCOLL}`,
-        `${process.env.USERADMINCOLL}`,
-        `${process.env.DBOWNERCOLL}`,
+        "dbAdmins",
+        "userAdmins",
+        "dbOwners"
     ];
     const database = await MongoClient.connect(dbUrl, { useUnifiedTopology: true });
     let i;
-    let conn = await database.db(stringify(process.env.ADMINDB));
+    let conn = await database.db(`${dbConfig.ADMINDB}`);
     for (i = 0; i < collectionsArr.length; i++) {
         qcollName = await stringify(collectionsArr[i]);
         collName = await qcollName.replace(/['"]+/g, '');
@@ -34,7 +36,7 @@ async function ConstructDatabases() {
     }
 
     GetdbOwnerInfo();
-    conn.close();
+    //conn.close();
     //CloseConnection();
     return true;
 }

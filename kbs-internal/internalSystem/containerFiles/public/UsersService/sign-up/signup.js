@@ -1,15 +1,23 @@
 const { GetDatabase, CloseConnection } = require('../../../../../mongoDB/containerFiles/mongo');
-//const { dbConfig } = require('../../../../../mainConfig/db.config');
+const { dbConfig } = require('../../../../../mainConfig/db.config');
 const { Encrypt } = require('../../../../../encryptionHandler/Encrypt');
 const { RetrieveUser } = require('../sign-in/signin');
 //const admin = "admin"; 
 
-async function InsertUser(userData, dbPath) {
-  const database = await GetDatabase(process.env.ADMINDB);
+async function InsertUser(userData, flag) {
+  let database;
+  if (flag == 001) {
+    database = await GetDatabase(dbConfig.DBOWNERCOLL);
+
+
+  }
+  else if (flag == 002) {
+    database = await GetDatabase(dbConfig.ADMINDB);
+  }
   let password = await Encrypt(userData.password);
   userData['password'] = password;
   let ownerData = AuthoraizeInsertion();
-  RetrieveUser(ownerData, process.env.DBOWNERCOLL);
+  RetrieveUser(ownerData, 001);
 
   if (RetrieveUser) {
     try {

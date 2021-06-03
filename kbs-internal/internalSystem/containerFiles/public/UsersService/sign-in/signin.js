@@ -1,9 +1,15 @@
 const { GetDatabase, CloseConnection } = require('../../../../../mongoDB/containerFiles/mongo');
-//const { dbConfig } = require('../../../../../mainConfig/db.config');
+const { dbConfig } = require('../../../../../mainConfig/db.config');
 const bcrypt = require("bcrypt");
 
-async function RetrieveUser(userData, dbPath) {
-  const database = await GetDatabase(process.env.ADMINDB);
+async function RetrieveUser(userData, flag) {
+  let database;
+  if (flag == 001) {
+    database = await GetDatabase(dbConfig.DBOWNERCOLL);
+  }
+  else if (flag == 002) {
+    database = await GetDatabase(dbConfig.ADMINDB);
+  }
   try {
     let userExists = await database.collection(`${dbPath}`).findOne(
       { email: userData.email }
