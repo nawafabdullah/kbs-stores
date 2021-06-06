@@ -35,13 +35,13 @@ async function ConstructDatabases() {
         }
     }
 
-    GetdbOwnerInfo();
+    SetdbOwnerInfo();
     //conn.close();
     //CloseConnection();
     return true;
 }
 
-async function GetdbOwnerInfo() {
+async function SetdbOwnerInfo() {
     // This json object is used to configure what data will be retrieved from command line.
     var prompt_attributes = [
         {

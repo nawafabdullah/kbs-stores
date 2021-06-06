@@ -2,8 +2,8 @@ const { MongoClient } = require('mongodb');
 const { dbConfig } = require("../../mainConfig/db.config");
 let database = null;
 let connection = null;
-async function StartDatabase(flag) {
-    // if (flag == 000) { 
+async function StartDatabase() {
+    // if (flag == 001) { 
     // Recognaize where to connect - flags are better than passing dbNames along 
     // define flags in the config file and follow standards 
     const dbUrl = `${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.NAME}`;
@@ -11,7 +11,7 @@ async function StartDatabase(flag) {
     database = connection.db();
 }
 
-async function GetDatabase(flag) {
+async function GetDatabase() {
     if (!database) await StartDatabase();
     return database;
 }

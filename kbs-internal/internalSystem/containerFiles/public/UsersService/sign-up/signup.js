@@ -7,30 +7,33 @@ const { RetrieveUser } = require('../sign-in/signin');
 async function InsertUser(userData, flag) {
   let database;
   if (flag == 001) {
-    database = await GetDatabase(dbConfig.DBOWNERCOLL);
-
-
+    //database = await GetDatabase(dbConfig.DBOWNERCOLL);
+    database = await GetDatabase();
+    let password = await Encrypt(userData.password);
+    userData['password'] = password;
+    const { insertedId } = await database.collection(dbConfig.DBOWNERCOLL).insertOne(userData);
   }
   else if (flag == 002) {
     database = await GetDatabase(dbConfig.ADMINDB);
-  }
-  let password = await Encrypt(userData.password);
-  userData['password'] = password;
-  let ownerData = AuthoraizeInsertion();
-  RetrieveUser(ownerData, 001);
 
-  if (RetrieveUser) {
-    try {
-      const { insertedId } = await database.collection(`${dbPath}`).insertOne(userData);
-      console.log(" DataBase User Inserted Succesfully With ID: " + insertedId);
-      //CloseConnection();
-    } catch (error) {
-      console.log("An Error Occured, Could Not Insert The New Database User " + error);
-      return false;
+    let password = await Encrypt(userData.password);
+    userData['password'] = password;
+    let ownerData = AuthoraizeInsertion();
+    RetrieveUser(ownerData, 001);
+
+    if (RetrieveUser) {
+      try {
+        const { insertedId } = await database.collection(`${dbPath}`).insertOne(userData);
+        console.log(" DataBase User Inserted Succesfully With ID: " + insertedId);
+        //CloseConnection();
+      } catch (error) {
+        console.log("An Error Occured, Could Not Insert The New Database User " + error);
+        return false;
+      }
+      return true;
+    } else {
+      console.log("Mr. Khalid's Email Does Not Match ");
     }
-    return true;
-  } else {
-    console.log("Mr. Khalid's Email Does Not Match ");
   }
 }
 
