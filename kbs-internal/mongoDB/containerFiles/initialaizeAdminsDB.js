@@ -11,19 +11,37 @@ const dbUrl = `${dbConfig.HOST}/${dbConfig.PORT}:${dbConfig.NAME}/`;
 //const dbUrl = Stringfy(process.env.DBHOST + ":" + process.env.DBPORT + "/");
 
 async function ConstructDatabases() {
-    let qcollName, collName;
+    let qcollName, collName, database;
     const collectionsArr = [
         "dbAdmins",
         "userAdmins",
         "dbOwners"
     ];
-    const database = await MongoClient.connect(dbUrl, { useUnifiedTopology: true });
+    //const database = await MongoClient.connect(dbUrl, { useUnifiedTopology: true });
+    
+    database = await GetDatabase();
+
     let i;
-    let conn = await database.db(`${dbConfig.ADMINDB}`);
+    
+    //let conn = await database.db(`${dbConfig.ADMINDB}`);
+    
+    let userData = {
+        username: " testUser ", 
+        password: "testPass ",
+        email: "test@test.com"
+    }
+
+
     for (i = 0; i < collectionsArr.length; i++) {
         qcollName = await stringify(collectionsArr[i]);
         collName = await qcollName.replace(/['"]+/g, '');
-        let collCreation = await conn.createCollection(collName, { capped: false });
+        
+        
+        //let collCreation = await conn.createCollection(collName, { capped: false });
+        
+        let collCreation = await database.collection(collectionsArr[i]).insertOne("");
+
+
         console.log("Created? " + collCreation);
         if (collCreation) {
             console.log(`${collName} Collection Created Successfully.... \n`);

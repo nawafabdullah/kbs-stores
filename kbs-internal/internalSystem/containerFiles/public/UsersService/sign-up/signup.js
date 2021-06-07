@@ -4,7 +4,7 @@ const { Encrypt } = require('../../../../../encryptionHandler/Encrypt');
 const { RetrieveUser } = require('../sign-in/signin');
 //const admin = "admin"; 
 
-async function InsertUser(userData, flag) {
+async function InsertUser(userData, flag) { 
   let database;
   if (flag == 001) {
     //database = await GetDatabase(dbConfig.DBOWNERCOLL);

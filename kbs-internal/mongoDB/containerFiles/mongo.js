@@ -1,6 +1,6 @@
 const { MongoClient } = require('mongodb');
 const { dbConfig } = require("../../mainConfig/db.config");
-let database = null;
+let database = null; 
 let connection = null;
 async function StartDatabase() {
     // if (flag == 001) { 
