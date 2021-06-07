@@ -18,15 +18,15 @@ async function ConstructDatabases() {
         "dbOwners"
     ];
     //const database = await MongoClient.connect(dbUrl, { useUnifiedTopology: true });
-    
+
     database = await GetDatabase();
 
     let i;
-    
+
     //let conn = await database.db(`${dbConfig.ADMINDB}`);
-    
+
     let userData = {
-        username: " testUser ", 
+        username: " testUser ",
         password: "testPass ",
         email: "test@test.com"
     }
@@ -35,11 +35,11 @@ async function ConstructDatabases() {
     for (i = 0; i < collectionsArr.length; i++) {
         qcollName = await stringify(collectionsArr[i]);
         collName = await qcollName.replace(/['"]+/g, '');
-        
-        
+
+
         //let collCreation = await conn.createCollection(collName, { capped: false });
-        
-        let collCreation = await database.collection(collectionsArr[i]).insertOne("");
+
+        let collCreation = await database.createCollection(collectionsArr[i]);
 
 
         console.log("Created? " + collCreation);

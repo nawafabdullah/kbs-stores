@@ -5,30 +5,53 @@ const bcrypt = require("bcrypt");
 async function RetrieveUser(userData, flag) {
   let database;
   if (flag == 001) {
-    database = await GetDatabase(dbConfig.DBOWNERCOLL);
-  }
-  else if (flag == 002) {
-    database = await GetDatabase(dbConfig.ADMINDB);
-  }
-  try {
-    let userExists = await database.collection(`${dbPath}`).findOne(
-      { email: userData.email }
-      //,{ _id: 0, 'name.first': 0, birth: 0 }
-    );
-    if (userExists) {
-      console.log("UserName Found! \nAuthenticating...");
-      //password = await Decrypt(userData, dbPath);
-      checkUser(userData.password, userExists.password);
-    } else {
-      console.log("Invalid UserName");
+    database = await GetDatabase();
+    try {
+
+      let userExists = await database.collection(`${dbConfig.DBOWNERCOLL}`).findOne(
+        { email: userData.email }
+        //,{ _id: 0, 'name.first': 0, birth: 0 }
+      );
+      if (userExists) {
+        console.log("UserName Found! \nAuthenticating...");
+        //password = await Decrypt(userData, dbPath);
+        checkUser(userData.password, userExists.password);
+      } else {
+        console.log("Invalid UserName");
+        return false;
+      }
+
+    } catch (error) {
+      console.log("An Error Occured, Could Not Retrieve The Requested Database User: " + error);
       return false;
     }
-
-  } catch (error) {
-    console.log("An Error Occured, Could Not Retrieve The Requested Database User: " + error);
-    return false;
+    return true;
   }
-  return true;
+
+
+  else if (flag == 002) {
+    database = await GetDatabase();
+    try {
+
+      let userExists = await database.collection(`${dbConfig.ADMINDB}`).findOne(
+        { email: userData.email }
+        //,{ _id: 0, 'name.first': 0, birth: 0 }
+      );
+      if (userExists) {
+        console.log("UserName Found! \nAuthenticating...");
+        //password = await Decrypt(userData, dbPath);
+        checkUser(userData.password, userExists.password);
+      } else {
+        console.log("Invalid UserName");
+        return false;
+      }
+
+    } catch (error) {
+      console.log("An Error Occured, Could Not Retrieve The Requested Database User: " + error);
+      return false;
+    }
+    return true;
+  }
 }
 
 async function checkUser(insertedPass, retrievedPass) {

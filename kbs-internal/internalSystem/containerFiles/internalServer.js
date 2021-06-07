@@ -1,32 +1,3 @@
-require('rootpath')();
-const express = require('express');
-const app = express();
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const errorHandler = require('../../_helpers/error-handler');
-
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(cors());
-
-// api routes
-app.use('/home', require('./public/home'));
-
-// global error handler
-app.use(errorHandler);
-
-// start server
-const port = process.env.NODE_ENV === 'production' ? 80 : 4000;
-const server = app.listen(port, function () {
-    console.log('Server listening on port ' + port);
-});
-
-
-
-
-
-
-/*
 const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
@@ -65,7 +36,7 @@ router.route("/signup")
     .post(urlencodedParser, async function (req, res) {
         console.log("request recieved to insert");
 
-        let insertion = await InsertUser(req.body, dbConfig.DBADMINCOLL);
+        let insertion = await InsertUser(req.body, 002);
         res.writeHead(301, {
             content: "Success",
             Location: "/",
@@ -88,7 +59,7 @@ router.route("/signin")
         res.end("Success");
     })
 
-    router.route("/authoraize")
+router.route("/authoraize")
     .get(function (req, res) {
         res.sendFile(path.join(__dirname + "/public/UsersService/authoraize/"));
     })
@@ -116,4 +87,3 @@ router.route("/downloadTerms")
         res.setHeader('Content-Disposition', 'attachment; filename=agreement.pdf');
         file.pipe(res);
     })
-*/

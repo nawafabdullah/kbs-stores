@@ -14,10 +14,10 @@ async function DeleteAll() {
         `${dbConfig.DBOWNERCOLL}`,
     ];
 
-   /*
-    const conn = await MongoClient.connect(dbUrl, { useUnifiedTopology: true });
-    const db = await conn.db(`${dbConfig.ADMINDB}`);
-   */
+    /*
+     const conn = await MongoClient.connect(dbUrl, { useUnifiedTopology: true });
+     const db = await conn.db(`${dbConfig.ADMINDB}`);
+    */
 
     database = await GetDatabase();
     let i;
@@ -38,9 +38,9 @@ async function DeleteAll() {
             console.log(`Could not delete ${collName}`);
         }
     }
-   
-   
-   // conn.close();
+
+
+    CloseConnection();
     return 1;
 }
 
