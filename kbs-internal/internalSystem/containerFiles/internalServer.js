@@ -87,3 +87,8 @@ router.route("/downloadTerms")
         res.setHeader('Content-Disposition', 'attachment; filename=agreement.pdf');
         file.pipe(res);
     })
+
+router.route("/products")
+    .get(function (req, res) {
+        res.sendFile(path.join(__dirname + "/public/Products/"));
+    })
