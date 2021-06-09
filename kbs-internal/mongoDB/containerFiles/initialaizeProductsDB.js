@@ -6,7 +6,7 @@ const { dbConfig } = require("../../mainConfig/db.config");
 const { GetDatabase, CloseConnection } = require("./mongo");
 //const { roleConfig } = require("../../mainConfig/roles.config");
 //const dbUrl = "mongodb://localhost:27017/admin";
-const dbUrl = `${dbConfig.HOST}/${dbConfig.PORT}:${dbConfig.NAME}/`;
+const dbUrl = `${dbConfig.HOST}/${dbConfig.PORT}:${dbConfig.NAME}`;
 
 //const dbUrl = Stringfy(process.env.DBHOST + ":" + process.env.DBPORT + "/");
 
