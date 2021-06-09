@@ -1,3 +1,5 @@
+const mainCatagories = ["", "", ""]
+
 $(document).ready(function () {
     $("#type").change(function () {
         var val = $(this).val();

@@ -6,30 +6,22 @@ const { dbConfig } = require("../../mainConfig/db.config");
 const { GetDatabase, CloseConnection } = require("./mongo");
 //const { roleConfig } = require("../../mainConfig/roles.config");
 //const dbUrl = "mongodb://localhost:27017/admin";
-const dbUrl = `${dbConfig.HOST}/${dbConfig.PORT}:${dbConfig.NAME}/`;
+//const dbUrl = `${dbConfig.HOST}/${dbConfig.PORT}:${dbConfig.NAME}/`;
 
 //const dbUrl = Stringfy(process.env.DBHOST + ":" + process.env.DBPORT + "/");
 
 async function ConstructDatabases() {
     let qcollName, collName, database;
     const collectionsArr = [
-        "dbAdmins",
-        "userAdmins",
-        "dbOwners"
+        `${dbConfig.USERS_DBADMINCOLL}`,
+        `${dbConfig.USERS_USERADMINCOLL}`,
+        `${dbConfig.USERS_DBOWNERCOLL}`,
     ];
     //const database = await MongoClient.connect(dbUrl, { useUnifiedTopology: true });
 
     database = await GetDatabase();
 
     let i;
-
-    //let conn = await database.db(`${dbConfig.ADMINDB}`);
-
-    let userData = {
-        username: " testUser ",
-        password: "testPass ",
-        email: "test@test.com"
-    }
 
 
     for (i = 0; i < collectionsArr.length; i++) {

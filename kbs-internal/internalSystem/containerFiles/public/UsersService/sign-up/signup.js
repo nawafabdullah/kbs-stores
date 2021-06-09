@@ -13,7 +13,7 @@ async function InsertUser(userData, flag) {
       database = await GetDatabase();
       let password = await Encrypt(userData.password);
       userData['password'] = password;
-      const { insertedId } = await database.collection(dbConfig.DBOWNERCOLL).insertOne(userData);
+      const { insertedId } = await database.collection(dbConfig.USERS_DBOWNERCOLL).insertOne(userData);
       console.log(`Welcome ${userData.username}.. you have become the database owner! `);
       CloseConnection();
     } catch (error) {

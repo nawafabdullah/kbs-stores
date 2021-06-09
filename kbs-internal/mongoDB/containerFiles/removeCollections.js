@@ -9,9 +9,9 @@ const { GetDatabase, CloseConnection } = require("./mongo");
 async function DeleteAll() {
     let qcollName, collName, database;
     const collectionsArr = [
-        `${dbConfig.DBADMINCOLL}`,
-        `${dbConfig.USERADMINCOLL}`,
-        `${dbConfig.DBOWNERCOLL}`,
+        `${dbConfig.USERS_DBADMINCOLL}`,
+        `${dbConfig.USERS_USERADMINCOLL}`,
+        `${dbConfig.USERS_DBOWNERCOLL}`,
     ];
 
     /*

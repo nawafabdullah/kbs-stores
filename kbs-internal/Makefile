@@ -6,6 +6,10 @@ init:
 	@echo ""
 	@node ./mongoDB/containerFiles/initialaizeAdminsDB.js
 	@#==================================================================================#
+	@sleep 2
+	@echo ""
+	@node ./mongoDB/containerFiles/initialaizeProductsDB.js
+	@#==================================================================================#
 	@echo "Starting Application's Main Server... "
 	@echo ""
 	@sleep 2
