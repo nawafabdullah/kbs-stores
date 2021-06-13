@@ -12,6 +12,9 @@ async function DeleteAll() {
         `${dbConfig.USERS_DBADMINCOLL}`,
         `${dbConfig.USERS_USERADMINCOLL}`,
         `${dbConfig.USERS_DBOWNERCOLL}`,
+        `${dbConfig.PRODUCTS_MAINCATAGORIES}`,
+        `${dbConfig.PRODUCTS_SECONDARYCATAGORIES}`,
+        `${dbConfig.PRODUCTS_COMPANIES}`,
     ];
 
     /*
