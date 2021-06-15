@@ -8,6 +8,7 @@ const morgan = require('morgan');
 const app = express();
 const router = express.Router();
 const { InsertUser } = require('./public/UsersService/sign-up/signup');
+const {AddCompaniestoDB} = require ('./public/Products/Adding-Products/Modify-Companies/companies');
 const { dbConfig } = require("../../mainConfig/db.config");
 const { RetrieveUser } = require('../containerFiles/public/UsersService/sign-in/signin');
 const { mServerConfig } = require('../../mainConfig/mainServer.config');
@@ -91,4 +92,24 @@ router.route("/downloadTerms")
 router.route("/products")
     .get(function (req, res) {
         res.sendFile(path.join(__dirname + "/public/Products/"));
+    })
+
+
+router.route("/products/addProducts")
+    .get(function (req, res) {
+        res.sendFile(path.join(__dirname + "/public/Products/Adding-Products/"));
+    })
+
+router.route("/products/addProducts/companies")
+    .get(function (req, res) {
+        res.sendFile(path.join(__dirname + "/public/Products/Adding-Products/Modify-Companies/"));
+    })
+    .post(urlencodedParser, async function (req, res) {
+        console.log(" request recieved to modify companies");
+        AddCompaniestoDB(req);
+        res.writeHead(301, {
+            content: "Success",
+            Location: "/",
+        });
+        res.end("Success");
     })

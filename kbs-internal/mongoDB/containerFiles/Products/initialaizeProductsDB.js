@@ -1,9 +1,9 @@
 const { MongoClient } = require("mongodb");
 var prompt = require('prompt');
 const stringify = require('stringify-object');
-const { InsertUser } = require('../../internalSystem/containerFiles/public/UsersService/sign-up/signup');
-const { dbConfig } = require("../../mainConfig/db.config");
-const { GetDatabase, CloseConnection } = require("./mongo");
+const { InsertUser } = require('../../../internalSystem/containerFiles/public/UsersService/sign-up/signup');
+const { dbConfig } = require("../../../mainConfig/db.config");
+const { GetDatabase, CloseConnection } = require(".././mongo");
 //const { roleConfig } = require("../../mainConfig/roles.config");
 //const dbUrl = "mongodb://localhost:27017/admin";
 const dbUrl = `${dbConfig.HOST}/${dbConfig.PORT}:${dbConfig.NAME}`;

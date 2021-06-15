@@ -4,11 +4,11 @@ default:
 init:
 	@sleep 2
 	@echo ""
-	@node ./mongoDB/containerFiles/initialaizeAdminsDB.js
+	@node ./mongoDB/containerFiles/DB-Admins/initialaizeAdminsDB.js
 	@#==================================================================================#
 	@sleep 2
 	@echo ""
-	@node ./mongoDB/containerFiles/initialaizeProductsDB.js
+	@node ./mongoDB/containerFiles/Products/initialaizeProductsDB.js
 	@#==================================================================================#
 	@echo "Starting Application's Main Server... "
 	@echo ""

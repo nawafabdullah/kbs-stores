@@ -1,7 +1,7 @@
 const mainCatagories = ["", "", ""]
 
 $(document).ready(function () {
-    $("#type").change(function () {
+    $("#type").change(function () { 
         var val = $(this).val();
         if (val == "item1") {
             $("#size").html("<option value='test'>item1: test 1</option><option value='test2'>item1: test 2</option>");
