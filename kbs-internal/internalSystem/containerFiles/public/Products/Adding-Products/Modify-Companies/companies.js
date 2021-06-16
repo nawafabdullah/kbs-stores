@@ -3,19 +3,16 @@ const { stringify } = require('querystring');
 
 const http = require('http');
 const formidable = require('formidable');
-
+ 
 
 function AddCompaniestoDB(dataFile) {
-
-  http.createServer(function (req, res) {
-    if (req.url == '/products/addProducts/companies') {
+    if (dataFile.url == '/products/addProducts/companies') {
       let form = new formidable.IncomingForm();
 
       console.log("FILE UPLOADED !!!!!!!!!");
 
-      form.parse(req, function (err, fields, files) {
-        res.write('File uploaded');
-        res.end();
+      form.parse(dataFile, function (err, fields, files) {
+        consolele.log('File uploaded');
       });
     } else {
 
@@ -27,7 +24,7 @@ function AddCompaniestoDB(dataFile) {
       res.write('</form>');
       return res.end();
     }
-  }).listen(8080);
+  
 
 
 }
