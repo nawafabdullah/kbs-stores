@@ -8,7 +8,7 @@ const morgan = require('morgan');
 const app = express();
 const router = express.Router();
 const { InsertUser } = require('./public/UsersService/sign-up/signup');
-const {AddCompaniestoDB} = require ('./public/Products/Adding-Products/Modify-Companies/companies');
+const { AddCompaniestoDB } = require('./public/Products/Adding-Products/Modify-Companies/companies');
 const { dbConfig } = require("../../mainConfig/db.config");
 const { RetrieveUser } = require('../containerFiles/public/UsersService/sign-in/signin');
 const { mServerConfig } = require('../../mainConfig/mainServer.config');
@@ -35,7 +35,7 @@ router.route("/signup")
         res.sendFile(path.join(__dirname + "/public/UsersService/sign-up/"));
     })
     .post(urlencodedParser, async function (req, res) {
-        console.log("request recieved to insert");
+        console.log("request received to insert");
 
         let insertion = await InsertUser(req.body, 002);
         res.writeHead(301, {
@@ -50,7 +50,7 @@ router.route("/signin")
         res.sendFile(path.join(__dirname + "/public/UsersService/sign-in/"));
     })
     .post(urlencodedParser, async function (req, res) {
-        console.log(" request recieved to retrieve");
+        console.log(" request received to retrieve");
         res.redirect('https://app.example.io');
         RetrieveUser(req.body, dbConfig.DBADMINCOLL);
         res.writeHead(301, {
@@ -105,8 +105,19 @@ router.route("/products/addProducts/companies")
         res.sendFile(path.join(__dirname + "/public/Products/Adding-Products/Modify-Companies/"));
     })
     .post(urlencodedParser, async function (req, res) {
-        console.log(" request recieved to modify companies");
+        console.log(" request received to modify companies");
+        // console.log(req.url);
+
+
+        //console.log(AddCompaniestoDB(req.body.inputfile));
+
+        //req.setValue("application/json", forHTTPHeaderField: "Content-Type");
+        //req.httpBody = data;
+
+
         AddCompaniestoDB(req);
+
+
         res.writeHead(301, {
             content: "Success",
             Location: "/",
