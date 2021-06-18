@@ -3,30 +3,40 @@ const { stringify } = require('querystring');
 
 const http = require('http');
 const formidable = require('formidable');
- 
 
-function AddCompaniestoDB(dataFile) {
-    if (dataFile.url == '/products/addProducts/companies') {
-      let form = new formidable.IncomingForm();
 
-      console.log("FILE UPLOADED !!!!!!!!!");
+async function AddCompaniestoDB(dataFile) {
+  if (dataFile.url == '/products/addProducts/fileupload') {
+    let form = await new formidable.IncomingForm();
+    await form.parse(dataFile, async function (err, fields, files) {
 
-      form.parse(dataFile, function (err, fields, files) {
-        consolele.log('File uploaded');
+      console.log(fields);
+      console.log(files);
+
+      /*
+      let oldpath = await files.filetoupload.path;
+      let newpath = await 'C:/Users/Your Name/' + files.filetoupload.name;
+      fs.rename(oldpath, newpath, function (err) {
+        if (err) throw err;
+        console.log('File uploaded and moved!');
       });
-    } else {
 
-      console.log("FAILEEEEEDDDDDD");
-      res.writeHead(200, { 'Content-Type': 'text/html' });
-      res.write('<form action="fileupload" method="post" enctype="multipart/form-data">');
-      res.write('<input type="file" name="filetoupload"><br>');
-      res.write('<input type="submit">');
-      res.write('</form>');
-      return res.end();
-    }
-  
+*/
 
+    });
+  } else {
 
+    console.log("failed!!!!");
+    /*
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.write('<form action="fileupload" method="post" enctype="multipart/form-data">');
+    res.write('<input type="file" name="filetoupload"><br>');
+    res.write('<input type="submit">');
+    res.write('</form>');
+    */
+
+    return;
+  }
 }
 
 

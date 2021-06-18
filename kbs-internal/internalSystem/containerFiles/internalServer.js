@@ -100,13 +100,13 @@ router.route("/products/addProducts")
         res.sendFile(path.join(__dirname + "/public/Products/Adding-Products/"));
     })
 
-router.route("/products/addProducts/companies")
+router.route("/products/addProducts/fileupload")
     .get(function (req, res) {
         res.sendFile(path.join(__dirname + "/public/Products/Adding-Products/Modify-Companies/"));
     })
     .post(urlencodedParser, async function (req, res) {
         console.log(" request received to modify companies");
-        // console.log(req.url);
+        console.log(req.param);
 
 
         //console.log(AddCompaniestoDB(req.body.inputfile));
