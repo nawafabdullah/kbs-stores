@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+
+<head>
+    <!-- basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- mobile metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <!-- site metas -->
+    <title>KBS-Stores (internal)</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- bootstrap css -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- style css -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Responsive-->
+    <link rel="stylesheet" href="css/responsive.css">
+    <!-- fevicon -->
+    <link rel="icon" href="images/fevicon.png" type="image/gif" />
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
+    <!-- Tweaks for older IEs-->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <!-- owl stylesheets -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+        integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <style>
+        html,
+        body {
+            display: flex;
+            justify-content: center;
+            height: 100%;
+        }
+
+        body,
+        div,
+        h1,
+        form,
+        input,
+        p {
+            padding: 0;
+            margin: 0;
+            outline: none;
+            font-family: Roboto, Arial, sans-serif;
+            font-size: 16px;
+            color: #666;
+        }
+
+        h1 {
+            padding: 10px 0;
+            font-size: 32px;
+            font-weight: 300;
+            text-align: center;
+        }
+
+        p {
+            font-size: 12px;
+        }
+
+        hr {
+            color: #a9a9a9;
+            opacity: 0.3;
+        }
+
+        .main-block {
+            max-width: 340px;
+            min-height: 460px;
+            padding: 10px 0;
+            margin: auto;
+            border-radius: 5px;
+            border: solid 1px #ccc;
+            box-shadow: 1px 2px 5px rgba(0, 0, 0, .31);
+            background: #ebebeb;
+        }
+
+        form {
+            margin: 0 30px;
+        }
+
+        .account-type,
+        .gender {
+            margin: 15px 0;
+        }
+
+        input[type=radio] {
+            display: none;
+        }
+
+        label#icon {
+            margin: 0;
+            border-radius: 5px 0 0 5px;
+        }
+
+        label.radio {
+            position: relative;
+            display: inline-block;
+            padding-top: 4px;
+            margin-right: 20px;
+            text-indent: 30px;
+            overflow: visible;
+            cursor: pointer;
+        }
+
+        label.radio:before {
+            content: "";
+            position: absolute;
+            top: 2px;
+            left: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #1c87c9;
+        }
+
+        label.radio:after {
+            content: "";
+            position: absolute;
+            width: 9px;
+            height: 4px;
+            top: 8px;
+            left: 4px;
+            border: 3px solid #fff;
+            border-top: none;
+            border-right: none;
+            transform: rotate(-45deg);
+            opacity: 0;
+        }
+
+        input[type=radio]:checked+label:after {
+            opacity: 1;
+        }
+
+        input[type=text],
+        input[type=password] {
+            width: calc(100% - 57px);
+            height: 36px;
+            margin: 13px 0 0 -5px;
+            padding-left: 10px;
+            border-radius: 0 5px 5px 0;
+            border: solid 1px #cbc9c9;
+            box-shadow: 1px 2px 5px rgba(0, 0, 0, .09);
+            background: #fff;
+        }
+
+        input[type=password] {
+            margin-bottom: 15px;
+        }
+
+        #icon {
+            display: inline-block;
+            padding: 9.3px 15px;
+            box-shadow: 1px 2px 5px rgba(0, 0, 0, .09);
+            background: #1c87c9;
+            color: #fff;
+            text-align: center;
+        }
+
+        .btn-block {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px 0;
+            margin: 10px auto;
+            border-radius: 5px;
+            border: none;
+            background: #1c87c9;
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        button:hover {
+            background: #26a9e0;
+        }
+    </style>
+
+</head>
+<!-- body -->
+
+<body class="main-layout">
+    <!-- loader  -->
+    <div class="loader_bg">
+        <div class="loader"><img src="images/loading.gif" alt="#" /></div>
+    </div>
+    <!-- end loader -->
+    <!-- header -->
+    <header>
+        <!-- header inner -->
+        <div class="header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9">
+                        <div class="menu-area">
+                            <div class="limit-box">
+                                <nav class="main-menu">
+                                    <ul class="menu-area-main" style="background-color: #333333;">
+                                        <li class="active"> <a href="/">الرئيسيــة</a> </li>
+                                        <li> <a href="/signin">تسـجيل الدخول</a> </li>
+                                        <li><a href="/signup"> مستخدم جديد</a></li>
+                                        <li><a href="/products"> المنتجات </a></li>
+                                        <li><a href="/terms">الشـروط والأحكام </a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col logo_section">
+                        <div class="center-desk">
+                            <div class="logo">
+                                <a href="index.html"><img src="images/logo.png" alt="#"></a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6 offset-md-6">
+                        <div class="location_icon_bottum">
+                            <ul>
+                                <li><img src="icon/call.png" /> فرع الوزير </li>
+                                <li> 2390 492 56 966+ </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end header inner -->
+    </header>
+    <!-- end header -->
+    <div class="brand_color">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="titlepage">
+                        <h2> محلات خــالد عمر بن صــديق </h2>
+                        <h3>نظـام داخلي</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- about -->
+    <div class="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-5 col-lg-5 col-md-5 co-sm-l2">
+                    <div class="store_img">
+                        <h1>Registration</h1>
+                        <form id="registrationForm" method="POST" action="/signup">
+                            <hr>
+                            <div class="account-type">
+                                <input type="radio" value="none" id="radioOne" name="account" checked />
+                                <label for="radioOne" class="radio">Personal Account</label>
+                            </div>
+                            <hr>
+                            <label id="icon" for="email"><i class="fas fa-envelope"></i></label>
+                            <input type="text" name="email" id="email" placeholder="Email" required />
+                            <label id="icon" for="name"><i class="fas fa-user"></i></label>
+                            <input type="text" name="name" id="name" placeholder="Name" required />
+                            <label id="icon" for="password"><i class="fas fa-unlock-alt"></i></label>
+                            <input type="password" name="password" id="password" placeholder="Password" required />
+                            <hr>
+
+                            <hr>
+                            <div class="btn-block">
+                                <p>By clicking Register, you agree on our <a href="/terms">Privacy Policy
+                                        for Nawaf's Website </a>.</p>
+                                <button type="submit" href="/">Submit</button>
+
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- end about -->
+
+        <!-- footer -->
+        <footer>
+            <div id="contact" class="footer">
+                <div class="container">
+                    <div class="row pdn-top-30">
+                        <div class="col-md-12 ">
+                            <div class="footer-box">
+                                <div class="headinga">
+                                    <h3>Address</h3>
+                                    <span> 123 Bussiness Gate, Riyadh, Saudi Arabia </span>
+                                    <p>(+966) xxxxxxxxx
+                                        <br>demo@gmail.com
+                                    </p>
+                                </div>
+                                <ul class="location_icon">
+                                    <li> <a href="#"><i class="fa fa-facebook-f"></i></a></li>
+                                    <li> <a href="#"><i class="fa fa-twitter"></i></a></li>
+                                    <li> <a href="#"><i class="fa fa-instagram"></i></a></li>
+
+                                </ul>
+                                <div class="menu-bottom">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="copyright">
+                    <div class="container">
+                        <p>© Nawaf 2021
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- end footer -->
+        <!-- Javascript files-->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.bundle.min.js"></script>
+        <script src="js/jquery-3.0.0.min.js"></script>
+        <script src="js/plugin.js"></script>
+        <!-- sidebar -->
+        <script src="js/custom.js"></script>
+        <!-- javascript -->
+
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Simple registration form</title>
+
+</head>
+
+<body>
+    <div class="main-block">
+    </div>
+    </form>
+    </div>
+</body>
+
+</html>

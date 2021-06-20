@@ -99,10 +99,22 @@
     <!-- about -->
     <div class="about">
         <div class="container">
+            <h1 id="inventory-title" style="text-align: center; padding-top: 5px;"> <b>المستودع </b></h1>
             <div class="row">
                 <div class="col-xl-5 col-lg-5 col-md-5 co-sm-l2">
-                    <div class="store_img">
-                        <img id="store_pic" src="./images/kbs-store1.jpg" style="text-align: left;">
+
+                    <div class="product-action-div">
+                        <script type="text/javascript" src="main-products.js"></script>
+                        <form action="" onsubmit="ValidateMainChoice()" method="POST">
+                            <label for="products">خيارات المستودع</label>
+                            <select name="product-action" id="product-action">
+                                <option value="products-options"> خيارات المنتجات</option>
+                                <option value="company-options">خيارات الشركات الموردة</option>
+                            </select>
+                            <br><br>
+                            <input type="submit" value="تنفيذ">
+                        </form>
+
                     </div>
                 </div>
             </div>

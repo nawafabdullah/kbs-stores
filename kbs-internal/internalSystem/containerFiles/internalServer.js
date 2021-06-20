@@ -8,7 +8,7 @@ const morgan = require('morgan');
 const app = express();
 const router = express.Router();
 const { InsertUser } = require('./public/UsersService/sign-up/signup');
-const { AddCompaniestoDB } = require('./public/Products/Adding-Products/Modify-Companies/companies');
+const { AddCompaniestoDB } = require('./public/Main-Products/Companies/Modify-Companies/modify-companies');
 const { dbConfig } = require("../../mainConfig/db.config");
 const { RetrieveUser } = require('../containerFiles/public/UsersService/sign-in/signin');
 const { mServerConfig } = require('../../mainConfig/mainServer.config');
@@ -91,18 +91,21 @@ router.route("/downloadTerms")
 
 router.route("/products")
     .get(function (req, res) {
-        res.sendFile(path.join(__dirname + "/public/Products/"));
+        res.sendFile(path.join(__dirname + "/public/Main-Products/"));
+    })
+    .post(function (req, res) {
+        res.sendFile(path.join(__dirname + "/public/Main-Products/main-products"));
     })
 
 
 router.route("/products/addProducts")
     .get(function (req, res) {
-        res.sendFile(path.join(__dirname + "/public/Products/Adding-Products/"));
+        res.sendFile(path.join(__dirname + "/containerFiles/public/Main-Products/Products/Add-Products"));
     })
 
 router.route("/products/addProducts/fileupload")
     .get(function (req, res) {
-        res.sendFile(path.join(__dirname + "/public/Products/Adding-Products/Modify-Companies/"));
+        res.sendFile(path.join(__dirname + "./public/Main-Products/Companies/Modify-Companies/"));
     })
     .post(urlencodedParser, async function (req, res) {
         console.log(" request received to modify companies");
