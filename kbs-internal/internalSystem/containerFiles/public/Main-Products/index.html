@@ -104,17 +104,18 @@
                 <div class="col-xl-5 col-lg-5 col-md-5 co-sm-l2">
 
                     <div class="product-action-div">
-                        <script type="text/javascript" src="main-products.js"></script>
-                        <form action="" onsubmit="ValidateMainChoice()" method="POST">
+
+                        <form action="">
                             <label for="products">خيارات المستودع</label>
                             <select name="product-action" id="product-action">
                                 <option value="products-options"> خيارات المنتجات</option>
                                 <option value="company-options">خيارات الشركات الموردة</option>
                             </select>
                             <br><br>
-                            <input type="submit" value="تنفيذ">
+                            <input type="submit" value="تنفيذ" onclick="ValidateMainChoice()">
                         </form>
-
+                        <pre id="size"></pre>
+                        <script src="js/main-products.js"></script>
                     </div>
                 </div>
             </div>

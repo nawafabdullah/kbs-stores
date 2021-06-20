@@ -2,7 +2,7 @@
 
 function ValidateMainChoice() {
     $(document).ready(function () {
-        $("#type").change(function () {
+        $("#product-action").change(function () {
             let val = $(this).val();
             if (val == "product-options") {
                 $("#size").html("<option value='test'>item1: test 1</option><option value='test2'>item1: test 2</option>");
