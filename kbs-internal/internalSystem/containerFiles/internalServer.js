@@ -7,6 +7,8 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const app = express();
 const router = express.Router();
+//const $ = require("jquery");
+
 const { InsertUser } = require('./public/UsersService/sign-up/signup');
 const { AddCompaniestoDB } = require('./public/Main-Products/Companies/Modify-Companies/modify-companies');
 const { dbConfig } = require("../../mainConfig/db.config");
@@ -25,6 +27,10 @@ app.listen(mServerConfig.PORT);
 app.use("/", router);
 app.use(express.static(__dirname + '/public/home'));
 console.log(`listening at ${mServerConfig.HOST}:${mServerConfig.PORT}`);
+
+
+app.use('/jquery', express.static(__dirname + '../../node_modules/jquery/dist/'));
+
 
 router.route("/")
     .get(function (req, res) {

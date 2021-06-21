@@ -15,7 +15,7 @@
     <meta name="author" content="">
     <!-- bootstrap css -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <!-- style css -->
+    <!-- style css fallback-->
     <link rel="stylesheet" href="css/style.css">
     <!-- Responsive-->
     <link rel="stylesheet" href="css/responsive.css">
@@ -28,10 +28,14 @@
     <!-- owl stylesheets -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!--- src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"-->
+
+
+
 </head>
-<!-- body -->
 
 <body class="main-layout">
     <!-- loader  -->
@@ -105,17 +109,16 @@
 
                     <div class="product-action-div">
 
-                        <form action="">
+                        <form id="product-action">
                             <label for="products">خيارات المستودع</label>
                             <select name="product-action" id="product-action">
                                 <option value="products-options"> خيارات المنتجات</option>
                                 <option value="company-options">خيارات الشركات الموردة</option>
                             </select>
                             <br><br>
-                            <input type="submit" value="تنفيذ" onclick="ValidateMainChoice()">
+                            <input type="submit" value="تنفيذ">
                         </form>
-                        <pre id="size"></pre>
-                        <script src="js/main-products.js"></script>
+                        <pre id="size">  </pre>
                     </div>
                 </div>
             </div>
@@ -169,6 +172,7 @@
     <!-- sidebar -->
     <script src="js/custom.js"></script>
     <!-- javascript -->
+    <script src="js/main-products.js" type="text/javascript"></script>
 
 
 </body>
