@@ -7,7 +7,7 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const app = express();
 const router = express.Router();
-//const $ = require("jquery");
+//const $ = require("jquery"); 
 
 const { InsertUser } = require('./public/UsersService/sign-up/signup');
 const { AddCompaniestoDB } = require('./public/Main-Products/Companies/Modify-Companies/modify-companies');

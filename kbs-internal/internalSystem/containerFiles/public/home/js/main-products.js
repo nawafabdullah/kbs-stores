@@ -2,7 +2,7 @@
 
 //const $ = require("jquery");
 
-
+ 
 console.log("function called");
 $(document).ready(function () {
 
@@ -10,7 +10,12 @@ $(document).ready(function () {
         let val = $(this).val();
         console.log("VAL IS " + val);
         if (val == "products-options") {
-            $("#size").html("<option value='test'>item1: test 1</option><option value='test2'>item1: test 2</option>");
+            $("#size").html("<form>" +
+                                "<option value='add-product'>item1: test 1</option>" +
+                                "<option value='remove-product'>item1: test 2</option>" +
+                                "<option value='modify-product'>item1: test 2</option>" + 
+                            
+                            "</form");
         } else {
             $("#size").html("<h1> none </h1>");
 
