@@ -11,11 +11,16 @@ $(document).ready(function () {
         console.log("VAL IS " + val);
         if (val == "products-options") {
             $("#size").html("<form>" +
-                                "<option value='add-product'>item1: test 1</option>" +
-                                "<option value='remove-product'>item1: test 2</option>" +
-                                "<option value='modify-product'>item1: test 2</option>" + 
-                            
-                            "</form");
+                                "<label for='products'> خيارات المنتـجات </label>" +
+                                    "<select name='product-action' id='product-action'>" +                                
+                                        "<option value='add-product'>إضافة قماش جديد   </option>" +
+                                        "<option value='remove-product'>حذف قماش  </option>" +
+                                        "<option value='modify-product'>التعديـل على قطعة موجودة </option>" + 
+                                        "<br /><br />" + 
+                                        "<input type = 'submit' value = 'تنفيذ'>  </input>" +
+                                    "</select>" +
+                                    "<br><br>" + 
+                            "</form>");
         } else {
             $("#size").html("<h1> none </h1>");
 
