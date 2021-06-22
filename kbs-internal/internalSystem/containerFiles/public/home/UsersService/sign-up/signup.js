@@ -1,6 +1,6 @@
-const { GetDatabase, CloseConnection } = require('../../../../../mongoDB/containerFiles/mongo');
-const { dbConfig } = require('../../../../../mainConfig/db.config');
-const { Encrypt } = require('../../../../../encryptionHandler/Encrypt');
+const { GetDatabase, CloseConnection } = require('../../../../../../mongoDB/containerFiles/mongo');
+const { dbConfig } = require('../../../../../../mainConfig/db.config');
+const { Encrypt } = require('../../../../../../encryptionHandler/Encrypt');
 const { RetrieveUser } = require('../sign-in/signin');
 const prompt = require('prompt');
 //const admin = "admin"; 

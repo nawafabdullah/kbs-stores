@@ -1,5 +1,5 @@
-const { GetDatabase, CloseConnection } = require('../../../../../mongoDB/containerFiles/mongo');
-const { dbConfig } = require('../../../../../mainConfig/db.config');
+const { GetDatabase, CloseConnection } = require('../../../../../../mongoDB/containerFiles/mongo');
+const { dbConfig } = require('../../../../../../mainConfig/db.config');
 const bcrypt = require("bcrypt");
 
 async function RetrieveUser(userData, flag) {

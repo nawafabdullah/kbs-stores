@@ -9,10 +9,10 @@ const app = express();
 const router = express.Router();
 //const $ = require("jquery"); 
 
-const { InsertUser } = require('./public/UsersService/sign-up/signup');
-const { AddCompaniestoDB } = require('./public/Main-Products/Companies/Modify-Companies/modify-companies');
+const { InsertUser } = require('./public/home/UsersService/sign-up/signup');
+const { AddCompaniestoDB } = require('./public/home/Main-Products/Companies/Add-Companies/add-companies');
 const { dbConfig } = require("../../mainConfig/db.config");
-const { RetrieveUser } = require('../containerFiles/public/UsersService/sign-in/signin');
+const { RetrieveUser } = require('./public/home/UsersService/sign-in/signin');
 const { mServerConfig } = require('../../mainConfig/mainServer.config');
 //const {ValidateMainChoice} = require ('./public/Main-Products/main-products');
 const util = require('util'),
@@ -39,7 +39,7 @@ router.route("/")
 
 router.route("/signup")
     .get(function (req, res) {
-        res.sendFile(path.join(__dirname + "/public/UsersService/sign-up/"));
+        res.sendFile(path.join(__dirname + "/public/home/UsersService/sign-up/"));
     })
     .post(urlencodedParser, async function (req, res) {
         console.log("request received to insert");
@@ -54,7 +54,7 @@ router.route("/signup")
 
 router.route("/signin")
     .get(function (req, res) {
-        res.sendFile(path.join(__dirname + "/public/UsersService/sign-in/"));
+        res.sendFile(path.join(__dirname + "/public/home/UsersService/sign-in/"));
     })
     .post(urlencodedParser, async function (req, res) {
         console.log(" request received to retrieve");
@@ -69,7 +69,7 @@ router.route("/signin")
 
 router.route("/authoraize")
     .get(function (req, res) {
-        res.sendFile(path.join(__dirname + "/public/UsersService/authoraize/"));
+        res.sendFile(path.join(__dirname + "/public/home/UsersService/authoraize/"));
     })
     .post(urlencodedParser, async function (req, res) {
         console.log(" request recieved to authoraize");
@@ -83,13 +83,13 @@ router.route("/authoraize")
 
 router.route("/terms")
     .get(function (req, res) {
-        res.sendFile(path.join(__dirname + "/public/Terms-And-Conditions/"));
+        res.sendFile(path.join(__dirname + "/public/home/Terms-And-Conditions/"));
     })
 
 router.route("/downloadTerms")
     .get(function (req, res) {
-        var file = fs.createReadStream(path.join(__dirname + '/public/Terms-And-Conditions/TermsFile/PrivacyPolicyForNawafWebsite.pdf'));
-        var stat = fs.statSync(path.join(__dirname + '/public/Terms-And-Conditions/TermsFile/PrivacyPolicyForNawafWebsite.pdf'));
+        var file = fs.createReadStream(path.join(__dirname + '/public/home/Terms-And-Conditions/TermsFile/PrivacyPolicyForNawafWebsite.pdf'));
+        var stat = fs.statSync(path.join(__dirname + '/public/home/Terms-And-Conditions/TermsFile/PrivacyPolicyForNawafWebsite.pdf'));
         res.setHeader('Content-Length', stat.size);
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', 'attachment; filename=agreement.pdf');
@@ -98,21 +98,21 @@ router.route("/downloadTerms")
 
 router.route("/products")
     .get(function (req, res) {
-        res.sendFile(path.join(__dirname + "/public/Main-Products/"));
+        res.sendFile(path.join(__dirname + "/public/home/Main-Products/"));
     })
     .post(function (req, res) {
-        res.sendFile(path.join(__dirname + "/public/Main-Products/main-products"));
+        res.sendFile(path.join(__dirname + "/public/home/Main-Products/main-products"));
     })
 
 
 router.route("/products/addProducts")
     .get(function (req, res) {
-        res.sendFile(path.join(__dirname + "/containerFiles/public/Main-Products/Products/Add-Products"));
+        res.sendFile(path.join(__dirname + "/containerFiles/public/home/Main-Products/Products/Add-Products"));
     })
 
 router.route("/products/addProducts/fileupload")
     .get(function (req, res) {
-        res.sendFile(path.join(__dirname + "./public/Main-Products/Companies/Modify-Companies/"));
+        res.sendFile(path.join(__dirname + "./public/home/Main-Products/Companies/Modify-Companies/"));
     })
     .post(urlencodedParser, async function (req, res) {
         console.log(" request received to modify companies");
