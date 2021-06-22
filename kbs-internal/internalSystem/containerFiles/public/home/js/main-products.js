@@ -13,6 +13,7 @@ $(document).ready(function () {
             $("#primary").html("<form>" +
                 "<label for='products'> خيارات المنتـجات </label>" +
                 "<select name='product-choice' id='product-choice'>" +
+                " <option value='products-options'> الرجاء الإخيار </option>" + 
                 "<option value='add-product'>إضافة قماش جديد   </option>" +
                 "<option value='remove-product'>حذف قماش  </option>" +
                 "<option value='modify-product'>التعديـل على قطعة موجودة </option>" +

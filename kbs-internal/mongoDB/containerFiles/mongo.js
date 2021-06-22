@@ -1,7 +1,7 @@
 const { MongoClient } = require('mongodb');
 const { dbConfig } = require("../../mainConfig/db.config");
 let database = null;
-let connection = null;
+let connection = null; 
 async function StartDatabase() {
     // if (flag == 001) { 
     // Recognaize where to connect - flags are better than passing dbNames along 

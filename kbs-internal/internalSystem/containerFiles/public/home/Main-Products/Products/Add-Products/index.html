@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html>
 <!-- Style is being embedded here until styles.css is fixed -->
-
 <body>
+
+    <script src="js/add-products.js" type="text/javascript"></script>
     <div id="add-product" style="text-align: center; margin-top: 5px;">
-        <form action="/action_page.php">
+        <form id="companyForm">
             <label for="companyName">إسم الشركة</label>
             <input type="text" id="username" name="username" required>
             <label for="companyOrgin">البلد</label>
             <input type="text" id="username" name="username" required>
             <label for="companyCode">كود الشركة في النظام</label>
             <input type="text" id="username" name="username" required>
-            <input type="submit">
+            <input type="submit" onclick="InsertCompany()">
         </form>
     </div>
 </body>
