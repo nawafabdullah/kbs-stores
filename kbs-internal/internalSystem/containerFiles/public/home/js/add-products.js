@@ -1,7 +1,7 @@
-const { GetDatabase, CloseConnection } = require('../../../../../mongoDB/containerFiles/mongo');
-const { dbConfig } = require('../../../../../mainConfig/db.config');
+//const { GetDatabase, CloseConnection } = require('../../../../../mongoDB/containerFiles/mongo');
+//const { dbConfig } = require('../../../../../mainConfig/db.config');
 
-function InsertCompany() {
+async function InsertCompany() {
     //
     //  let companyName, companyOrgin, companyCode, codeFromDB, letterCode, numberCode;
 
