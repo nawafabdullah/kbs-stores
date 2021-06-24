@@ -6,7 +6,7 @@
 console.log("function called");
 $(document).ready(function () {
 
-    $("#product-action").change(function () {
+    $("#product-action").change(function () { 
         let val = $(this).val();
         console.log("VAL IS " + val);
         if (val == "products-options") {
@@ -50,11 +50,11 @@ $(document).ready(function () {
 
             $(document).ready(function () {
 
-                $("#product-choice").change(function () {
+                $("#company-choice").change(function () {
                     let val = $(this).val();
                     console.log("VAL IS " + val);
                     if (val == "add-company") {
-                        $("#secondary").load("../Main-Products/Products/Add-Company/index.html");
+                        $("#secondary").load("../Main-Products/Companies/Add-Companies/index.html");
                     } else {
                         $("#secondary").html("<h1> none </h1>");
                     }

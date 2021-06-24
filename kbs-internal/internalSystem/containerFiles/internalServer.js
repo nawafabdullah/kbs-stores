@@ -13,7 +13,7 @@ const { body, validationResult } = require('express-validator');
 
 const { InsertUser } = require('./public/home/UsersService/sign-up/signup');
 
-const { InsertCompany } = require('./public/home/js/add-companies');
+const { InsertCompany } = require('./public/home/Main-Products/Companies/Add-Companies/add-companies');
 
 //const { AddCompaniestoDB } = require('./public/home/Main-Products/Companies/Add-Companies/add-companies');
 
@@ -58,6 +58,10 @@ router.route("/signup")
         res.writeHead(301, {
             content: "Success",
             Location: "/",
+        });       
+        res.writeHead(301, {
+            content: "Success",
+            Location: "/",
         });
         res.end("Success");
     })
@@ -70,6 +74,10 @@ router.route("/signin")
         console.log(" request received to retrieve");
         res.redirect('https://app.example.io');
         RetrieveUser(req.body, dbConfig.DBADMINCOLL);
+        res.writeHead(301, {
+            content: "Success",
+            Location: "/",
+        });
         res.writeHead(301, {
             content: "Success",
             Location: "/",
@@ -110,6 +118,8 @@ router.route("/products")
     .get(function (req, res) {
         res.sendFile(path.join(__dirname + "/public/home/Main-Products/"));
     })
+   
+   /*
     .post(async function (req, res) {
         //res.sendFile(path.join(__dirname + "/public/home/Main-Products/main-products"));
         const errors = validationResult(req);
@@ -126,6 +136,7 @@ router.route("/products")
 
     })
 
+    */
 
 router.route("/products/add-product")
     .post(async function (req, res) {
@@ -140,15 +151,34 @@ router.route("/products/add-product")
             // Data from form is valid.
             console.log(companyName);
         }
-        res.end();
+        res.writeHead(301, {
+            content: "Success",
+            Location: "/",
+        });
+        res.end("Success");
     })
 
-
-
-router.route("/products/addCompany")
-    .get(function (req, res) {
-        res.sendFile(path.join(__dirname + "/containerFiles/public/home/Main-Products/Products/Add-Products"));
+    router.route("/products/add-company")
+    .post(async function (req, res) {
+        //res.sendFile(path.join(__dirname + "/public/home/Main-Products/main-products"));
+        const errors = validationResult(req);
+        let companyName = await req.body;
+        if (!errors.isEmpty()) {
+            // There are errors. Render form again with sanitized values/errors messages.
+            // Error messages can be returned in an array using `errors.array()`.
+        }
+        else {
+            // Data from form is valid.
+            console.log(companyName);
+            InsertCompany(req.body);
+        }
+        res.writeHead(301, {
+            content: "Success",
+            Location: "/",
+        });
+        res.end("Success");
     })
+
 
 router.route("/products/addProducts/fileupload")
     .get(function (req, res) {
