@@ -36,9 +36,32 @@ $(document).ready(function () {
                 })
             })
 
-        } else {
-            $("#primary").html("<h1> none </h1>");
+        } else if (val == "company-options") {
+            $("#primary").html("<form>" +
+                "<label for='products'> خيارات الشركات </label>" +
+                "<select name='company-choice' id='company-choice'>" +
+                " <option value='company-options'> الرجاء الإخيار </option>" +
+                "<option value='add-company'>إضافة شركة جديدة   </option>" +
+                "<option value='modify-company'>التعديـل على شركة موجودة </option>" +
+                "<br /><br />" +
 
+                "</select>" +
+                "</form>");
+
+            $(document).ready(function () {
+
+                $("#product-choice").change(function () {
+                    let val = $(this).val();
+                    console.log("VAL IS " + val);
+                    if (val == "add-company") {
+                        $("#secondary").load("../Main-Products/Products/Add-Company/index.html");
+                    } else {
+                        $("#secondary").html("<h1> none </h1>");
+                    }
+                })
+            })
+        } else {
+            $("#secondary").html("<h1> none </h1>");
         }
 
 

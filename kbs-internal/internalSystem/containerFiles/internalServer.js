@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
-const urlencodedParser = bodyParser.urlencoded({ extended: false });
+const urlencodedParser = express.urlencoded({ extended: true });
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
@@ -12,7 +12,12 @@ const { body, validationResult } = require('express-validator');
 //const $ = require("jquery"); 
 
 const { InsertUser } = require('./public/home/UsersService/sign-up/signup');
-const { AddCompaniestoDB } = require('./public/home/Main-Products/Companies/Add-Companies/add-companies');
+
+const { InsertCompany } = require('./public/home/js/add-companies');
+
+//const { AddCompaniestoDB } = require('./public/home/Main-Products/Companies/Add-Companies/add-companies');
+
+
 const { dbConfig } = require("../../mainConfig/db.config");
 const { RetrieveUser } = require('./public/home/UsersService/sign-in/signin');
 const { mServerConfig } = require('../../mainConfig/mainServer.config');
@@ -105,10 +110,10 @@ router.route("/products")
     .get(function (req, res) {
         res.sendFile(path.join(__dirname + "/public/home/Main-Products/"));
     })
-    .post(function (req, res) {
+    .post(async function (req, res) {
         //res.sendFile(path.join(__dirname + "/public/home/Main-Products/main-products"));
         const errors = validationResult(req);
-        let companyName = req.body.companyName;
+        let companyName = await req.body.companyName;
         if (!errors.isEmpty()) {
             // There are errors. Render form again with sanitized values/errors messages.
             // Error messages can be returned in an array using `errors.array()`.
@@ -122,7 +127,25 @@ router.route("/products")
     })
 
 
-router.route("/products/addProducts")
+router.route("/products/add-product")
+    .post(async function (req, res) {
+        //res.sendFile(path.join(__dirname + "/public/home/Main-Products/main-products"));
+        const errors = validationResult(req);
+        let companyName = await req.body;
+        if (!errors.isEmpty()) {
+            // There are errors. Render form again with sanitized values/errors messages.
+            // Error messages can be returned in an array using `errors.array()`.
+        }
+        else {
+            // Data from form is valid.
+            console.log(companyName);
+        }
+        res.end();
+    })
+
+
+
+router.route("/products/addCompany")
     .get(function (req, res) {
         res.sendFile(path.join(__dirname + "/containerFiles/public/home/Main-Products/Products/Add-Products"));
     })

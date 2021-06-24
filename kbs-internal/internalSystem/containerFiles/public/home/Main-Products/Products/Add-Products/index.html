@@ -1,53 +1,33 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <!-- basic -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- mobile metas -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-    <!-- site metas -->
-    <title>KBS-Stores (internal)</title>
-    <meta name="keywords" content="">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <!-- bootstrap css -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <!-- style css fallback-->
-    <link rel="stylesheet" href="css/style.css">
-    <!-- Responsive-->
-    <link rel="stylesheet" href="css/responsive.css">
-    <!-- fevicon -->
-    <link rel="icon" href="images/fevicon.png" type="image/gif" />
-    <!-- Scrollbar Custom CSS -->
-    <link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
-    <!-- Tweaks for older IEs-->
-    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
-    <!-- owl stylesheets -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-    <!--- src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"-->
-</head>
-
-
-
-
 <!-- Style is being embedded here until styles.css is fixed -->
 
 <body>
     <div id="add-product" style="text-align: center; margin-top: 5px;">
-        <form id="companyForm" method="POST">
-            <label for="companyName">إسم الشركة</label>
-            <input type="text" id="username" name="username" required>
-            <label for="companyOrgin">البلد</label>
-            <input type="text" id="username" name="username" required>
-            <label for="companyCode">كود الشركة في النظام</label>
-            <input type="text" id="username" name="username" required>
+        <form action="/products/add-company" id="companyForm" method="POST">
+
+            <label for="companyName">رمز القطعة</label>
+            <input type="text" id="fabricName=" name="companyName" required>
+
+            <label for="companyOrgin">رمز الشركة </label>
+            <input type="text" id="companyCode" name="companyOrgin" required>
+
+            <label for="companyCode">عدد الأمتار الموجودة في المستودع</label>
+            <input type="text" id="fabricAvailableMeters" name="companyCode" required>
+
+
+            <label for="companyCode">عدد الأمتار المباعة </label>
+            <input type="text" id="fabricSoldMeters" name="companyCode" required>
+
+
+            <label for="companyCode">فئة القماش الرئيسيــة</label>
+            <input type="text" id="fabricPrimaryType" name="companyCode" required>
+
+
+            <label for="companyCode"> فئة القماش الفرعية </label>
+            <input type="text" id="fabricSecondaryType" name="companyCode" required>
+
             <input type="submit">
         </form>
     </div>
