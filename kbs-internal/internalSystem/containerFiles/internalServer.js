@@ -7,6 +7,8 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const app = express();
 const router = express.Router();
+const { body, validationResult } = require('express-validator');
+
 //const $ = require("jquery"); 
 
 const { InsertUser } = require('./public/home/UsersService/sign-up/signup');
@@ -24,6 +26,9 @@ app.use(cors());
 app.use(helmet());
 //app.use(morgan('combined'));
 app.listen(mServerConfig.PORT);
+app.use(express.urlencoded({
+    extended: true
+}))
 app.use("/", router);
 app.use(express.static(__dirname + '/public/home'));
 console.log(`listening at ${mServerConfig.HOST}:${mServerConfig.PORT}`);
@@ -101,7 +106,19 @@ router.route("/products")
         res.sendFile(path.join(__dirname + "/public/home/Main-Products/"));
     })
     .post(function (req, res) {
-        res.sendFile(path.join(__dirname + "/public/home/Main-Products/main-products"));
+        //res.sendFile(path.join(__dirname + "/public/home/Main-Products/main-products"));
+        const errors = validationResult(req);
+        let companyName = req.body.companyName;
+        if (!errors.isEmpty()) {
+            // There are errors. Render form again with sanitized values/errors messages.
+            // Error messages can be returned in an array using `errors.array()`.
+        }
+        else {
+            // Data from form is valid.
+            console.log(companyName);
+        }
+
+
     })
 
 
