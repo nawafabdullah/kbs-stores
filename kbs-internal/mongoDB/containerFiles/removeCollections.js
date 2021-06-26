@@ -15,6 +15,7 @@ async function DeleteAll() {
         `${dbConfig.PRODUCTS_MAINCATAGORIES}`,
         `${dbConfig.PRODUCTS_SECONDARYCATAGORIES}`,
         `${dbConfig.PRODUCTS_COMPANIES}`,
+        `${dbConfig.COUNTRIES}`,
     ];
 
     /*

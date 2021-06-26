@@ -8,7 +8,8 @@ dbConfig = {
     USERS_DBOWNERCOLL: "DB-Owners",
     PRODUCTS_MAINCATAGORIES: "Main-Catagories",
     PRODUCTS_SECONDARYCATAGORIES: "Secondary-Catagories",
-    PRODUCTS_COMPANIES: "Companies"
+    PRODUCTS_COMPANIES: "Companies",
+    COUNTRIES: "Countries"
 };
 /* flags 001 => dbOwner - 002 => dbAdmins */
 exports.dbConfig = dbConfig;

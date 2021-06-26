@@ -188,7 +188,7 @@ router.route("/products/add-company")
 
 router.route("/products/display-companies")
     .get(function (req, res) {
-        res.sendFile(path.join(__dirname + "/public/home/Main-Products/"));
+        res.sendFile(path.join(__dirname + "/containerFiles/public/home/Main-Products/Companies/Display-Companies"));
     })
 
 

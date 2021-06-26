@@ -10,7 +10,7 @@ async function InsertCompany(companyObj) {
     console.log("ADD PRODUCT JS FILE CALLED");
     let companyName = await (companyObj.companyName).toString();
     let companyOrgin = await (companyObj.companyOrgin).toString();
-    let codeFromDB = await GetMax().toString();
+    let codeFromDB = await GetMax();
     /*
         if (codeFromDB == null) {
             let letterCode = await GetLetter(companyOrgin);
@@ -25,7 +25,7 @@ async function InsertCompany(companyObj) {
     let letterCode = await GetLetter(companyOrgin);
     let numberCode = await GetNumber(codeFromDB);
 
-    let companyCode = await letterCode + numberCode;
+    let companyCode = await letterCode + "-" + numberCode;
     ProcessParsing(companyName, companyOrgin, companyCode)
     return companyCode;
 
@@ -45,7 +45,8 @@ async function GetLetter(orgin) {
 async function GetNumber(coded) {
     try {
         let numberCode = await coded.substr(2, 3);
-        return numberCode;
+        numberCode.toNumber();
+        return numberCode++;
     } catch (error) {
         console.log("failed to extract the number \n Error " + error);
         return false;
@@ -80,6 +81,8 @@ async function GetMax() {
         let database;
         database = await GetDatabase();
         let codeFromDB = await database.collection(`${dbConfig.PRODUCTS_COMPANIES}`).find().sort({ code: -1 }).limit(1);
+        //console.log("CODE RECIEVED FROM DB IS::::::: " + codeFromDB);
+        codeFromDB = parseInt(codeFromDB);
         return codeFromDB;
 
     } catch (error) {

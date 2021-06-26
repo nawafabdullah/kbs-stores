@@ -1,6 +1,9 @@
-var table = document.createElement('table');
-for (var i = 1; i < 4; i++){
-    var tr = document.createElement('tr');   
+
+
+console.log("File ACCESSED");
+let table = document.createElement('table');
+for (var i = 1; i < 4; i++) {
+    var tr = document.createElement('tr');
 
     var td1 = document.createElement('td');
     var td2 = document.createElement('td');
