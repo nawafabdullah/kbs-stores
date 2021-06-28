@@ -4,7 +4,7 @@ const { dbConfig } = require('../../../../../mainConfig/db.config');
 /* ***************
 
 Note: Since this is an internal system, and that only one user will use it a time
-I assume no parallelism and that entries will happen in sequence
+I assume no parallelism and that entries will happen in sequence 
 
 *************** */
 async function InsertCompany(companyObj) {
@@ -14,7 +14,7 @@ async function InsertCompany(companyObj) {
     // console.log("ADD PRODUCT JS FILE CALLED");
     let companyName = await (companyObj.companyName).toString();
     let companyOrgin = await (companyObj.companyOrgin).toString();
-    let codeFromDB = await GetFromDB().toString();
+    //let codeFromDB = await GetFromDB().toString();
 
     /*
         if (codeFromDB == null) {
@@ -26,9 +26,12 @@ async function InsertCompany(companyObj) {
         }
       
       */
+    // flags are set as 0 for the letter code and 1 to get the number 
+    let letterCode = await GetFromDB(companyOrgin, 0);
+    let numberCode = await GetFromDB(companyOrgin, 1);
 
-    let letterCode = await GetLetter(companyOrgin);
-    let numberCode = await GetNumber(codeFromDB);
+    console.log("IN MAIN NUMBER CODE IS::::::::::::::::::::" + numberCode);
+
 
     let companyCode = await letterCode + "-" + numberCode;
     ProcessParsing(companyName, companyOrgin, companyCode)
@@ -39,6 +42,8 @@ async function InsertCompany(companyObj) {
 
 async function GetLetter(orgin) {
     try {
+
+
         let letterCode = await orgin.substr(0, 3);
         return letterCode;
     } catch (error) {
@@ -49,18 +54,20 @@ async function GetLetter(orgin) {
 
 
 async function GetNumber(coded) {
-    let examineInt = await coded.substr(3);
+    let examineInt = await coded.substr(4);
+    //  console.log("EXAMINE AFTER SLICING IS:::::::: " + examineInt);
+
     examineInt = await parseInt(examineInt);
     console.log("EXAMINE AFTER EXTRACTION IS:::::::: " + examineInt);
     try {
-        if (!examineInt) {
+        if ((!examineInt) || (examineInt == NaN)) {
             let numberCode = 001;
             return numberCode;
         } else {
             //let numberCode = coded.toString();
-            let numberCode = examineInt;
+            let numberCode = examineInt++;
             console.log("NUMBER CODE AFTER EXTRACTION IS:::::::: " + numberCode);
-            numberCode = numberCode++;
+            //        numberCode = numberCode++;
             return numberCode;
         }
 
@@ -74,6 +81,7 @@ async function GetNumber(coded) {
 
 async function ProcessParsing(companyName, companyOrgin, companyCode) {
     try {
+        console.log("IN PROCESS PARSING CODE IS:::::::::::::::::::::::" + companyCode);
         let companyObj = await { Company_Name: companyName, Company_Orgin: companyOrgin, _id: companyCode };
         //let companyParsedObj = JSON.parse(companyObj);
         //console.log(companyObj);
@@ -95,22 +103,22 @@ async function DatabaseInsertion(companyObj) {
     }
 }
 
-async function GetFromDB() {
+async function GetFromDB(orgin, flag) {
     try {
         let database;
         database = await GetDatabase();
-        let cursorFromDB = await database.collection(`${dbConfig.PRODUCTS_COMPANIES}`).find().sort({ _id: -1 }).limit(1).toArray();
-        ///for await (const doc of cursorFromDB) {
-        /// cursorFromDB.stream().on("_ID", doc => console.log("SFTER STRAM ISSSS:::::: " + doc));
 
+        if (flag == 0) {
+            let nameCursorFromDB = await database.collection(`${dbConfig.Countries}`).find({ name: orgin }).toArray();
+            console.log("The name CURSOR CONTAINS:::::: " + nameCursorFromDB[0].code);
+        } else if (flag == 1) {
+            let numCursorFromDB = await database.collection(`${dbConfig.PRODUCTS_COMPANIES}`).find().sort({ _id: -1 }).limit(1).toArray();
+            console.log("ARRAY CONTAINS:::::: " + numCursorFromDB[0]._id);
+            GetNumber(numCursorFromDB[0]._id);
+        }
 
-        //console.log("ARRAY CONTAINS:::::: " + cursorFromDB[0]._id);
-
-
-        //CloseConnection();
-        return cursorFromDB[0]._id;
     } catch (error) {
-        console.log("failed to retrieve the company with the max id digits \n Error: " + error);
+        console.error("failed to retrieve from the database \n Error: " + error);
     }
 }
 

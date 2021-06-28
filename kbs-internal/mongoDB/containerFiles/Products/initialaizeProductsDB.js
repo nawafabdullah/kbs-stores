@@ -50,7 +50,7 @@ async function ConstructDatabases() {
 
 
   //conn.close();
-  CloseConnection();
+  //CloseConnection();
   InsertCountries();
   return true;
 }
@@ -312,16 +312,52 @@ async function InsertCountries() {
   let database;
   database = await GetDatabase();
   try {
-    for (i in countryNames) {
-      let { insertedID } = await database.collection(`${dbConfig.COUNTRIES}`).insertOne(countryNames[i]);
+    console.log("Filling countriesDB... \nthis might take some time, please be patient...")
+    for (country in countryNames) {
+      let { insertedID } = await database.collection(`${dbConfig.COUNTRIES}`).insertOne(countryNames[country]);
+      //  console.log(`Country #: ${country} had been inserted..`);
     }
+    InsertDummies(countryNames);
   } catch (error) {
-    console.log("failed to insert countries to the Database \n Error: " + error);
+    console.error("failed to insert countries to the Database \n Error: " + error);
     return false;
   }
+}
+
+
+async function InsertDummies(countryNames) {
+
+  let database, companyName, companyCode, companyOrgin, companyObj;
+  database = await GetDatabase();
+  try {
+    console.log("Filling dummy data... \nthis might take some time, please be patient...")
+    for (country in countryNames) {
+      companyName = "dummy";
+      companyOrgin = countryNames[country].name;
+      companyCode = countryNames[country].code + "-" + "000";
+      companyObj = await { Company_Name: companyName, Company_Orgin: companyOrgin, _id: companyCode };
+      let { insertedID } = await database.collection(`${dbConfig.PRODUCTS_COMPANIES}`).insertOne(companyObj);
+      //  console.log(`Country #: ${country} had been inserted..`);
+    }
+    Exit();
+  } catch (error) {
+    console.error("failed to insert countries to the Database \n Error: " + error);
+    return false;
+  }
+
+
+
 
 }
 
 
-
+async function Exit() {
+  try {
+    CloseConnection();
+    return true;
+  } catch (error) {
+    console.error("Could not exit cleanly \nError: " + error);
+    return false;
+  }
+}
 ConstructDatabases();
