@@ -1,23 +1,23 @@
-async function CreateCompaniesDB(db) { 
-   db.createCollection("companies", {
+async function CreateUsersDB(db) { 
+   db.createCollection("users", {
       validator: {
          $jsonSchema: {
             bsonType: "object",
-            required: ["_id", "Company_Name ", "Company_Origin", "Entry_Date"],
+            required: ["_id", "Name ", "Password", "Role"],
             properties: {
                _id: {
                   bsonType: "string",
                   description: "must be a string and is required"
                },
-               Company_Name: {
+               Name: {
                   bsonType: "string",
                   description: "must be a string and is required"
                },
-               Company_Origin: {
+               Password: {
                   bsonType: "string",
                   description: "must be a string and is required"
                },
-               Entry_Date: {
+               Role: {
                   bsonType: "string",
                   description: "must be a string and is required"
                }
@@ -27,3 +27,5 @@ async function CreateCompaniesDB(db) {
    })
    return true;
 }
+
+module.exports = {CreateUsersDB};

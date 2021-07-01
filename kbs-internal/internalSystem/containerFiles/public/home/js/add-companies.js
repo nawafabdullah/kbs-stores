@@ -1,7 +1,7 @@
 const { GetDatabase, CloseConnection } = require('../../../../../mongoDB/containerFiles/mongo');
 const { dbConfig } = require('../../../../../mainConfig/db.config');
 
-/* ***************
+/* *************** 
  
 Note: Since this is an internal system, and that only one user will use it a time
 I assumed no parallelism and that entries will happen in sequence 

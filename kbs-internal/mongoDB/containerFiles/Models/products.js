@@ -32,3 +32,5 @@ async function CreateProductsDB(db) {
    })
    return true;
 }
+
+module.exports = {CreateProductsDB};

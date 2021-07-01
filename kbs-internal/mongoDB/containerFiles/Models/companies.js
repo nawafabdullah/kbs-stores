@@ -1,4 +1,4 @@
-async function CreateCompaniesDB(db) {
+async function CreateCompaniesDB(db) { 
    db.createCollection("companies", {
       validator: {
          $jsonSchema: {
@@ -27,3 +27,5 @@ async function CreateCompaniesDB(db) {
    })
    return true;
 }
+
+module.exports = {CreateCompaniesDB};
