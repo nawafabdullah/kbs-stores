@@ -2,9 +2,9 @@ const { GetDatabase, CloseConnection } = require('../../../../../mongoDB/contain
 const { dbConfig } = require('../../../../../mainConfig/db.config');
 
 /* *************** 
-
+ 
 Note: Since this is an internal system, and that only one user will use it a time
-I assume no parallelism and that entries will happen in sequence 
+I assumed no parallelism and that entries will happen in sequence 
 
 *************** */
 async function InsertCompany(companyObj) {
@@ -29,16 +29,32 @@ async function InsertCompany(companyObj) {
     // flags are set as 0 for the letter code and 1 to get the number 
     let letterCode = await GetFromDB(companyOrgin, 0);
     let numberCode = await GetFromDB(companyOrgin, 1);
-
-    console.log("IN MAIN LETTER CODE IS::::::::::::::::::::" + letterCode);
-    console.log("IN MAIN NUMBER CODE IS::::::::::::::::::::" + numberCode);
-
-
     let companyCode = await letterCode + "-" + numberCode;
     ProcessParsing(companyName, companyOrgin, companyCode)
     //CloseConnection();
     return companyCode;
 
+}
+
+async function GetFromDB(orgin, flag) {
+    try {
+        let database;
+        database = await GetDatabase();
+
+        if (flag == 0) {
+            let nameCursorFromDB = await database.collection(`${dbConfig.COUNTRIES}`).find({ name: orgin }).toArray();
+            console.log("The name CURSOR CONTAINS:::::: " + nameCursorFromDB[0].code);
+            let returnedLetterCode = await GetLetter(nameCursorFromDB[0].code);
+            return returnedLetterCode;
+        } else if (flag == 1) {
+            let numCursorFromDB = await database.collection(`${dbConfig.PRODUCTS_COMPANIES}`).find({ Company_Orgin: orgin }).sort({ Entry_Date: -1 }).limit(1).toArray();
+            console.log("ARRAY CONTAINS:::::: " + numCursorFromDB[0]._id);
+            let returnedNumberCode = await GetNumber(numCursorFromDB[0]._id);
+            return returnedNumberCode;
+        }
+    } catch (error) {
+        console.error("failed to retrieve from the database \n Error: " + error);
+    }
 }
 
 async function GetLetter(orgin) {
@@ -53,7 +69,7 @@ async function GetLetter(orgin) {
 
 
 async function GetNumber(coded) {
-    let examineInt = await coded.substr(3);
+    let examineInt = await coded.substr(3, 3);
     console.log("EXAMINE AFTER SLICING IS:::::::: " + examineInt);
 
     examineInt = await parseInt(examineInt);
@@ -102,39 +118,38 @@ async function DatabaseInsertion(companyObj) {
         let { insertedID } = await database.collection(`${dbConfig.PRODUCTS_COMPANIES}`).insertOne(companyObj);
         // CloseConnection();
     } catch (error) {
-        console.log("failed to insert the company to the Database \n Error: " + error.message);
         let errorString = (error.message).toString();
         let containsDuplicate = errorString.includes("E11000");
-        console.log(containsDuplicate);
-        let duplicateID = errorString.substr(98, 1);
-        duplicateID = parseInt(duplicateID);
-        console.log("SLICE::::::::::::::::::::" + duplicateID);
-
-
+        if (containsDuplicate) {
+            RecoverFromDuplicateError(companyObj,errorString);
+            return true;
+        } 
+        console.error("failed to insert the company to the Database \n Error: " + error);
         return false;
     }
 }
 
-async function GetFromDB(orgin, flag) {
-    try {
-        let database;
-        database = await GetDatabase();
+async function RecoverFromDuplicateError(companyObj, errorString) {
+    let duplicateID = errorString.substr(98, 3);
+    duplicateID = parseInt(duplicateID);
+    //console.log("SLICE::::::::::::::::::::" + duplicateID);
+    let oldID = await companyObj._id;
+    oldNumID = await oldID.substr(3);
+    newLetterID = await oldID.substr(0, 3);
+    oldNumID = await parseInt(oldNumID);
+    newNumID = oldNumID + 1;
+    console.log(newNumID);
+    newID = await newLetterID + newNumID;
+   //console.log("THE ID IS:::::: " + newID);
 
-        if (flag == 0) {
-            let nameCursorFromDB = await database.collection(`${dbConfig.COUNTRIES}`).find({ name: orgin }).toArray();
-            console.log("The name CURSOR CONTAINS:::::: " + nameCursorFromDB[0].code);
-            let returnedLetterCode = await GetLetter(nameCursorFromDB[0].code);
-            return returnedLetterCode;
-        } else if (flag == 1) {
-            let numCursorFromDB = await database.collection(`${dbConfig.PRODUCTS_COMPANIES}`).find({ Company_Orgin: orgin }).sort({ Entry_Date: -1 }).limit(1).toArray();
-            console.log("ARRAY CONTAINS:::::: " + numCursorFromDB[0]._id);
-            let returnedNumberCode = await GetNumber(numCursorFromDB[0]._id);
-            return returnedNumberCode;
-        }
+    ProcessParsing(companyObj.Company_Name, companyObj.Company_Orgin, newID);
 
-    } catch (error) {
-        console.error("failed to retrieve from the database \n Error: " + error);
-    }
+    /*****
+    companyObj._id = newID;
+    let { insertedID } = await database.collection(`${dbConfig.PRODUCTS_COMPANIES}`).insertOne(companyObj);
+    */
+    return true;
 }
+
 
 module.exports = { InsertCompany };
