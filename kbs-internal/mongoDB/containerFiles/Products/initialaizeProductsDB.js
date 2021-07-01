@@ -317,7 +317,8 @@ async function InsertCountries() {
       let { insertedID } = await database.collection(`${dbConfig.COUNTRIES}`).insertOne(countryNames[country]);
       //  console.log(`Country #: ${country} had been inserted..`);
     }
-    InsertDummies(countryNames);
+    // InsertDummies(countryNames);
+    Exit();
   } catch (error) {
     console.error("failed to insert countries to the Database \n Error: " + error);
     return false;

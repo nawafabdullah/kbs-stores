@@ -169,15 +169,15 @@ router.route("/products/add-company")
     .post(async function (req, res) {
         //res.sendFile(path.join(__dirname + "/public/home/Main-Products/main-products"));
         const errors = validationResult(req);
-        let companyName = await req.body;
+        let companyObj = await req.body;
         if (!errors.isEmpty()) {
             // There are errors. Render form again with sanitized values/errors messages.
             // Error messages can be returned in an array using `errors.array()`.
         }
         else {
             // Data from form is valid.
-            console.log(companyName);
-            InsertCompany(req.body);
+            //console.log(companyName);
+            InsertCompany(companyObj);
         }
         res.writeHead(301, {
             content: "Success",
