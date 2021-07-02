@@ -1,5 +1,6 @@
-async function CreateUsersDB(db) { 
-   db.createCollection("users", {
+const { dbConfig } = require("../../../mainConfig/db.config");
+async function CreateUsersDB(db) {
+   db.createCollection(dbConfig.INTERNAL_USERS, {
       validator: {
          $jsonSchema: {
             bsonType: "object",
@@ -28,4 +29,4 @@ async function CreateUsersDB(db) {
    return true;
 }
 
-module.exports = {CreateUsersDB};
+module.exports = { CreateUsersDB };

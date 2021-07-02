@@ -1,13 +1,15 @@
-//const { MongoClient } = require("mongodb");
+const { MongoClient } = require("mongodb");
 var prompt = require('prompt');
 const stringify = require('stringify-object');
-const { InsertUser } = require('../../../internalSystem/containerFiles/public/home/UsersService/sign-up/signup');
-const { dbConfig } = require("../../../mainConfig/db.config");
-const { GetDatabase, CloseConnection } = require(".././mongo");
-const { CreateCompaniesDB } = require("../Models/companies");
-const { CreateProductsDB } = require("../Models/companies");
-const { CreateUsersDB } = require("../Models/companies");
+const { InsertUser } = require('../../internalSystem/containerFiles/public/home/UsersService/sign-up/signup');
+const { dbConfig } = require("../../mainConfig/db.config");
+const { GetDatabase, CloseConnection } = require("./mongo");
+const { CreateUsersDB } = require("./Models/users");
+const { CreateCompaniesDB } = require("./Models/companies");
+const { CreateProductsDB } = require("./Models/products");
 
+//const { roleConfig } = require("../../mainConfig/roles.config");
+//const dbUrl = "mongodb://localhost:27017/admin";
 const dbUrl = `${dbConfig.HOST}/${dbConfig.PORT}:${dbConfig.NAME}`;
 
 //const dbUrl = Stringfy(process.env.DBHOST + ":" + process.env.DBPORT + "/");
@@ -15,13 +17,9 @@ const dbUrl = `${dbConfig.HOST}/${dbConfig.PORT}:${dbConfig.NAME}`;
 
 async function ConstructDatabases() {
   database = await GetDatabase();
-
   CreateCompaniesDB(database);
-  CreateProductsDB(database);
-  CreateUsersDB(database);
-
-
-
+  //CreateProductsDB(database);
+  //CreateUsersDB(database);
 }
 
 

@@ -1,5 +1,6 @@
+const { dbConfig } = require("../../../mainConfig/db.config");
 async function CreateProductsDB(db) {
-   db.createCollection("products", {
+   db.createCollection(dbConfig.PRODUCTS, {
       validator: {
          $jsonSchema: {
             bsonType: "object",
@@ -33,4 +34,4 @@ async function CreateProductsDB(db) {
    return true;
 }
 
-module.exports = {CreateProductsDB};
+module.exports = { CreateProductsDB };

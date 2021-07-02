@@ -1,5 +1,8 @@
-async function CreateCompaniesDB(db) { 
-   db.createCollection("companies", {
+const { dbConfig } = require("../../../mainConfig/db.config");
+
+async function CreateCompaniesDB(db) {
+   console.log("Creating DB.....");
+   db.createCollection(dbConfig.COMPANIES, {
       validator: {
          $jsonSchema: {
             bsonType: "object",
@@ -28,4 +31,4 @@ async function CreateCompaniesDB(db) {
    return true;
 }
 
-module.exports = {CreateCompaniesDB};
+module.exports = { CreateCompaniesDB };
