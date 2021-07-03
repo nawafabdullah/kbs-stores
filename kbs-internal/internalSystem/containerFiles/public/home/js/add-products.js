@@ -13,10 +13,11 @@ I assumed no parallelism and that entries will happen in sequence
 // Discus whether the ID is assigned by store or by the system ??
 async function InsertProduct(productObj) {
     let fabricID = await productObj.fabricID;
+    let companyID = await productObj.companyID;
     let metersAdded = await productObj.metersAdded;
     let fabricPrimaryType = await productObj.fabricPrimaryType;
     let fabricSecondaryType = await productObj.fabricSecondaryType;
-
+    ProcessParsing(fabricID, companyID, metersAdded, fabricPrimaryType, fabricSecondaryType);
 }
 
 
@@ -44,13 +45,14 @@ async function ProcessParsing(fabricID, companyID, metersAdded, fabricPrimaryTyp
     let today = await new Date();
     let date = await today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     let time = await today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    let dateTime = await date + ' ' + time;
-    let productObj = { _id: fabricID, Company_ID: companyID, Number_Of_Meters: metersAdded, Primary_Type: fabricPrimaryType, Secondary_Type: fabricSecondaryType, Entry_Date: dateTime };
+    let dateTime = await (date + ' ' + time).toString();
+    let productObj = await { _id: fabricID, Company_ID: companyID, Number_Of_Meters: metersAdded, Primary_Type: fabricPrimaryType, Secondary_Type: fabricSecondaryType, Entry_Date: dateTime };
     DatabaseInsertion(productObj);
 }
 
 async function DatabaseInsertion(productObj) {
     let database = await GetDatabase();
+    console.log(productObj);
     let checkEntry = await database.collection(`${dbConfig.PRODUCTS}`).insertOne(productObj);
     return true;
 }
@@ -61,8 +63,7 @@ async function DatabaseInsertion(productObj) {
 
 
 
-
-
+module.exports = { InsertProduct };
 
 
 
