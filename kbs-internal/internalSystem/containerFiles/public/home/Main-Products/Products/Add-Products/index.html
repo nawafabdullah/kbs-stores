@@ -5,24 +5,24 @@
 
 <body>
     <div id="add-product" style="text-align: center; margin-top: 5px;">
-        <form action="/products/add-company" id="companyForm" method="POST">
+        <form action="/products/add-company" id="productForm" method="POST">
 
-            <label for="companyName">رمز القطعة</label>
-            <input type="text" id="fabricName=" name="companyName" required>
+            <label for="fabricID">رمز القطعة</label>
+            <input type="text" id="fabricID=" name="fabricID" required>
 
-            <label for="companyOrgin">رمز الشركة </label>
-            <input type="text" id="companyCode" name="companyOrgin" required>
+            <label for="companyCode">رمز الشركة </label>
+            <input type="text" id="companyCode" name="companyCode" required>
 
-            <label for="companyCode">عدد الأمتار المضافة</label>
-            <input type="text" id="fabricAvailableMeters" name="companyCode" required>
-
-
-            <label for="companyCode">فئة القماش الرئيسيــة</label>
-            <input type="text" id="fabricPrimaryType" name="companyCode" required>
+            <label for="metersAdded">عدد الأمتار المضافة</label>
+            <input type="text" id="metersAdded" name="metersAdded" required>
 
 
-            <label for="companyCode"> فئة القماش الفرعية </label>
-            <input type="text" id="fabricSecondaryType" name="companyCode" required>
+            <label for="fabricPrimaryType">فئة القماش الرئيسيــة</label>
+            <input type="text" id="fabricPrimaryType" name="fabricPrimaryType" required>
+
+
+            <label for="fabricSecondaryType"> فئة القماش الفرعية </label>
+            <input type="text" id="fabricSecondaryType" name="fabricSecondaryType" required>
 
             <input type="submit">
         </form>

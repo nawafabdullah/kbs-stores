@@ -1,27 +1,35 @@
 const { dbConfig } = require("../../../mainConfig/db.config");
-async function CreateUsersDB(db) {
-   db.createCollection(dbConfig.INTERNAL_USERS, {
+async function CreateProductsDB(db) {
+   db.createCollection(dbConfig.PRODUCTS, {
       validator: {
          $jsonSchema: {
             bsonType: "object",
-            required: ["_id", "Name ", "Password", "Role"],
+            required: ["_id", "Company_ID ", "Number_Of_Meters", "Primary_Type", "Secondary_Type"],
             properties: {
                _id: {
                   bsonType: "string",
                   description: "must be a string and is required"
                },
-               Name: {
+               Company_ID: {
                   bsonType: "string",
                   description: "must be a string and is required"
                },
-               Password: {
+               Number_Of_Meters: {
                   bsonType: "string",
                   description: "must be a string and is required"
                },
-               Role: {
+               Primary_Type: {
                   bsonType: "string",
                   description: "must be a string and is required"
-               }
+               },
+               Secondary_Type: {
+                  bsonType: "string",
+                  description: "must be a string and is required"
+               },
+               Entry_Date: {
+                  bsonType: "string",
+                  description: "must be a string and is required"
+               },
             }
          }
       }
@@ -29,4 +37,4 @@ async function CreateUsersDB(db) {
    return true;
 }
 
-module.exports = { CreateUsersDB };
+module.exports = { CreateProductsDB };

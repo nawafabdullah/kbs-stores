@@ -2,7 +2,7 @@ dbConfig = {
     HOST: "mongodb://localhost",
     PORT: 27017,
     NAME: "KBS-Stores-Internal",
-    USERS: "Internal-Users",
+    INTERNAL_USERS: "Internal-Users",
     PRODUCTS: "Products",
     COMPANIES: "Companies",
     COUNTRIES: "Countries",

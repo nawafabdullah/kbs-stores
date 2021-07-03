@@ -6,7 +6,7 @@ const { dbConfig } = require("../../mainConfig/db.config");
 const { GetDatabase, CloseConnection } = require("./mongo");
 const { CreateUsersDB } = require("./Models/users");
 const { CreateCompaniesDB } = require("./Models/companies");
-const { CreateProductsDB } = require("./Models/products");
+const { CreateProductsDB } = require("./Models/productsTemp");
 
 //const { roleConfig } = require("../../mainConfig/roles.config");
 //const dbUrl = "mongodb://localhost:27017/admin";
@@ -18,8 +18,8 @@ const dbUrl = `${dbConfig.HOST}/${dbConfig.PORT}:${dbConfig.NAME}`;
 async function ConstructDatabases() {
   database = await GetDatabase();
   CreateCompaniesDB(database);
-  //CreateProductsDB(database);
-  //CreateUsersDB(database);
+  CreateProductsDB(database);
+  CreateUsersDB(database);
 }
 
 

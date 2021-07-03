@@ -15,6 +15,7 @@ const { InsertUser } = require('./public/home/UsersService/sign-up/signup');
 
 const { InsertCompany } = require('./public/home/js/add-companies');
 
+const { InsertProduct } = require('./public/home/js/add-products')
 //const { AddCompaniestoDB } = require('./public/home/Main-Products/Companies/Add-Companies/add-companies');
 
 
@@ -142,14 +143,17 @@ router.route("/products/add-product")
     .post(async function (req, res) {
         //res.sendFile(path.join(__dirname + "/public/home/Main-Products/main-products"));
         const errors = validationResult(req);
-        let companyName = await req.body;
+        let productObj = await req.body;
         if (!errors.isEmpty()) {
             // There are errors. Render form again with sanitized values/errors messages.
             // Error messages can be returned in an array using `errors.array()`.
+
+            console.log("ERRORS EXIST");
         }
         else {
             // Data from form is valid.
-            console.log(companyName);
+            console.log("I am here!!");
+            InsertProduct(productObj);
         }
         res.writeHead(301, {
             content: "Success",
