@@ -29,10 +29,10 @@ async function CreateProductsDB(db) {
                Entry_Date: {
                   bsonType: "string",
                   description: "must be a string and is required"
-               },
+               }
             }
          }
-      }
+      }, validationAction: "warn"
    })
    return true;
 }

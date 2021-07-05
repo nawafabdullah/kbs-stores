@@ -20,6 +20,8 @@ async function ConstructDatabases() {
   CreateCompaniesDB(database);
   CreateProductsDB(database);
   CreateUsersDB(database);
+  InsertCountries();
+  return true;
 }
 
 
