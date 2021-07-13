@@ -4,7 +4,7 @@ default:
 init:
 	@sleep 2
 	@echo ""
-	@node ./mongoDB/containerFiles/DB-Admins/initialaizeDBs.js
+	@node ./mongoDB/containerFiles/initialaizeDBs.js
 	@#==================================================================================#
 #	@sleep 2
 #	@echo ""
