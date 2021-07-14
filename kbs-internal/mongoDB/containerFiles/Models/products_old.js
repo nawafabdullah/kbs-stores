@@ -1,5 +1,6 @@
 const { dbConfig } = require("../../../mainConfig/db.config");
 async function CreateProductsDB(db) {
+   console.log(`Creating ${dbConfig.PRODUCTS}...`);
    db.createCollection(dbConfig.PRODUCTS, {
       validator: {
          $jsonSchema: {

@@ -15,7 +15,7 @@ const { InsertUser } = require('./public/home/UsersService/sign-up/signup');
 
 const { InsertCompany } = require('./public/home/js/add-companies');
 
-const { InsertProduct } = require('./public/home/js/add-products')
+const { InsertProduct } = require('./public/home/js/add-products');
 //const { AddCompaniestoDB } = require('./public/home/Main-Products/Companies/Add-Companies/add-companies');
 
 
@@ -204,17 +204,10 @@ router.route("/products/addProducts/fileupload")
     .post(urlencodedParser, async function (req, res) {
         console.log(" request received to modify companies");
         console.log(req.param);
-
-
         //console.log(AddCompaniestoDB(req.body.inputfile));
-
         //req.setValue("application/json", forHTTPHeaderField: "Content-Type");
         //req.httpBody = data;
-
-
         AddCompaniestoDB(req);
-
-
         res.writeHead(301, {
             content: "Success",
             Location: "/",

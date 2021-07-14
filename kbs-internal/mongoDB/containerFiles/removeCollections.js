@@ -7,20 +7,33 @@ const { GetDatabase, CloseConnection } = require("./mongo");
 
 async function DeleteAll() {
 
-    let database = await GetDatabase();
-    await database.dropCollection(dbConfig.USERS, { capped: false });
-    await database.dropCollection(dbConfig.PRODUCTS, { capped: false });
-    await database.dropCollection(dbConfig.COMPANIES, { capped: false });
+    try {
+        let database = await GetDatabase();
+        await database.dropCollection(dbConfig.INTERNAL_USERS, { capped: false });
+        console.log(`Deleting ${dbConfig.INTERNAL_USERS}..`);
+        await database.dropCollection(dbConfig.PRODUCTS, { capped: false });
+        console.log(`Deleting ${dbConfig.PRODUCTS}..`);
+        await database.dropCollection(dbConfig.COMPANIES, { capped: false });
+        console.log(`Deleting ${dbConfig.COMPANIES}..`);
+        await database.dropCollection(dbConfig.COUNTRIES, { capped: false });
+        console.log(`Deleting ${dbConfig.COUNTRIES}..`);
+        await database.dropCollection(dbConfig.PRODUCTS_MAINCATAGORIES, { capped: false });
+        console.log(`Deleting ${dbConfig.PRODUCTS_MAINCATAGORIES}..`);
+        await database.dropCollection(dbConfig.PRODUCTS_SECONDARYCATAGORIES, { capped: false });
+        console.log(`Deleting ${dbConfig.PRODUCTS_SECONDARYCATAGORIES}..`);
+        EXIT();
+    } catch (error) {
+        console.error("Could Not Delete Database /n Error: " + error);
+    }
+}
 
-
-
-
-
-
+async function EXIT () {
+    CloseConnection();
 }
 
 
 
+DeleteAll();
 /*
 async function DeleteAll() {
     let qcollName, collName, database;
@@ -66,4 +79,5 @@ return 1;
 }
 
 DeleteAll();
-//ConstructDatabases(dbsArr);
+ConstructDatabases(dbsArr);
+*/

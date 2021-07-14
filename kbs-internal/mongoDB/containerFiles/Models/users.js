@@ -1,5 +1,6 @@
 const { dbConfig } = require("../../../mainConfig/db.config");
 async function CreateUsersDB(db) {
+   console.log(`Creating ${dbConfig.INTERNAL_USERS}...`);
    db.createCollection(dbConfig.INTERNAL_USERS, {
       validator: {
          $jsonSchema: {
@@ -24,7 +25,7 @@ async function CreateUsersDB(db) {
                }
             }
          }
-      }
+      }, validationAction: "warn"
    })
    return true;
 }

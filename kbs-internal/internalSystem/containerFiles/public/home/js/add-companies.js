@@ -95,9 +95,9 @@ async function ProcessParsing(companyName, companyOrigin, companyCode) {
         if (containsUndefined) {
             companyCode = await RecoverFromUndefinedCode(companyCode);
         }
-        let companyObj = await { Company_Name: companyName, Company_Origin: companyOrigin, _id: companyCode, Entry_Date: dateTime };
+        let companyObj = await { _id: companyCode, Company_Name: companyName, Company_Origin: companyOrigin, Entry_Date: dateTime };
         //let companyParsedObj = JSON.parse(companyObj);
-        //console.log(companyObj);
+        console.log(companyObj);
         DatabaseInsertion(companyObj);
     } catch (error) {
         console.error("failed to parse the company object \n Error: " + error);
@@ -108,7 +108,7 @@ async function DatabaseInsertion(companyObj) {
     try {
         let database;
         database = await GetDatabase();
-        let { insertedID } = await database.collection(`${dbConfig.PRODUCTS_COMPANIES}`).insertOne(companyObj);
+        let { insertedID } = await database.collection(`${dbConfig.COMPANIES}`).insertOne(companyObj);
         // CloseConnection();
         console.log("Success..");
         return true;

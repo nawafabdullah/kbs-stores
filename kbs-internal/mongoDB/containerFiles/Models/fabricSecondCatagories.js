@@ -1,8 +1,8 @@
 const { dbConfig } = require("../../../mainConfig/db.config");
 
-async function CreateCompaniesDB(db) {
-   console.log(`Creating ${dbConfig.COMPANIES}...`);
-   db.createCollection(dbConfig.COMPANIES, {
+async function CreateFabricSecondaryCatagoriesDB(db) {
+   console.log(`Creating ${dbConfig.PRODUCTS_SECONDARYCATAGORIES}...`);
+   db.createCollection(dbConfig.PRODUCTS_SECONDARYCATAGORIES, {
       validator: {
          $jsonSchema: {
             bsonType: "object",
@@ -12,15 +12,7 @@ async function CreateCompaniesDB(db) {
                   bsonType: "string",
                   description: "must be a string and is required"
                },
-               Company_Name: {
-                  bsonType: "string",
-                  description: "must be a string and is required"
-               },
-               Company_Origin: {
-                  bsonType: "string",
-                  description: "must be a string and is required"
-               },
-               Entry_Date: {
+               Catagory_Type: {
                   bsonType: "string",
                   description: "must be a string and is required"
                }
@@ -31,4 +23,5 @@ async function CreateCompaniesDB(db) {
    return true;
 }
 
-module.exports = { CreateCompaniesDB };
+   module.exports = { CreateFabricSecondaryCatagoriesDB};
+
