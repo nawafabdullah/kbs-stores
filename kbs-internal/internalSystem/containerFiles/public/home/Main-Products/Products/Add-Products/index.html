@@ -11,7 +11,23 @@
             <input type="text" id="fabricID=" name="fabricID" required>
 
             <label for="companyCode">رمز الشركة </label>
-            <input type="text" id="companyCode" name="companyCode" required>
+            <select name="companies" id="companies"> </select>
+            <span>
+                <script type="text/javascript">
+                    const { GetDatabase } = require('../../../../../../../mongoDB/containerFiles/mongo');
+                    let database = await GetDatabase;
+                    // let companiesArr = await database.collection(`${dbConfig.COMPANIES}`).find().toArray();
+                    console.log("HEREEEE");
+                    let companiesArr = ["hello", "This", "is"];
+                    let options = "";
+                    console.log(companiesArr);
+                    for (let i = 0; i < companiesArr.length; i++) {
+                        options += "<option>" + companiesArr[i] + "</option>";
+                    }
+                    document.getElementById("companies").innerHTML = options;
+                </script>
+            </span>
+
 
             <label for="metersAdded">عدد الأمتار المضافة</label>
             <input type="text" id="metersAdded" name="metersAdded" required>
