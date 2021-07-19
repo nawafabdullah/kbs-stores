@@ -1,7 +1,42 @@
 <!DOCTYPE html>
 <html>
 
-<!-- Style is being embedded here until styles.css is fixed -->
+    <head>
+        <!-- basic -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <!-- mobile metas -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+        <!-- site metas -->
+        <title>KBS-Stores (internal)</title>
+        <meta name="keywords" content="">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <!-- bootstrap css -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <!-- style css fallback-->
+        <link rel="stylesheet" href="css/style.css">
+        <!-- Responsive-->
+        <link rel="stylesheet" href="css/responsive.css">
+        <!-- fevicon -->
+        <link rel="icon" href="images/fevicon.png" type="image/gif" />
+        <!-- Scrollbar Custom CSS -->
+        <link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
+        <!-- Tweaks for older IEs-->
+        <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+        <!-- owl stylesheets -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        <!--- src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"-->
+    
+    
+    
+    </head>
+    
 
 <body>
     <div id="add-product" style="text-align: center; margin-top: 5px;">
@@ -12,21 +47,7 @@
 
             <label for="companyCode">رمز الشركة </label>
             <select name="companies" id="companies"> </select>
-            <span>
-                <script type="text/javascript">
-                    const { GetDatabase } = require('../../../../../../../mongoDB/containerFiles/mongo');
-                    let database = await GetDatabase;
-                    // let companiesArr = await database.collection(`${dbConfig.COMPANIES}`).find().toArray();
-                    console.log("HEREEEE");
-                    let companiesArr = ["hello", "This", "is"];
-                    let options = "";
-                    console.log(companiesArr);
-                    for (let i = 0; i < companiesArr.length; i++) {
-                        options += "<option>" + companiesArr[i] + "</option>";
-                    }
-                    document.getElementById("companies").innerHTML = options;
-                </script>
-            </span>
+
 
 
             <label for="metersAdded">عدد الأمتار المضافة</label>
@@ -44,6 +65,18 @@
         </form>
     </div>
 
+    <footer>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.bundle.min.js"></script>
+        <script src="js/jquery-3.0.0.min.js"></script>
+        <script src="js/plugin.js"></script>
+        <!-- sidebar -->
+        <script src="js/custom.js"></script>
+        <!-- javascript -->
+        <script src="js/main-products.js" type="text/javascript"></script>
+        <script src="js/add-products.js" type="text/javascript"></script>
+
+    </footer>
 </body>
 
 </html>

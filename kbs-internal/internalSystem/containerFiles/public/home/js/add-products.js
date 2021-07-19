@@ -22,15 +22,23 @@ async function InsertProduct(productObj) {
 
 
 // implement to retrieve companies from DB and display them in a "select" tag 
-async function GetCompaniesID() {
-    let database = await database;
-    let companiesArr = await database.collection(`${dbConfig.PRODUCTS}`).find().toArray();
-    console.log(companiesArr);
-    for (let i = 0; i < companiesArr.length; year++) {
-        options += "<option>" + year + "</option>";
-    }
-    document.getElementById("companies").innerHTML = options;
-}
+
+    $(document).ready(async function () {
+        let database = await database;
+        let companiesArr = await database.collection(`${dbConfig.PRODUCTS}`).find().toArray();
+
+        $("#companies").change(function () {
+
+            console.log("HEREEEE");
+            var selectBox = document.getElementById('companies');
+
+            for (var i = 0, l = options.length; i < l; i++) {
+                var option = companiesArr[i];
+                selectBox.options.add(new Option(option));
+            }
+        })
+    })
+
 
 
 async function CheckDuplicates(fabricID) {
