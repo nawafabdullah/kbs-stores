@@ -1,7 +1,8 @@
 const { GetDatabase, CloseConnection } = require('../../../../../mongoDB/containerFiles/mongo');
 const { dbConfig } = require('../../../../../mainConfig/db.config');
-
-/* ***************          
+const $ = require("jquery");
+const document = require("jquery");
+/* ***************           
  
 Note: Since this is an internal system, and that only one user will use it a time
 I assumed no parallelism and that entries will happen in sequence 
@@ -23,21 +24,21 @@ async function InsertProduct(productObj) {
 
 // implement to retrieve companies from DB and display them in a "select" tag 
 
-    $(document).ready(async function () {
-        let database = await database;
-        let companiesArr = await database.collection(`${dbConfig.PRODUCTS}`).find().toArray();
+$(document).ready(async function () {
+    let database = await database;
+    let companiesArr = await database.collection(`${dbConfig.PRODUCTS}`).find().toArray();
 
-        $("#companies").change(function () {
+    $("#companies").change(function () {
 
-            console.log("HEREEEE");
-            var selectBox = document.getElementById('companies');
+        console.log("HEREEEE");
+        var selectBox = document.getElementById('companies');
 
-            for (var i = 0, l = options.length; i < l; i++) {
-                var option = companiesArr[i];
-                selectBox.options.add(new Option(option));
-            }
-        })
+        for (var i = 0, l = options.length; i < l; i++) {
+            var option = companiesArr[i];
+            selectBox.options.add(new Option(option));
+        }
     })
+})
 
 
 
