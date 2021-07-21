@@ -1,7 +1,7 @@
 const { GetDatabase, CloseConnection } = require('../../../../../mongoDB/containerFiles/mongo');
 const { dbConfig } = require('../../../../../mainConfig/db.config');
-const $ = require("jquery");
-const document = require("jquery");
+//const $ = require("jquery");
+//const document = require("jquery"); 
 /* ***************           
  
 Note: Since this is an internal system, and that only one user will use it a time
@@ -23,64 +23,62 @@ async function InsertProduct(productObj) {
 
 
 // implement to retrieve companies from DB and display them in a "select" tag 
-
-$(document).ready(async function () {
+async function GetCompanies() {
     let database = await database;
     let companiesArr = await database.collection(`${dbConfig.PRODUCTS}`).find().toArray();
 
-    $("#companies").change(function () {
+    let select = document.getElementById("select"),
+        arr = ["html", "css", "java", "javascript", "php", "c++", "node.js", "ASP", "JSP", "SQL"];
 
-        console.log("HEREEEE");
-        var selectBox = document.getElementById('companies');
-
-        for (var i = 0, l = options.length; i < l; i++) {
-            var option = companiesArr[i];
-            selectBox.options.add(new Option(option));
-        }
-    })
-})
-
+    for (var i = 0; i < arr.length; i++) {
+        var option = document.createElement("OPTION"),
+            txt = document.createTextNode(arr[i]);
+        option.appendChild(txt);
+        option.setAttribute("value", arr[i]);
+        select.insertBefore(option, select.lastChild);
+    }
 
 
-async function CheckDuplicates(fabricID) {
-    try {
-        let database = await GetDatabase();
-        let checkDuplicates = await database.collection(`${dbConfig.PRODUCTS}`).find({ id: fabricID }).toArray();
-        if (checkDuplicates) {
+
+    async function CheckDuplicates(fabricID) {
+        try {
+            let database = await GetDatabase();
+            let checkDuplicates = await database.collection(`${dbConfig.PRODUCTS}`).find({ id: fabricID }).toArray();
+            if (checkDuplicates) {
+                return false;
+            }
+            return true;
+        } catch (error) {
+            console.error("Failed to check for duplicate IDs \nError: " + error)
             return false;
         }
-        return true;
-    } catch (error) {
-        console.error("Failed to check for duplicate IDs \nError: " + error)
-        return false;
     }
-}
 
 
-async function ProcessParsing(fabricID, companyID, metersAdded, fabricPrimaryType, fabricSecondaryType) {
+    async function ProcessParsing(fabricID, companyID, metersAdded, fabricPrimaryType, fabricSecondaryType) {
 
-    let today = await new Date();
-    let date = await today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-    let time = await today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    let dateTime = await (date + ' ' + time).toString();
-    let productObj = await { _id: fabricID, Company_ID: companyID, Number_Of_Meters: metersAdded, Primary_Type: fabricPrimaryType, Secondary_Type: fabricSecondaryType, Entry_Date: dateTime };
-    DatabaseInsertion(productObj);
-}
+        let today = await new Date();
+        let date = await today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        let time = await today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        let dateTime = await (date + ' ' + time).toString();
+        let productObj = await { _id: fabricID, Company_ID: companyID, Number_Of_Meters: metersAdded, Primary_Type: fabricPrimaryType, Secondary_Type: fabricSecondaryType, Entry_Date: dateTime };
+        DatabaseInsertion(productObj);
+    }
 
-async function DatabaseInsertion(productObj) {
-    let database = await GetDatabase();
-    console.log(productObj);
-    let checkEntry = await database.collection(`${dbConfig.PRODUCTS}`).insertOne(productObj);
-    return true;
-}
-
-
+    async function DatabaseInsertion(productObj) {
+        let database = await GetDatabase();
+        console.log(productObj);
+        let checkEntry = await database.collection(`${dbConfig.PRODUCTS}`).insertOne(productObj);
+        return true;
+    }
 
 
 
 
 
-module.exports = { InsertProduct };
+
+
+    module.exports = { InsertProduct };
 
 
 

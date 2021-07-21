@@ -1,7 +1,7 @@
 //const mainCatagories = ["", "", ""]
 
 //const $ = require("jquery"); 
- 
+  
 
 console.log("function called");
 $(document).ready(function () {
