@@ -1,53 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html dir="rtl" lang="ar">
 
-    <head>
-        <!-- basic -->
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <!-- mobile metas -->
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-        <!-- site metas -->
-        <title>KBS-Stores (internal)</title>
-        <meta name="keywords" content="">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <!-- bootstrap css -->
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <!-- style css -->
-        <link rel="stylesheet" href="css/style.css">
-        <!-- Responsive-->
-        <link rel="stylesheet" href="css/responsive.css">
-        <!-- fevicon -->
-        <link rel="icon" href="images/fevicon.png" type="image/gif" />
-        <!-- Scrollbar Custom CSS -->
-        <link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
-        <!-- Tweaks for older IEs-->
-        <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
-        <!-- owl stylesheets -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        
-        
-        
-        <!--[if lt IE 9]>
-          <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
-    </head>
-    
+<head>
+
+</head>
 
 <body>
     <div id="add-product" style="text-align: center; margin-top: 5px;">
-        <form action="/products/add-product" id="productForm" method="POST">
 
+        <form action="/products/add-product" id="productForm" method="POST">
             <label for="fabricID">رمز القطعة</label>
             <input type="text" id="fabricID=" name="fabricID" required>
 
-            <label for="companyCode">رمز الشركة </label>
-            <select name="companies" id="companies"> </select>
+            <label for="companyName">إسم الشركة </label>
+            <select name="companies" id="companies">
+                <option id="companies">
+
+                </option>
+            </select>
+
+            <!--script>
+                let optionList = document.getElementById('companies').options;
+                let options = [
+                    {
+                        text: 'Option 1',
+                        value: 'Value 1'
+                    },
+                    {
+                        text: 'Option 2',
+                        value: 'Value 2',
+                        selected: true
+                    },
+                    {
+                        text: 'Option 3',
+                        value: 'Value 3'
+                    }
+                ];
+
+                options.forEach(option =>
+                    optionList.add(
+                        new Option(option.text, option.value, option.selected)
+                    )
+                );
 
 
-
+            </script-->
             <label for="metersAdded">عدد الأمتار المضافة</label>
             <input type="text" id="metersAdded" name="metersAdded" required>
 
@@ -60,8 +57,16 @@
             <input type="text" id="fabricSecondaryType" name="fabricSecondaryType" required>
 
             <input type="submit">
+
+
+
+
         </form>
     </div>
+
+    <footer></footer>
+
+    <!--script src="js/main-products.js"></script-->
 
 </body>
 

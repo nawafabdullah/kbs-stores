@@ -45,7 +45,10 @@ app.use('/jquery', express.static(__dirname + '../../node_modules/jquery/dist/')
 
 router.route("/")
     .get(function (req, res) {
-        res.sendFile(path.join(__dirname + "/public/home/"));
+        res
+            .sendFile(path.join(__dirname + "/public/home/"));
+        //  .set("Content-Security-Policy", "default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'")
+        //.send("<html><head></head><body></body></html>");
     })
 
 router.route("/signup")
@@ -142,23 +145,26 @@ router.route("/products")
 router.route("/products/add-product")
     .post(async function (req, res) {
         //res.sendFile(path.join(__dirname + "/public/home/Main-Products/main-products"));
-        const errors = validationResult(req);
+        //const errors = validationResult(req);
         let productObj = await req.body;
-        if (!errors.isEmpty()) {
-            // There are errors. Render form again with sanitized values/errors messages.
-            // Error messages can be returned in an array using `errors.array()`.
+        //if (!errors.isEmpty()) {
+        // There are errors. Render form again with sanitized values/errors messages.
+        // Error messages can be returned in an array using `errors.array()`.
 
-            console.log("ERRORS EXIST");
-        }
-        else {
-            // Data from form is valid.
-            console.log("I am here!!");
-            InsertProduct(productObj);
-        }
+        //  console.log("ERRORS EXIST");
+        // }
+        //else {
+        // Data from form is valid.
+        res.set("Content-Security-Policy", "default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'")
+        res.send("<html><head></head><body></body></html>");
+        console.log("I am here!!");
+        InsertProduct(productObj);
+        //}
         res.writeHead(301, {
             content: "Success",
             Location: "/",
         });
+
         res.end("Success");
     })
 

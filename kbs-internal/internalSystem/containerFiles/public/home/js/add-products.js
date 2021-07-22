@@ -1,6 +1,6 @@
 const { GetDatabase, CloseConnection } = require('../../../../../mongoDB/containerFiles/mongo');
 const { dbConfig } = require('../../../../../mainConfig/db.config');
-//const $ = require("jquery");
+//const $ = require("jquery");  
 //const document = require("jquery"); 
 /* ***************           
  
@@ -14,21 +14,43 @@ I assumed no parallelism and that entries will happen in sequence
 // Discus whether the ID is assigned by store or by the system ??
 async function InsertProduct(productObj) {
     let fabricID = await productObj.fabricID;
-    let companyID = await productObj.companyCode;
+    let companyName = await productObj.companyName;
     let metersAdded = await productObj.metersAdded;
     let fabricPrimaryType = await productObj.fabricPrimaryType;
     let fabricSecondaryType = await productObj.fabricSecondaryType;
-    ProcessParsing(fabricID, companyID, metersAdded, fabricPrimaryType, fabricSecondaryType);
+    let returned = GetCompanies();
+    console.log(returned);
+    ProcessParsing(fabricID, companyName, metersAdded, fabricPrimaryType, fabricSecondaryType);
 }
 
 
 // implement to retrieve companies from DB and display them in a "select" tag 
 async function GetCompanies() {
-    let database = await database;
+    let database = await GetDatabase();
     let companiesArr = await database.collection(`${dbConfig.PRODUCTS}`).find().toArray();
 
-    let select = document.getElementById("select"),
-        arr = ["html", "css", "java", "javascript", "php", "c++", "node.js", "ASP", "JSP", "SQL"];
+
+    /*
+    document.write('<!DOCTYPE html>'
+        + '<html>'
+        + '<head lang="en">'
+        + '<meta charset="UTF-8">'
+        + '<title></title>'
+        + '<link rel="stylesheet" type="text/css" href="css/quiz.css" />'
+        + '</head>'
+        + ' <body>'
+
+        + '<div id="divid">Next</div>'
+        + '<script type="text/javascript" src="js/quiz.js"></script>'
+        + '</body>'
+        + '</html>');
+
+*/
+
+
+    //  let select = document.getElementById("select"),
+
+    return arr = ["html", "css", "java", "javascript", "php", "c++", "node.js", "ASP", "JSP", "SQL"];
 
     for (var i = 0; i < arr.length; i++) {
         var option = document.createElement("OPTION"),
@@ -37,48 +59,71 @@ async function GetCompanies() {
         option.setAttribute("value", arr[i]);
         select.insertBefore(option, select.lastChild);
     }
+}
 
-
-
-    async function CheckDuplicates(fabricID) {
-        try {
-            let database = await GetDatabase();
-            let checkDuplicates = await database.collection(`${dbConfig.PRODUCTS}`).find({ id: fabricID }).toArray();
-            if (checkDuplicates) {
-                return false;
-            }
-            return true;
-        } catch (error) {
-            console.error("Failed to check for duplicate IDs \nError: " + error)
+async function CheckDuplicates(fabricID) {
+    try {
+        let database = await GetDatabase();
+        let checkDuplicates = await database.collection(`${dbConfig.PRODUCTS}`).find({ _id: fabricID }).toArray();
+        if (checkDuplicates) {
             return false;
         }
+        return true;
+    } catch (error) {
+        console.error("Failed to check for duplicate IDs \nError: " + error)
+        return false;
     }
+}
 
 
-    async function ProcessParsing(fabricID, companyID, metersAdded, fabricPrimaryType, fabricSecondaryType) {
+async function ProcessParsing(fabricID, companyName, metersAdded, fabricPrimaryType, fabricSecondaryType) {
+    let today = await new Date();
+    let date = await today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    let time = await today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    let dateTime = await (date + ' ' + time).toString();
+    let productObj = await { _id: fabricID, Company_Name: companyName, Number_Of_Meters: metersAdded, Primary_Type: fabricPrimaryType, Secondary_Type: fabricSecondaryType, Entry_Date: dateTime };
+    DatabaseInsertion(productObj);
+}
 
-        let today = await new Date();
-        let date = await today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-        let time = await today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        let dateTime = await (date + ' ' + time).toString();
-        let productObj = await { _id: fabricID, Company_ID: companyID, Number_Of_Meters: metersAdded, Primary_Type: fabricPrimaryType, Secondary_Type: fabricSecondaryType, Entry_Date: dateTime };
-        DatabaseInsertion(productObj);
-    }
 
-    async function DatabaseInsertion(productObj) {
+async function DatabaseInsertion(productObj) {
+    try {
         let database = await GetDatabase();
         console.log(productObj);
-        let checkEntry = await database.collection(`${dbConfig.PRODUCTS}`).insertOne(productObj);
-        return true;
+        checkDuplicates(productObj._id);
+    } catch (error) {
+        let errorString = (error.message).toString();
+        let containsDuplicate = errorString.includes("E11000");
+        if (containsDuplicate) {
+            RecoverFromDuplicateError(productObj, errorString);
+            return true;
+        }
+        console.error("failed to insert the company to the Database \n Error: " + error);
+        return false;
     }
+}
+
+async function RecoverFromDuplicateError(companyObj, errorString) {
+    let duplicateID = errorString.substr(98, 3);
+    duplicateID = parseInt(duplicateID);
+    //console.log("SLICE::::::::::::::::::::" + duplicateID);
+    let oldID = await companyObj._id;
+    oldNumID = await oldID.substr(3);
+    newLetterID = await oldID.substr(0, 3);
+    oldNumID = await parseInt(oldNumID);
+    newNumID = oldNumID + 1;
+    //console.log(newNumID);
+    newID = await newLetterID + newNumID;
+    //console.log("THE ID IS:::::: " + newID);
+    ProcessParsing(companyObj.Company_Name, companyObj.Company_Origin, newID);
+    return true;
+}
 
 
 
 
 
-
-
-    module.exports = { InsertProduct };
+module.exports = { InsertProduct };
 
 
 
