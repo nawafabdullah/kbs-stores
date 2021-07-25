@@ -155,8 +155,8 @@ router.route("/products/add-product")
         // }
         //else {
         // Data from form is valid.
-        res.set("Content-Security-Policy", "default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'")
-        res.send("<html><head></head><body></body></html>");
+        // res.set("Content-Security-Policy", "default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'")
+        //res.send("<html><head></head><body></body></html>");
         console.log("I am here!!");
         InsertProduct(productObj);
         //}

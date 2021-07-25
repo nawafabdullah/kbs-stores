@@ -18,9 +18,11 @@ async function InsertProduct(productObj) {
     let metersAdded = await productObj.metersAdded;
     let fabricPrimaryType = await productObj.fabricPrimaryType;
     let fabricSecondaryType = await productObj.fabricSecondaryType;
-    let returned = GetCompanies();
-    console.log(returned);
-    ProcessParsing(fabricID, companyName, metersAdded, fabricPrimaryType, fabricSecondaryType);
+    //let returned = GetCompanies();
+    //console.log(returned);
+
+    _fabricID = CheckDuplicates(fabricID);
+    ProcessParsing(_fabricID, companyName, metersAdded, fabricPrimaryType, fabricSecondaryType);
 }
 
 
@@ -64,9 +66,9 @@ async function GetCompanies() {
 async function CheckDuplicates(fabricID) {
     try {
         let database = await GetDatabase();
-        let checkDuplicates = await database.collection(`${dbConfig.PRODUCTS}`).find({ _id: fabricID }).toArray();
-        if (checkDuplicates) {
-            return false;
+        let containsDuplicates = await database.collection(`${dbConfig.PRODUCTS}`).find({ _id: fabricID }).toArray();
+        if (containsDuplicates) {
+            RecoverFromDuplicateError(fabricID);
         }
         return true;
     } catch (error) {
@@ -88,23 +90,30 @@ async function ProcessParsing(fabricID, companyName, metersAdded, fabricPrimaryT
 
 async function DatabaseInsertion(productObj) {
     try {
+        let productID;
         let database = await GetDatabase();
         console.log(productObj);
-        checkDuplicates(productObj._id);
-    } catch (error) {
-        let errorString = (error.message).toString();
-        let containsDuplicate = errorString.includes("E11000");
-        if (containsDuplicate) {
-            RecoverFromDuplicateError(productObj, errorString);
-            return true;
+        let containsDuplicates = CheckDuplicates(productObj._id);
+        if (containsDuplicates) {
+            productID = await RecoverFromDuplicateError(productObj._id);
+
         }
+
+
+    } catch (error) {
+        // let errorString = (error.message).toString();
+        // let containsDuplicate = errorString.includes("E11000");
+        // if (containsDuplicate) {
+        //     RecoverFromDuplicateError(productObj, errorString);
+        //     return true;
+        // }
         console.error("failed to insert the company to the Database \n Error: " + error);
         return false;
     }
 }
 
-async function RecoverFromDuplicateError(companyObj, errorString) {
-    let duplicateID = errorString.substr(98, 3);
+async function RecoverFromDuplicateError(productID) {
+
     duplicateID = parseInt(duplicateID);
     //console.log("SLICE::::::::::::::::::::" + duplicateID);
     let oldID = await companyObj._id;
