@@ -6,12 +6,8 @@ async function CreateFabricSecondaryCatagoriesDB(db) {
       validator: {
          $jsonSchema: {
             bsonType: "object",
-            required: ["_id", "Company_Name ", "Company_Origin", "Entry_Date"],
+            required: ["Catagory_Type"],
             properties: {
-               _id: {
-                  bsonType: "string",
-                  description: "must be a string and is required"
-               },
                Catagory_Type: {
                   bsonType: "string",
                   description: "must be a string and is required"
@@ -20,8 +16,37 @@ async function CreateFabricSecondaryCatagoriesDB(db) {
          }
       }, validationAction: "warn"
    })
+   InsertSecondaryTypes(db);
    return true;
 }
 
-   module.exports = { CreateFabricSecondaryCatagoriesDB};
+
+async function InsertSecondaryTypes(db) {
+   let secondaryTypes = [
+      { type: "Plain", _id: "B01" },
+      { type: "Chiffon", _id: "B02" },
+      { type: "Cotton", _id: "B03" },
+      { type: "Crepe", _id: "B04" },
+      { type: "Denim", _id: "B05" },
+      { type: "Lace", _id: "B06" },
+      { type: "Leather", _id: "B07" },
+      { type: "Linen", _id: "B08" },
+      { type: "Satin", _id: "B09" },
+      { type: "Silk", _id: "B10" },
+      { type: "Synthetics", _id: "B11" },
+      { type: "Velvet", _id: "B12" },
+      { type: "Wool", _id: "B13" }
+   ];
+   try {
+      for (type in secondaryTypes) {
+         let { insertedID } = await db.collection(`${dbConfig.PRODUCTS_SECONDARYCATAGORIES}`).insertOne(secondaryTypes[type]);
+         //  console.log(`Country #: ${country} had been inserted..`);
+      }
+   } catch (error) {
+      console.error("failed to insert primary types to the Database \n Error: " + error);
+      return false;
+   }
+}
+
+module.exports = { CreateFabricSecondaryCatagoriesDB };
 

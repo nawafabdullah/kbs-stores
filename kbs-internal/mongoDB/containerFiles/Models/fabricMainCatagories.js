@@ -6,12 +6,8 @@ async function CreateFabricMainCatagoriesDB(db) {
       validator: {
          $jsonSchema: {
             bsonType: "object",
-            required: ["_id", "Company_Name ", "Company_Origin", "Entry_Date"],
+            required: ["Catagory_Type"],
             properties: {
-               _id: {
-                  bsonType: "string",
-                  description: "must be a string and is required"
-               },
                Catagory_Type: {
                   bsonType: "string",
                   description: "must be a string and is required"
@@ -20,7 +16,26 @@ async function CreateFabricMainCatagoriesDB(db) {
          }
       }, validationAction: "warn"
    })
+   InsertPrimaryTypes(db);
    return true;
+}
+
+
+async function InsertPrimaryTypes(db) {
+   let primaryTypes = [
+      { type: "Sahrah", _id: "A01" },
+      { type: "Sadah", _id: "A02" },
+      { type: "Moshajar", _id: "A03" }
+   ];
+   try {
+      for (type in primaryTypes) {
+         let { insertedID } = await db.collection(`${dbConfig.PRODUCTS_MAINCATAGORIES}`).insertOne(primaryTypes[type]);
+         //  console.log(`Country #: ${country} had been inserted..`);
+      }
+   } catch (error) {
+      console.error("failed to insert primary types to the Database \n Error: " + error);
+      return false;
+   }
 }
 
 module.exports = { CreateFabricMainCatagoriesDB };
