@@ -17,7 +17,7 @@ async function GetFabricPrimaryTypes() {
     let primaryTypesArr = await database.collection(`${dbConfig.PRODUCTS_MAINCATAGORIES}`).find().toArray();
     console.log("Primary Types Array contains: \n");
     for (type in primaryTypesArr) {
-        console.log(primaryTypesArr[type] + "\n");
+        console.log(primaryTypesArr[type]._id + "\n");
     }
     console.log("\n\n\n");
     //return companiesArr;
