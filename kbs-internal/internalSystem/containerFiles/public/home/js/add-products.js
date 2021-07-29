@@ -1,8 +1,13 @@
-const { GetDatabase, CloseConnection } = require('../../../../../mongoDB/containerFiles/mongo');
-const { dbConfig } = require('../../../../../mainConfig/db.config');
-const { Fabric } = require('../../../../../mongoDB/containerFiles/Models/fabric-model');
-//const $ = require("jquery");  
-//const document = require("jquery"); 
+const {
+  GetDatabase,
+  CloseConnection,
+} = require("../../../../../mongoDB/containerFiles/mongo");
+const { dbConfig } = require("../../../../../mainConfig/db.config");
+const {
+  Fabric,
+} = require("../../../../../mongoDB/containerFiles/Models/fabric-model");
+//const $ = require("jquery");
+//const document = require("jquery");
 /* ***************           
  
 Note: Since this is an internal system, and that only one user will use it a time
@@ -10,10 +15,23 @@ I assumed no parallelism and that entries will happen in sequence
 
 *************** */
 
-
-
 // Discus whether the ID is assigned by store or by the system ??
 async function InsertProduct(productObj) {
+  let fabric = new Fabric(
+    await productObj.companyName,
+    await productObj.metersAdded,
+    await productObj.fabricPrimaryType,
+    await productObj.quality,
+    await productObj.price
+  );
+
+  console.log (fabric);
+}
+
+
+module.exports = {InsertProduct};
+
+  /*
     let fabricID = await productObj.fabricID;
     let companyName = await productObj.companyName;
     let metersAdded = await productObj.metersAdded;
@@ -25,16 +43,23 @@ async function InsertProduct(productObj) {
 
     _fabricID = CheckDuplicates(fabricID);
     ProcessParsing(_fabricID, companyName, metersAdded, fabricPrimaryType, fabricQuality, fabricPrice);
-}
+*/
 
 
-// implement to retrieve companies from DB and display them in a "select" tag 
+//}
+
+
+/*
+
+// implement to retrieve companies from DB and display them in a "select" tag
 async function GetCompanies() {
-    let database = await GetDatabase();
-    let companiesArr = await database.collection(`${dbConfig.PRODUCTS}`).find().toArray();
+  let database = await GetDatabase();
+  let companiesArr = await database
+    .collection(`${dbConfig.PRODUCTS}`)
+    .find()
+    .toArray();
 
-
-    /*
+  /*
     document.write('<!DOCTYPE html>'
         + '<html>'
         + '<head lang="en">'
@@ -51,93 +76,99 @@ async function GetCompanies() {
 
 */
 
+  //  let select = document.getElementById("select"),
 
-    //  let select = document.getElementById("select"),
+ 
 
-    return arr = ["html", "css", "java", "javascript", "php", "c++", "node.js", "ASP", "JSP", "SQL"];
+  /*
+  return (arr = [
+    "html",
+    "css",
+    "java",
+    "javascript",
+    "php",
+    "c++",
+    "node.js",
+    "ASP",
+    "JSP",
+    "SQL",
+  ]);
 
-    for (var i = 0; i < arr.length; i++) {
-        var option = document.createElement("OPTION"),
-            txt = document.createTextNode(arr[i]);
-        option.appendChild(txt);
-        option.setAttribute("value", arr[i]);
-        select.insertBefore(option, select.lastChild);
-    }
+  for (var i = 0; i < arr.length; i++) {
+    var option = document.createElement("OPTION"),
+      txt = document.createTextNode(arr[i]);
+    option.appendChild(txt);
+    option.setAttribute("value", arr[i]);
+    select.insertBefore(option, select.lastChild);
+  }
 }
 
 async function CheckDuplicates(fabricID) {
-    try {
-        let database = await GetDatabase();
-        let containsDuplicates = await database.collection(`${dbConfig.PRODUCTS}`).find({ _id: fabricID }).toArray();
-        if (containsDuplicates) {
-            RecoverFromDuplicateError(fabricID);
-        }
-        return true;
-    } catch (error) {
-        console.error("Failed to check for duplicate IDs \nError: " + error)
-        return false;
+  try {
+    let database = await GetDatabase();
+    let containsDuplicates = await database
+      .collection(`${dbConfig.PRODUCTS}`)
+      .find({ _id: fabricID })
+      .toArray();
+    if (containsDuplicates) {
+      RecoverFromDuplicateError(fabricID);
     }
+    return true;
+  } catch (error) {
+    console.error("Failed to check for duplicate IDs \nError: " + error);
+    return false;
+  }
 }
 
-
-async function ProcessParsing(fabricID, companyName, metersAdded, fabricPrimaryType, fabricQuality) {
-
-    DatabaseInsertion(productObj);
+async function ProcessParsing(
+  fabricID,
+  companyName,
+  metersAdded,
+  fabricPrimaryType,
+  fabricQuality
+) {
+  DatabaseInsertion(productObj);
 }
-
 
 async function DatabaseInsertion(productObj) {
-    try {
-        let productID;
-        let database = await GetDatabase();
-        console.log(productObj);
-        let containsDuplicates = CheckDuplicates(productObj._id);
-        if (containsDuplicates) {
-            productID = await RecoverFromDuplicateError(productObj._id);
-
-        }
-
-
-    } catch (error) {
-        // let errorString = (error.message).toString();
-        // let containsDuplicate = errorString.includes("E11000");
-        // if (containsDuplicate) {
-        //     RecoverFromDuplicateError(productObj, errorString);
-        //     return true;
-        // }
-        console.error("failed to insert the company to the Database \n Error: " + error);
-        return false;
+  try {
+    let productID;
+    let database = await GetDatabase();
+    console.log(productObj);
+    let containsDuplicates = CheckDuplicates(productObj._id);
+    if (containsDuplicates) {
+      productID = await RecoverFromDuplicateError(productObj._id);
     }
+  } catch (error) {
+    // let errorString = (error.message).toString();
+    // let containsDuplicate = errorString.includes("E11000");
+    // if (containsDuplicate) {
+    //     RecoverFromDuplicateError(productObj, errorString);
+    //     return true;
+    // }
+    console.error(
+      "failed to insert the company to the Database \n Error: " + error
+    );
+    return false;
+  }
 }
 
 async function RecoverFromDuplicateError(productID) {
-
-    duplicateID = parseInt(duplicateID);
-    //console.log("SLICE::::::::::::::::::::" + duplicateID);
-    let oldID = await companyObj._id;
-    oldNumID = await oldID.substr(3);
-    newLetterID = await oldID.substr(0, 3);
-    oldNumID = await parseInt(oldNumID);
-    newNumID = oldNumID + 1;
-    //console.log(newNumID);
-    newID = await newLetterID + newNumID;
-    //console.log("THE ID IS:::::: " + newID);
-    ProcessParsing(companyObj.Company_Name, companyObj.Company_Origin, newID);
-    return true;
+  duplicateID = parseInt(duplicateID);
+  //console.log("SLICE::::::::::::::::::::" + duplicateID);
+  let oldID = await companyObj._id;
+  oldNumID = await oldID.substr(3);
+  newLetterID = await oldID.substr(0, 3);
+  oldNumID = await parseInt(oldNumID);
+  newNumID = oldNumID + 1;
+  //console.log(newNumID);
+  newID = (await newLetterID) + newNumID;
+  //console.log("THE ID IS:::::: " + newID);
+  ProcessParsing(companyObj.Company_Name, companyObj.Company_Origin, newID);
+  return true;
 }
 
-
-
-
-
 module.exports = { InsertProduct };
-
-
-
-
-
-
-
 
 /*
 async function InsertProduct(productObj) {
@@ -283,3 +314,5 @@ async function RecoverFromUndefinedCode(oldCompanyCode) {
 
 module.exports = { InsertCompany };
 */
+
+

@@ -2,7 +2,7 @@ const { dbConfig } = require("../../../mainConfig/db.config");
 
 async function CreateFabricQualityDB(db) {
    console.log(`Creating ${dbConfig.PRODUCTS_SECONDARYCATAGORIES}...`);
-   db.createCollection(dbConfig.PRODUCTS_SECONDARYCATAGORIES, {
+   db.createCollection(dbConfig.PRODUCTS_QUALITY, {
       validator: {
          $jsonSchema: {
             bsonType: "object",
@@ -16,13 +16,13 @@ async function CreateFabricQualityDB(db) {
          }
       }, validationAction: "warn"
    })
-   InsertSecondaryTypes(db);
+   InsertQualityTypes(db);
    return true;
 }
 
 
-async function InsertSecondaryTypes(db) {
-   let secondaryTypes = [
+async function InsertQualityTypes(db) {
+   let quality = [
       { type: "Plain", _id: "B01" },
       { type: "Chiffon", _id: "B02" },
       { type: "Cotton", _id: "B03" },
@@ -38,15 +38,15 @@ async function InsertSecondaryTypes(db) {
       { type: "Wool", _id: "B13" }
    ];
    try {
-      for (type in secondaryTypes) {
-         let { insertedID } = await db.collection(`${dbConfig.PRODUCTS_SECONDARYCATAGORIES}`).insertOne(secondaryTypes[type]);
+      for (type in quality) {
+         let { insertedID } = await db.collection(`${dbConfig.PRODUCTS_QUALITY}`).insertOne(quality[type]);
          //  console.log(`Country #: ${country} had been inserted..`);
       }
    } catch (error) {
-      console.error("failed to insert primary types to the Database \n Error: " + error);
+      console.error("failed to insert quality to the Database \n Error: " + error);
       return false;
    }
 }
 
-module.exports = { CreateFabricSecondaryCatagoriesDB };
+module.exports = { CreateFabricQualityDB };
 

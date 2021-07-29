@@ -19,8 +19,8 @@ async function DeleteAll() {
         console.log(`Deleting ${dbConfig.COUNTRIES}..`);
         await database.dropCollection(dbConfig.PRODUCTS_MAINCATAGORIES, { capped: false });
         console.log(`Deleting ${dbConfig.PRODUCTS_MAINCATAGORIES}..`);
-        await database.dropCollection(dbConfig.PRODUCTS_SECONDARYCATAGORIES, { capped: false });
-        console.log(`Deleting ${dbConfig.PRODUCTS_SECONDARYCATAGORIES}..`);
+        await database.dropCollection(dbConfig.PRODUCTS_QUALITY, { capped: false });
+        console.log(`Deleting ${dbConfig.PRODUCTS_QUALITY}..`);
         EXIT();
     } catch (error) {
         console.error("Could Not Delete Database /n Error: " + error);
