@@ -1,5 +1,6 @@
 const { GetDatabase, CloseConnection } = require('../../../../../mongoDB/containerFiles/mongo');
 const { dbConfig } = require('../../../../../mainConfig/db.config');
+const { Fabric } = require('../../../../../mongoDB/containerFiles/Models/fabric-model');
 //const $ = require("jquery");  
 //const document = require("jquery"); 
 /* ***************           
@@ -17,12 +18,13 @@ async function InsertProduct(productObj) {
     let companyName = await productObj.companyName;
     let metersAdded = await productObj.metersAdded;
     let fabricPrimaryType = await productObj.fabricPrimaryType;
-    let fabricSecondaryType = await productObj.fabricSecondaryType;
+    let fabricQuality = await productObj.quality;
+    let fabricPrice = await productObj.price;
     //let returned = GetCompanies();
     //console.log(returned);
 
     _fabricID = CheckDuplicates(fabricID);
-    ProcessParsing(_fabricID, companyName, metersAdded, fabricPrimaryType, fabricSecondaryType);
+    ProcessParsing(_fabricID, companyName, metersAdded, fabricPrimaryType, fabricQuality, fabricPrice);
 }
 
 
@@ -78,12 +80,8 @@ async function CheckDuplicates(fabricID) {
 }
 
 
-async function ProcessParsing(fabricID, companyName, metersAdded, fabricPrimaryType, fabricSecondaryType) {
-    let today = await new Date();
-    let date = await today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-    let time = await today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    let dateTime = await (date + ' ' + time).toString();
-    let productObj = await { _id: fabricID, Company_Name: companyName, Number_Of_Meters: metersAdded, Primary_Type: fabricPrimaryType, Secondary_Type: fabricSecondaryType, Entry_Date: dateTime };
+async function ProcessParsing(fabricID, companyName, metersAdded, fabricPrimaryType, fabricQuality) {
+
     DatabaseInsertion(productObj);
 }
 

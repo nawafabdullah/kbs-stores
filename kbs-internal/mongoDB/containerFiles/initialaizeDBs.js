@@ -9,7 +9,7 @@ const { CreateCompaniesDB } = require("./Models/companies");
 const { CreateCountriesDB } = require("./Models/countries");
 const { CreateProductsDB } = require("./Models/productsTemp");
 const { CreateFabricMainCatagoriesDB } = require("./Models/fabricMainCatagories");
-const { CreateFabricSecondaryCatagoriesDB } = require("./Models/fabricSecondCatagories");
+const { CreateFabricQualityDB } = require("./Models/quality");
 
 //const { roleConfig } = require("../../mainConfig/roles.config");
 //const dbUrl = "mongodb://localhost:27017/admin";
@@ -24,7 +24,7 @@ async function ConstructDatabases() {
   await CreateProductsDB(database);
   await CreateUsersDB(database);
   await CreateFabricMainCatagoriesDB(database);
-  await CreateFabricSecondaryCatagoriesDB(database);
+  await CreateFabricQualityDB(database);
   await CreateCountriesDB(database);
   return true;
 }

@@ -7,7 +7,7 @@ dbConfig = {
     COMPANIES: "Companies",
     COUNTRIES: "Countries",
     PRODUCTS_MAINCATAGORIES: "Main-Catagories",
-    PRODUCTS_SECONDARYCATAGORIES: "Secondary-Catagories", 
+    PRODUCTS_QUALITY: "Fabric-Quality",
 
 };
 /* flags 001 => dbOwner - 002 => dbAdmins */

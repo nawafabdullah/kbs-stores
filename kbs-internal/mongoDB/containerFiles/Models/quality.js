@@ -1,6 +1,6 @@
 const { dbConfig } = require("../../../mainConfig/db.config");
 
-async function CreateFabricSecondaryCatagoriesDB(db) {
+async function CreateFabricQualityDB(db) {
    console.log(`Creating ${dbConfig.PRODUCTS_SECONDARYCATAGORIES}...`);
    db.createCollection(dbConfig.PRODUCTS_SECONDARYCATAGORIES, {
       validator: {
