@@ -1,7 +1,7 @@
 const { dbConfig } = require("../../../mainConfig/db.config");
 
 async function CreateFabricQualityDB(db) {
-   console.log(`Creating ${dbConfig.PRODUCTS_SECONDARYCATAGORIES}...`);
+   console.log(`Creating ${dbConfig.PRODUCTS_QUALITY}...`);
    db.createCollection(dbConfig.PRODUCTS_QUALITY, {
       validator: {
          $jsonSchema: {

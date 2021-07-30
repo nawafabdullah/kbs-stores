@@ -1,6 +1,6 @@
 const { GetDatabase, CloseConnection } = require('../../../../../mongoDB/containerFiles/mongo');
 const { dbConfig } = require('../../../../../mainConfig/db.config');
-
+const { Company } = require('../../../../../mongoDB/containerFiles/Models/company-model');
 /* *************** 
  
 Note: Since this is an internal system, and that only one user will use it a time
@@ -8,22 +8,46 @@ I assumed no parallelism and that entries will happen in sequence
 
 *************** */
 async function InsertCompany(companyObj) {
+    let company = New Company(
+        await GetCode(),
+        await companyObj.companyName,
+        await companyObj.companyOrigin,
+        await SetDate()
+    )
+
+
+}
+
+async function SetDate() {
+    let today = await new Date();
+    let date = await today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    let time = await today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    let dateTime = await date + ' ' + time;
+    return dateTime;
+}
+
+async function GetCode(companyOrigin) {
+
     // 
     //  let companyName, companyOrgin, companyCode, codeFromDB, letterCode, numberCode;
 
     // console.log("ADD PRODUCT JS FILE CALLED");
-    let companyName = await (companyObj.companyName).toString();
-    let companyOrigin = await (companyObj.companyOrigin).toString();
+    //let companyName = await(companyObj.companyName).toString();
+    //let companyOrigin = await(companyObj.companyOrigin).toString();
 
     // flags are set as 0 for the letter code and 1 to get the number 
     let letterCode = await GetFromDB(companyOrigin, 0);
     let numberCode = await GetFromDB(companyOrigin, 1);
     console.log("Number Code In MAIN IS::::::::::::::::: " + numberCode);
     let companyCode = await letterCode + "-" + numberCode;
-    ProcessParsing(companyName, companyOrigin, companyCode)
-    //CloseConnection();
     return companyCode;
+
+    //ProcessParsing(companyName, companyOrigin, companyCode)
+    //CloseConnection();
+    //return companyCode;
 }
+
+
 
 async function GetFromDB(origin, flag) {
     try {
@@ -147,5 +171,6 @@ async function RecoverFromUndefinedCode(oldCompanyCode) {
     console.log("After PARSINGGGGG::::::: " + companyCode);
     return companyCode;
 }
+* /
 
 module.exports = { InsertCompany };
