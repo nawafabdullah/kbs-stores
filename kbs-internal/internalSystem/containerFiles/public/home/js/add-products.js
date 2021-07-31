@@ -13,7 +13,7 @@ const {
 Note: Since this is an internal system, and that only one user will use it a time
 I assumed no parallelism and that entries will happen in sequence 
 
-*************** */
+*************** */ 
 
 // Discus whether the ID is assigned by store or by the system ??
 async function InsertProduct(productObj) {

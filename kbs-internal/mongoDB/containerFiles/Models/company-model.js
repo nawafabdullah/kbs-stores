@@ -6,5 +6,7 @@ class Company {
         this.entryDate = Entry_Date;
     }
 
-
+ 
 }
+
+module.exports = {Company};

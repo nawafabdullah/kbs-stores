@@ -24,4 +24,4 @@ class Fabric {
 */
 
 }
-module.exports = { Fabric };
+module.exports = { Fabric }; 

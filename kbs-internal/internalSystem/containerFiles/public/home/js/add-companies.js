@@ -8,14 +8,14 @@ I assumed no parallelism and that entries will happen in sequence
 
 *************** */
 async function InsertCompany(companyObj) {
-    let company = New Company(
+    let company = new Company(
         await GetCode(),
         await companyObj.companyName,
         await companyObj.companyOrigin,
         await SetDate()
     )
 
-
+    console.log(company);
 }
 
 async function SetDate() {
@@ -49,7 +49,7 @@ async function GetCode(companyOrigin) {
 
 
 
-async function GetFromDB(origin, flag) {
+async function GetFromDB(origin, flag) { 
     try {
         let database;
         database = await GetDatabase();
@@ -58,9 +58,10 @@ async function GetFromDB(origin, flag) {
             let nameCursorFromDB = await database.collection(`${dbConfig.COUNTRIES}`).find({ name: origin }).toArray();
             //  console.log("The name CURSOR CONTAINS:::::: " + nameCursorFromDB[0].code);
             let returnedLetterCode = await GetLetter(nameCursorFromDB[0].code);
+            console.log ("LETTER CODE::::::::::::::::: " + returnedLetterCode);
             return returnedLetterCode;
         } else if (flag == 1) {
-            let numCursorFromDB = await database.collection(`${dbConfig.PRODUCTS_COMPANIES}`).find({ Company_Origin: origin }).sort({ Entry_Date: -1 }).limit(1).toArray();
+            let numCursorFromDB = await database.collection(`${dbConfig.COMPANIES}`).find({ Company_Origin: origin }).sort({ Entry_Date: -1 }).limit(1).toArray();
             console.log("ARRAY CONTAINS:::::: " + numCursorFromDB[0]._id);
             let returnedNumberCode = await GetNumber(numCursorFromDB[0]._id);
             return returnedNumberCode;
@@ -171,6 +172,6 @@ async function RecoverFromUndefinedCode(oldCompanyCode) {
     console.log("After PARSINGGGGG::::::: " + companyCode);
     return companyCode;
 }
-* /
+
 
 module.exports = { InsertCompany };
