@@ -9,7 +9,7 @@ I assumed no parallelism and that entries will happen in sequence
 *************** */
 async function InsertCompany(companyObj) {
     let company = new Company(
-        await GetCode(),
+        await GetCode(companyObj.companyOrigin),
         await companyObj.companyName,
         await companyObj.companyOrigin,
         await SetDate()
@@ -49,25 +49,35 @@ async function GetCode(companyOrigin) {
 
 
 
-async function GetFromDB(origin, flag) { 
+async function GetFromDB(origin, flag) {
     try {
         let database;
         database = await GetDatabase();
 
         if (flag == 0) {
             let nameCursorFromDB = await database.collection(`${dbConfig.COUNTRIES}`).find({ name: origin }).toArray();
-            //  console.log("The name CURSOR CONTAINS:::::: " + nameCursorFromDB[0].code);
+            console.log("The name CURSOR CONTAINS:::::: " + nameCursorFromDB[0].code);
             let returnedLetterCode = await GetLetter(nameCursorFromDB[0].code);
-            console.log ("LETTER CODE::::::::::::::::: " + returnedLetterCode);
+            console.log("LETTER CODE::::::::::::::::: " + returnedLetterCode);
             return returnedLetterCode;
         } else if (flag == 1) {
             let numCursorFromDB = await database.collection(`${dbConfig.COMPANIES}`).find({ Company_Origin: origin }).sort({ Entry_Date: -1 }).limit(1).toArray();
+
+            // if (numCursorFromDB.includes("undefined")) {
+            //     numCursorFromDB = 0;
+            //     return numCursorFromDB;
+            // } else {
             console.log("ARRAY CONTAINS:::::: " + numCursorFromDB[0]._id);
             let returnedNumberCode = await GetNumber(numCursorFromDB[0]._id);
             return returnedNumberCode;
+            // }
         }
     } catch (error) {
-        console.error("failed to retrieve from the database \n Error: " + error);
+        if (error.message.includes("undefined")) {
+            return RecoverFromUndefinedCode(0);
+        } else {
+            console.error("failed to retrieve from the database \n Error: " + error);
+        }
     }
 }
 
@@ -129,6 +139,7 @@ async function ProcessParsing(companyName, companyOrigin, companyCode) {
     }
 }
 
+/* 
 async function DatabaseInsertion(companyObj) {
     try {
         let database;
@@ -149,6 +160,7 @@ async function DatabaseInsertion(companyObj) {
     }
 }
 
+*/
 async function RecoverFromDuplicateError(companyObj, errorString) {
     let duplicateID = errorString.substr(98, 3);
     duplicateID = parseInt(duplicateID);
@@ -165,12 +177,12 @@ async function RecoverFromDuplicateError(companyObj, errorString) {
     return true;
 }
 
-async function RecoverFromUndefinedCode(oldCompanyCode) {
-    let letterCode = oldCompanyCode.substr(0, 3);
-    let numberCode = 001;
-    let companyCode = letterCode + numberCode;
-    console.log("After PARSINGGGGG::::::: " + companyCode);
-    return companyCode;
+async function RecoverFromUndefinedCode(num) {
+    //let letterCode = oldCompanyCode.substr(0, 3);
+    let numberCode = parseInt(num) + 1;
+    //let companyCode = letterCode + numberCode;
+    console.log("After PARSINGGGGG::::::: " + numberCode);
+    return numberCode.toString();
 }
 
 
