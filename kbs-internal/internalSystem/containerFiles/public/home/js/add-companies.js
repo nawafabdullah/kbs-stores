@@ -14,8 +14,9 @@ async function InsertCompany(companyObj) {
         await companyObj.companyOrigin,
         await SetDate()
     )
-
-    console.log(company);
+   // console.log(companyObj.companyOrigin);
+   // console.log(company);
+    DatabaseInsertion(companyObj);
 }
 
 async function SetDate() {
@@ -139,7 +140,7 @@ async function ProcessParsing(companyName, companyOrigin, companyCode) {
     }
 }
 
-/* 
+
 async function DatabaseInsertion(companyObj) {
     try {
         let database;
@@ -160,7 +161,7 @@ async function DatabaseInsertion(companyObj) {
     }
 }
 
-*/
+
 async function RecoverFromDuplicateError(companyObj, errorString) {
     let duplicateID = errorString.substr(98, 3);
     duplicateID = parseInt(duplicateID);
@@ -173,7 +174,7 @@ async function RecoverFromDuplicateError(companyObj, errorString) {
     //console.log(newNumID);
     newID = await newLetterID + newNumID;
     //console.log("THE ID IS:::::: " + newID);
-    ProcessParsing(companyObj.Company_Name, companyObj.Company_Origin, newID);
+    InsertCompany(companyObj);
     return true;
 }
 
