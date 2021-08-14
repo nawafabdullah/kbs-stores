@@ -13,27 +13,29 @@ const {
 Note: Since this is an internal system, and that only one user will use it a time
 I assumed no parallelism and that entries will happen in sequence 
 
-*************** */ 
+*************** */
 
 // Discus whether the ID is assigned by store or by the system ??
 async function InsertProduct(productObj) {
 
   try {
     let fabric = new Fabric(
-      await GetNumberCode(await productObj.fabricPrimaryType, await productObj.quality, await productObj.companyName),
-      await productObj.companyName,
+      await AssignFabricCode(productObj),
+      //await productObj.companyCode,
       await productObj.metersAdded,
       await productObj.fabricPrimaryType,
-      await productObj.quality,
-      await productObj.price,
+      await productObj.fabricQuality,
+      await productObj.fabricColor,
+      await productObj.fabricPrice,
       await SetDate()
     );
     console.log(fabric);
+    // AssignFabricCode(productObj);
   }
   catch (error) {
     console.error("Could not create the object \n Error:" + error.message);
     if (error.message.includes("undefined")) {
-      RecoverFromFirstEntryError(productObj.fabricPrimaryType, productObj.quality, productObj.companyName);
+      //  RecoverFromFirstEntryError(productObj.fabricPrimaryType, productObj.quality, productObj.companyName);
     }
   }
 }
@@ -46,11 +48,26 @@ async function SetDate() {
   return dateTime;
 }
 
-async function GetNumberCode(primaryType, quality, companyName) {
+
+async function AssignFabricCode(productObj) {
+
+  console.log("INSIDE THE FUNCTION");
+  let companyCode = await productObj.companyCode.toString();
+  let fabricPrimaryType = await productObj.fabricPrimaryType.toString();
+  let fabricQuality = await productObj.fabricQuality.toString();
+  let fabricColor = await fabricColor.toString();
+
+  let fabricCode = await companyCode + await fabricPrimaryType + await fabricQuality + await fabricColor;
+  console.log(fabricCode);
+}
+
+module.exports = { InsertProduct }
+/*
+async function AssignFabricCode(fabricObj) {
   try {
     let database = await GetDatabase();
-    let numCursorFromDB = await database.collection(`${dbConfig.PRODUCTS}`).find().sort({ Entry_Date: -1 }).limit(1).toArray();
-    OptimizeNumberCode(primaryType, quality, companyName, await numCursorFromDB._id.toString());
+    //let numCursorFromDB = await database.collection(`${dbConfig.PRODUCTS}`).find().sort({ Entry_Date: -1 }).limit(1).toArray();
+    //OptimizeNumberCode(primaryType, quality, companyName, await numCursorFromDB._id.toString());
   } catch (error) {
     console.error("Could not retrieve the number from the database \nError " + error);
     if (error.message.includes("undefined")) {
@@ -58,8 +75,9 @@ async function GetNumberCode(primaryType, quality, companyName) {
     }
   }
 }
+*/
 
-
+/*
 async function OptimizeNumberCode(primaryType, quality, companyName, num) {
   //let old_ID = num.substr(14, 3);
   let old_ID = parseInt(num);

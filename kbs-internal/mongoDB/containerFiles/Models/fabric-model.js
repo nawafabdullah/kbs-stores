@@ -2,12 +2,13 @@ const { GetDatabase } = require('../mongo');
 
 class Fabric {
 
-    constructor(ID, Company_Name, Number_Of_Meters, Primary_Type, Quality, Price, Entry_Date) {
-        this.id = ID;
-        this.companyName = Company_Name;
+    constructor(ID, Number_Of_Meters, Primary_Type, Quality, Color, Price, Entry_Date) {
+        this._id = ID;
+        //this.companyCode = Company_Code;
         this.numberOfMeters = Number_Of_Meters;
         this.primaryType = Primary_Type;
         this.quality = Quality;
+        this.color = Color;
         this.price = Price;
         this.entryDate = Entry_Date;
 
@@ -24,4 +25,4 @@ class Fabric {
 */
 
 }
-module.exports = { Fabric }; 
+module.exports = { Fabric };

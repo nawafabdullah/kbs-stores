@@ -187,7 +187,7 @@ router.route("/products/add-company")
         else {
             // Data from form is valid.
             //console.log(companyName);
-            console.log(companyObj);
+            // console.log(companyObj);
             InsertCompany(companyObj);
         }
         res.writeHead(301, {

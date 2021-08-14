@@ -9,42 +9,11 @@
     <div id="add-product" style="text-align: center; margin-top: 5px;">
 
         <form action="/products/add-product" id="productForm" method="POST">
-            <label for="fabricID">رمز القطعة</label>
-            <input type="text" id="fabricID=" name="fabricID" required>
 
-            <label for="companyName">إسم الشركة </label>
-            <select name="companies" id="companies">
-                <option id="companies">
-
-                </option>
-            </select>
-
-            <script>
-                let optionList = document.getElementById('companies').options;
-                let options = [
-                    {
-                        text: 'Option 1',
-                        value: 'Value 1'
-                    },
-                    {
-                        text: 'Option 2',
-                        value: 'Value 2',
-                        selected: true
-                    },
-                    {
-                        text: 'Option 3',
-                        value: 'Value 3'
-                    }
-                ];
-
-                options.forEach(option =>
-                    optionList.add(
-                        new Option(option.text, option.value, option.selected)
-                    )
-                );
+            <label for="metersAdded">رمز الشركة </label>
+            <input type="text" id="companyCode" name="companyCode" required>
 
 
-            </script>
             <label for="metersAdded">عدد الأمتار المضافة</label>
             <input type="text" id="metersAdded" name="metersAdded" required>
 
@@ -54,10 +23,14 @@
 
 
             <label for="fabricQuality"> نوع القماش </label>
-            <input type="text" id="quality" name="quality" required>
+            <input type="text" id="fabricQuality" name="fabricQuality" required>
+
+            <label for="fabricColor"> لون القماش </label>
+            <input type="text" id="fabricColor" name="fabricColor" required>
+
 
             <label for="fabricPrice"> سعر المتر </label>
-            <input type="text" id="price" name="price" required>
+            <input type="text" id="fabricPrice" name="fabricPrice" required>
 
 
 

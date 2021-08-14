@@ -8,15 +8,16 @@ I assumed no parallelism and that entries will happen in sequence
 
 *************** */
 async function InsertCompany(companyObj) {
+    let ID = await GetCode(companyObj.companyOrigin);
     let company = new Company(
-        await GetCode(companyObj.companyOrigin),
+        await ID,
         await companyObj.companyName,
         await companyObj.companyOrigin,
         await SetDate()
     )
-   // console.log(companyObj.companyOrigin);
-   // console.log(company);
-    DatabaseInsertion(companyObj);
+    // console.log(companyObj.companyOrigin);
+    //console.log(company);
+    await DatabaseInsertion(company);
 }
 
 async function SetDate() {
@@ -39,7 +40,7 @@ async function GetCode(companyOrigin) {
     // flags are set as 0 for the letter code and 1 to get the number 
     let letterCode = await GetFromDB(companyOrigin, 0);
     let numberCode = await GetFromDB(companyOrigin, 1);
-    console.log("Number Code In MAIN IS::::::::::::::::: " + numberCode);
+    //console.log("Number Code In MAIN IS::::::::::::::::: " + numberCode);
     let companyCode = await letterCode + "-" + numberCode;
     return companyCode;
 
@@ -57,9 +58,9 @@ async function GetFromDB(origin, flag) {
 
         if (flag == 0) {
             let nameCursorFromDB = await database.collection(`${dbConfig.COUNTRIES}`).find({ name: origin }).toArray();
-            console.log("The name CURSOR CONTAINS:::::: " + nameCursorFromDB[0].code);
+            //   console.log("The name CURSOR CONTAINS:::::: " + nameCursorFromDB[0].code);
             let returnedLetterCode = await GetLetter(nameCursorFromDB[0].code);
-            console.log("LETTER CODE::::::::::::::::: " + returnedLetterCode);
+            //   console.log("LETTER CODE::::::::::::::::: " + returnedLetterCode);
             return returnedLetterCode;
         } else if (flag == 1) {
             let numCursorFromDB = await database.collection(`${dbConfig.COMPANIES}`).find({ Company_Origin: origin }).sort({ Entry_Date: -1 }).limit(1).toArray();
@@ -68,7 +69,7 @@ async function GetFromDB(origin, flag) {
             //     numCursorFromDB = 0;
             //     return numCursorFromDB;
             // } else {
-            console.log("ARRAY CONTAINS:::::: " + numCursorFromDB[0]._id);
+            //console.log("ARRAY CONTAINS:::::: " + numCursorFromDB[0]._id);
             let returnedNumberCode = await GetNumber(numCursorFromDB[0]._id);
             return returnedNumberCode;
             // }
@@ -95,7 +96,7 @@ async function GetLetter(origin) {
 
 async function GetNumber(coded) {
     let examineInt = await coded.substr(3, 3);
-    console.log("EXAMINE AFTER SLICING IS:::::::: " + examineInt);
+    // console.log("EXAMINE AFTER SLICING IS:::::::: " + examineInt);
 
     examineInt = await parseInt(examineInt);
     //console.log("EXAMINE AFTER EXTRACTION IS:::::::: " + examineInt);
@@ -118,7 +119,7 @@ async function GetNumber(coded) {
         return false;
     }
 }
-
+/*
 async function ProcessParsing(companyName, companyOrigin, companyCode) {
     try {
         //  console.log("IN PROCESS PARSING CODE IS:::::::::::::::::::::::" + companyCode);
@@ -127,7 +128,7 @@ async function ProcessParsing(companyName, companyOrigin, companyCode) {
         let time = await today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
         let dateTime = await date + ' ' + time;
         let containsUndefined = await companyCode.includes("undefined");
-        console.log(containsUndefined);
+        //  console.log(containsUndefined);
         if (containsUndefined) {
             companyCode = await RecoverFromUndefinedCode(companyCode);
         }
@@ -140,8 +141,9 @@ async function ProcessParsing(companyName, companyOrigin, companyCode) {
     }
 }
 
-
+*/
 async function DatabaseInsertion(companyObj) {
+    //  console.log("Inside the insertion function: " + companyObj.companyName);
     try {
         let database;
         database = await GetDatabase();
@@ -174,7 +176,8 @@ async function RecoverFromDuplicateError(companyObj, errorString) {
     //console.log(newNumID);
     newID = await newLetterID + newNumID;
     //console.log("THE ID IS:::::: " + newID);
-    InsertCompany(companyObj);
+    companyObj._id = newID;
+    DatabaseInsertion(companyObj);
     return true;
 }
 
@@ -182,7 +185,7 @@ async function RecoverFromUndefinedCode(num) {
     //let letterCode = oldCompanyCode.substr(0, 3);
     let numberCode = parseInt(num) + 1;
     //let companyCode = letterCode + numberCode;
-    console.log("After PARSINGGGGG::::::: " + numberCode);
+    //console.log("After PARSINGGGGG::::::: " + numberCode);
     return numberCode.toString();
 }
 
