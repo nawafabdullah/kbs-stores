@@ -157,7 +157,7 @@ router.route("/products/add-product")
         // Data from form is valid.
         // res.set("Content-Security-Policy", "default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'")
         //res.send("<html><head></head><body></body></html>");
-        console.log("I am here!!");
+        // console.log("I am here!!");
         InsertProduct(productObj);
         //}
         res.writeHead(301, {

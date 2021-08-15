@@ -21,7 +21,7 @@ async function InsertProduct(productObj) {
   try {
     let fabric = new Fabric(
       await AssignFabricCode(productObj),
-      //await productObj.companyCode,
+      await productObj.companyCode,
       await productObj.metersAdded,
       await productObj.fabricPrimaryType,
       await productObj.fabricQuality,
@@ -30,6 +30,8 @@ async function InsertProduct(productObj) {
       await SetDate()
     );
     console.log(fabric);
+    DatabaseInsertion(fabric);
+    RetrieveLatestNum(fabric);
     // AssignFabricCode(productObj);
   }
   catch (error) {
@@ -51,15 +53,61 @@ async function SetDate() {
 
 async function AssignFabricCode(productObj) {
 
-  console.log("INSIDE THE FUNCTION");
+  //  console.log("INSIDE THE FUNCTION");
   let companyCode = await productObj.companyCode.toString();
   let fabricPrimaryType = await productObj.fabricPrimaryType.toString();
   let fabricQuality = await productObj.fabricQuality.toString();
-  let fabricColor = await fabricColor.toString();
+  let fabricColor = await productObj.fabricColor.toString();
 
-  let fabricCode = await companyCode + await fabricPrimaryType + await fabricQuality + await fabricColor;
-  console.log(fabricCode);
+  let fabricCode = "(" + await companyCode + ")" + "-" + await fabricPrimaryType + "-" + await fabricQuality + "-" + await fabricColor;
+  // console.log(fabricCode);
+
 }
+
+
+async function RetrieveLatestNum(productObj) {
+  try {
+    let database = await GetDatabase();
+    let nameCursorFromDB = await database.collection(`${dbConfig.PRODUCTS}`).find({ Company_Code: productObj.companyCode, Primary_Type: productObj.fabricPrimaryType }).toArray();
+
+    let numCursorFromDB = await database.collection(`${dbConfig.COMPANIES}`).find({ Company_Code: productObj.companyCode, Primary_Type: productObj.fabricPrimaryType }).sort({ Entry_Date: -1 }).limit(1).toArray();
+    console.log("inside retrive function: " + numCursorFromDB[0]);
+
+    /*
+        for (item in nameCursorFromDB) {
+          console.log(nameCursorFromDB[0]);
+        }
+    */
+
+  } catch (error) {
+    console.log("Could not retrieve from Database \nError: " + error);
+  }
+
+
+}
+
+async function DatabaseInsertion(productObj) {
+  //  console.log("Inside the insertion function: " + companyObj.companyName);
+  try {
+    let database;
+    database = await GetDatabase();
+    let { insertedID } = await database.collection(`${dbConfig.PRODUCTS}`).insertOne(productObj);
+    // CloseConnection();
+    console.log("Success..");
+    return true;
+  } catch (error) {
+    let errorString = (error.message).toString();
+    let containsDuplicate = errorString.includes("E11000");
+    if (containsDuplicate) {
+      RecoverFromDuplicateError(productObj, errorString);
+      return true;
+    }
+    console.error("failed to insert the company to the Database \n Error: " + error);
+    return false;
+  }
+}
+
+
 
 module.exports = { InsertProduct }
 /*
