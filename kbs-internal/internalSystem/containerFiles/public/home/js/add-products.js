@@ -20,7 +20,8 @@ async function InsertProduct(productObj) {
 
   try {
     let fabric = new Fabric(
-      await AssignFabricCode(productObj),
+      await AssignFabricCode(),
+      await AssignStoreIdentifier(productObj),
       await productObj.companyCode,
       await productObj.metersAdded,
       await productObj.fabricPrimaryType,
@@ -29,7 +30,7 @@ async function InsertProduct(productObj) {
       await productObj.fabricPrice,
       await SetDate()
     );
-    console.log(fabric);
+    // console.log(fabric);
     DatabaseInsertion(fabric);
     RetrieveLatestNum(fabric);
     // AssignFabricCode(productObj);
@@ -42,6 +43,7 @@ async function InsertProduct(productObj) {
   }
 }
 
+
 async function SetDate() {
   let today = await new Date();
   let date = await today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
@@ -50,37 +52,53 @@ async function SetDate() {
   return dateTime;
 }
 
-
-async function AssignFabricCode(productObj) {
+async function AssignStoreIdentifier(productObj) {
 
   //  console.log("INSIDE THE FUNCTION");
-  let companyCode = await productObj.companyCode.toString();
+  //let companyCode = await productObj.companyCode.toString();
+
   let fabricPrimaryType = await productObj.fabricPrimaryType.toString();
   let fabricQuality = await productObj.fabricQuality.toString();
   let fabricColor = await productObj.fabricColor.toString();
 
-  let fabricCode = "(" + await companyCode + ")" + "-" + await fabricPrimaryType + "-" + await fabricQuality + "-" + await fabricColor;
-  // console.log(fabricCode);
-
+  let storeIdentifier = await fabricPrimaryType.substr(0, 4) + "-" + await fabricQuality.substr(0, 4) + "-" + await fabricColor.substr(0, 4);
+  console.log(storeIdentifier);
+  return storeIdentifier;
 }
 
 
-async function RetrieveLatestNum(productObj) {
+
+
+async function AssignFabricCode() {
+
   try {
-    let database = await GetDatabase();
-    let nameCursorFromDB = await database.collection(`${dbConfig.PRODUCTS}`).find({ Company_Code: productObj.companyCode, Primary_Type: productObj.fabricPrimaryType }).toArray();
+    //let numberCode = parseInt(RetrieveLatestNum()) + 1;
 
-    let numCursorFromDB = await database.collection(`${dbConfig.COMPANIES}`).find({ Company_Code: productObj.companyCode, Primary_Type: productObj.fabricPrimaryType }).sort({ Entry_Date: -1 }).limit(1).toArray();
-    console.log("inside retrive function: " + numCursorFromDB[0]);
+    let retrieved = await RetrieveLatestNum()._id.toString().substr(0, 3);
+    console.log(retrieved);
 
-    /*
-        for (item in nameCursorFromDB) {
-          console.log(nameCursorFromDB[0]);
-        }
-    */
+    //let numberCode = await parseInt(.substr(2)) + 1;
+    //let productCode = "F-" + numberCode;
+    //console.log(productCode);
 
   } catch (error) {
+    console.error("Could not assign a code to the product \nError" + error);
+    // return false;
+  }
+}
+
+
+async function RetrieveLatestNum() {
+  try {
+    let database = await GetDatabase();
+    let codeCursorFromDB = await database.collection(`${dbConfig.PRODUCTS}`).find().sort({ Entry_Date: -1 }).limit(1).toArray();
+    let dbProductCode = await codeCursorFromDB[0]._id;
+    return dbProductCode;
+  } catch (error) {
     console.log("Could not retrieve from Database \nError: " + error);
+    if (error.message.toString().includes("undefined")) {
+      return "F-000";
+    }
   }
 
 
@@ -99,8 +117,9 @@ async function DatabaseInsertion(productObj) {
     let errorString = (error.message).toString();
     let containsDuplicate = errorString.includes("E11000");
     if (containsDuplicate) {
-      RecoverFromDuplicateError(productObj, errorString);
-      return true;
+      //  RecoverFromDuplicateError(productObj, errorString);
+      //  return true;
+      console.log("duplicate");
     }
     console.error("failed to insert the company to the Database \n Error: " + error);
     return false;
