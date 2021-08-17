@@ -74,8 +74,17 @@ async function AssignFabricCode() {
   try {
     //let numberCode = parseInt(RetrieveLatestNum()) + 1;
 
-    let retrieved = await RetrieveLatestNum()._id.toString().substr(0, 3);
-    console.log(retrieved);
+    let re = await RetrieveLatestNum();
+    console.log(re);
+
+
+    if (RetrieveLatestNum() == "F-000") {
+      return "F-001"
+    } else {
+      let retrieved = await RetrieveLatestNum()._id.toString().substr(0, 3);
+      console.log(retrieved);
+    }
+
 
     //let numberCode = await parseInt(.substr(2)) + 1;
     //let productCode = "F-" + numberCode;
