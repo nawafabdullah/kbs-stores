@@ -32,7 +32,7 @@ async function InsertProduct(productObj) {
     );
     // console.log(fabric);
     DatabaseInsertion(fabric);
-    RetrieveLatestNum(fabric);
+    //  RetrieveLatestNum(fabric);
     // AssignFabricCode(productObj);
   }
   catch (error) {
@@ -74,15 +74,19 @@ async function AssignFabricCode() {
   try {
     //let numberCode = parseInt(RetrieveLatestNum()) + 1;
 
-    let re = await RetrieveLatestNum();
-    console.log(re);
+    let fromDB = await RetrieveLatestNum();
+    console.log(fromDB);
 
 
-    if (RetrieveLatestNum() == "F-000") {
-      return "F-001"
+    if (fromDB == "F-0") {
+      return "F-1"
     } else {
-      let retrieved = await RetrieveLatestNum()._id.toString().substr(0, 3);
-      console.log(retrieved);
+      let retrieved = await fromDB.toString().substr(2);
+      let numCode = await parseInt(retrieved) + 1;
+
+      console.log(fromDB.toString().substr(0, 2) + numCode);
+      return fromDB.toString().substr(0, 2) + numCode;
+
     }
 
 
@@ -101,12 +105,17 @@ async function RetrieveLatestNum() {
   try {
     let database = await GetDatabase();
     let codeCursorFromDB = await database.collection(`${dbConfig.PRODUCTS}`).find().sort({ Entry_Date: -1 }).limit(1).toArray();
-    let dbProductCode = await codeCursorFromDB[0]._id;
-    return dbProductCode;
+    console.log("inside retrieve " + codeCursorFromDB);
+
+    if (codeCursorFromDB == '') {
+      return "F-0";
+    } else {
+      return codeCursorFromDB[0]._id;
+    }
   } catch (error) {
     console.log("Could not retrieve from Database \nError: " + error);
     if (error.message.toString().includes("undefined")) {
-      return "F-000";
+      ;
     }
   }
 
@@ -126,14 +135,56 @@ async function DatabaseInsertion(productObj) {
     let errorString = (error.message).toString();
     let containsDuplicate = errorString.includes("E11000");
     if (containsDuplicate) {
-      //  RecoverFromDuplicateError(productObj, errorString);
-      //  return true;
-      console.log("duplicate");
+      RecoverFromDuplicateError(productObj, errorString);
+      return true;
+      //console.log("duplicate");
+    } else {
+      console.error("failed to insert the company to the Database \n Error: " + error);
+      return false;
     }
-    console.error("failed to insert the company to the Database \n Error: " + error);
-    return false;
   }
 }
+async function RecoverFromDuplicateError(productObj, errorString) {
+  // let duplicateID = errorString.substr(98, 3);
+  // duplicateID = parseInt(duplicateID);
+  //console.log("SLICE::::::::::::::::::::" + duplicateID);
+  let oldID = await productObj._id;
+  oldNumID = await oldID.substr(2);
+  newLetterID = await oldID.substr(0, 2);
+  oldNumID = await parseInt(oldNumID);
+  newNumID = oldNumID + 1;
+  console.log("Recovery" + newNumID);
+  newID = await newLetterID + newNumID;
+  //console.log("THE ID IS:::::: " + newID);
+  productObj._id = newID;
+  DatabaseInsertion(productObj);
+  return true;
+}
+
+var up = document.getElementById('geeks');
+var down = document.getElementById('gfg');
+var select = document.getElementById("arr");
+var elmts = ["HTML", "CSS", "JS", "PHP", "jQuery"];
+up.innerHTML = "Click on the button to "
+  + "perform the operation" +
+  ".<br>Array - [" + elmts + "]";
+
+// Main function
+function GFG_Fun() {
+  for (var i = 0; i < elmts.length; i++) {
+    var optn = elmts[i];
+    var el = document.createElement("option");
+    el.textContent = optn;
+    el.value = optn;
+    select.appendChild(el);
+  }
+  down.innerHTML = "Elements Added";
+}
+
+
+
+
+
 
 
 
