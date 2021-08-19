@@ -1,21 +1,35 @@
+const {
+    GetDatabase,
+    CloseConnection,
+} = require("../../../../../mongoDB/containerFiles/mongo");
+const { dbConfig } = require("../../../../../mainConfig/db.config");
+const {
+    Fabric,
+} = require("../../../../../mongoDB/containerFiles/Models/fabric-model");
 
 
-console.log("File ACCESSED");
-let table = document.createElement('table');
-for (var i = 1; i < 4; i++) {
-    var tr = document.createElement('tr');
+async function DisplayProducts() {
+    let database = await GetDatabase();
+    let codeCursorFromDB = await database.collection(`${dbConfig.PRODUCTS}`).find().sort({ Entry_Date: -1 }).toArray();
 
-    var td1 = document.createElement('td');
-    var td2 = document.createElement('td');
+    for (item in codeCursorFromDB) {
+        //   console.log(codeCursorFromDB[item]);
+        let row = enrolled.insertRow(1);
+        let cell1 = row.insertCell(0);
+        let cell2 = row.insertCell(1);
+        let cell3 = row.insertCell(2);
+        cell1.innerHTML = codeCursorFromDB[i].Store_Identifier;
+        cell2.innerHTML = courseArray[i].Quality;
+        cell3.innerHTML = courseArray[i].Quality;
+    }
 
-    var text1 = document.createTextNode('Text1');
-    var text2 = document.createTextNode('Text2');
-
-    td1.appendChild(text1);
-    td2.appendChild(text2);
-    tr.appendChild(td1);
-    tr.appendChild(td2);
-
-    table.appendChild(tr);
 }
-document.body.appendChild(table);
+
+//return codeCursorFromDB;
+
+
+
+
+DisplayProducts();
+
+module.exports = { DisplayProducts };

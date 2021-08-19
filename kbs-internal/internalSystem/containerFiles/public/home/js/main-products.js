@@ -17,6 +17,7 @@ $(document).ready(function () {
                 "<option value='add-product'>إضافة قماش جديد   </option>" +
                 "<option value='remove-product'>حذف قماش  </option>" +
                 "<option value='modify-product'>التعديـل على قطعة موجودة </option>" +
+                "<option value='display-product'>عرض المنتجـات </option>" +
                 "<br /><br />" +
 
                 "</select>" +

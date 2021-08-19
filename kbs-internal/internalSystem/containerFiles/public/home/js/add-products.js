@@ -161,6 +161,7 @@ async function RecoverFromDuplicateError(productObj, errorString) {
   return true;
 }
 
+/*
 var up = document.getElementById('geeks');
 var down = document.getElementById('gfg');
 var select = document.getElementById("arr");
@@ -185,7 +186,7 @@ function GFG_Fun() {
 
 
 
-
+*/
 
 
 module.exports = { InsertProduct }

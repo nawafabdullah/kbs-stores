@@ -18,6 +18,7 @@ const { InsertCompany } = require('./public/home/js/add-companies');
 const { InsertProduct } = require('./public/home/js/add-products');
 //const { AddCompaniestoDB } = require('./public/home/Main-Products/Companies/Add-Companies/add-companies');
 
+const { DisplayProducts } = require('./public/home/js/display-products');
 
 const { dbConfig } = require("../../mainConfig/db.config");
 const { RetrieveUser } = require('./public/home/UsersService/sign-in/signin');
@@ -171,7 +172,9 @@ router.route("/products/add-product")
 
 router.route("/products/display-products")
     .get(function (req, res) {
-        res.sendFile(path.join(__dirname + "/public/home/Main-Products/"));
+        res.sendFile(path.join(__dirname + "/public/home/Main-Products/Display-Products"));
+        let productsArr = DisplayProducts();
+        res.send(productsArr);
     })
 
 
