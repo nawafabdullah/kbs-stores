@@ -11,7 +11,9 @@ const {
 async function DisplayProducts() {
     let database = await GetDatabase();
     let codeCursorFromDB = await database.collection(`${dbConfig.PRODUCTS}`).find().sort({ Entry_Date: -1 }).toArray();
+    return codeCursorFromDB;
 
+    /*
     for (item in codeCursorFromDB) {
         //   console.log(codeCursorFromDB[item]);
         let row = enrolled.insertRow(1);
@@ -22,6 +24,7 @@ async function DisplayProducts() {
         cell2.innerHTML = courseArray[i].Quality;
         cell3.innerHTML = courseArray[i].Quality;
     }
+    */
 
 }
 

@@ -35,7 +35,7 @@ $(document).ready(function () {
                     } else if (val == "modify-product") {
                         $("#secondary").load("../Main-Products/Products/Modify-Products/index.html");
                     } else if (val == "display-product") {
-                        $("#secondary").load("../Main-Products/Products/Display-Products/index.html");
+                        $("#secondary").load("../Main-Products/Products/Display-Products/index.hbs");
                     } else {
                         $("#secondary").html("<h1> none </h1>");
                     }
