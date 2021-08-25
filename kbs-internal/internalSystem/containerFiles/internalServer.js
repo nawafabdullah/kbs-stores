@@ -174,8 +174,10 @@ router.route("/products/display-products")
     .get(function (req, res) {
         // res.sendFile(path.join(__dirname + "/public/home/Main-Products/Display-Products"));
         let productsArr = DisplayProducts();
+
+        console.log(productsArr[0]);
         // res.send(productsArr);
-        res.render(path.join(__dirname + "/public/home/Main-Products/Display-Products/index"), { items: productsArr });
+        res.render(__dirname + "/public/home/Main-Products/Display-Products/index", { productsArr: productsArr });
     })
 
 

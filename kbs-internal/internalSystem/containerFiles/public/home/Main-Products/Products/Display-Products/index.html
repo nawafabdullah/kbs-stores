@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type="text/css">
+        table,
+        td,
+        th {
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 50%;
+
+        }
+
+        .table-data {
+            position: relative;
+            left: 50px;
+            top: 50px;
+        }
+
+        th,
+        td {
+            padding: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <form action="/products/display-product">
+        <div class="table-data">
+            <table border="1">
+                <tr>
+                    <th>S.N</th>
+                    <th>Full Name</th>
+                    <th>Email Address</th>
+                    <th>City</th>
+                    <th>Country</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+
+                <% if(productsArr.length!=0){ var i=1; productsArr.forEach(function(data){ %>
+                    <tr>
+                        <td>
+                            <%=i; %>
+                        </td>
+                        <td>
+                            <%=data.Company_Code %>
+                        </td>
+                        <td>
+                            <%=data.email_adress %>
+                        </td>
+                        <td>
+                            <%=data.city %>
+                        </td>
+                        <td>
+                            <%=data.country %>
+                        </td>
+                        <td><a href="/edit/<%=data.id%>">Edit</a></td>
+                        <td><a href="/delete/<%=data.id%>">Delete</a></td>
+                    </tr>
+                    <% i++; }) %>
+                        <% } else{ %>
+                            <tr>
+                                <td colspan="7">No Data Found</td>
+                            </tr>
+                            <% } %>
+            </table>
+        </div>
+    </form>
+</body>
+
+
+
+
+
+
+<!--head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+ <style type="text/css">
+     table, td, th {  
+     border: 1px solid #ddd;
+     text-align: left;
+   }
+   
+   table {
+     border-collapse: collapse;
+     width: 50%;
+    
+   }
+   .table-data{
+       position: relative;
+     left:50px;
+     top:50px;
+   }
+   th, td {
+     padding: 15px;
+   }
+ </style>
+</head>
+<body>
+<!--====form section start====-->
+<!--div class="table-data">
+    <table border="1">
+        <tr>
+            <th>S.N</th>
+            <th>Full Name</th>
+            <th>Email Address</th>
+            <th>City</th>
+            <th>Country</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+
+        <% if(userData.length!=0){ var i=1; userData.forEach(function(data){ %>
+            <tr>
+                <td>
+                    <%=i; %>
+                </td>
+                <td>
+                    <%=data.full_name %>
+                </td>
+                <td>
+                    <%=data.email_adress %>
+                </td>
+                <td>
+                    <%=data.city %>
+                </td>
+                <td>
+                    <%=data.country %>
+                </td>
+                <td><a href="/edit/<%=data.id%>">Edit</a></td>
+                <td><a href="/delete/<%=data.id%>">Delete</a></td>
+            </tr>
+            <% i++; }) %>
+                <% } else{ %>
+                    <tr>
+                        <td colspan="7">No Data Found</td>
+                    </tr>
+                    <% } %>
+    </table>
+</div>
+</body>
+
+</html>
+
+
+
+
+
+
+<!--
+<section class="load-products">
+
+
+    <a href="/products/display-products"> Products List </a>
+    <div>
+        {{#each items }}
+        <article class="item">
+            <div> Store Identifier: {this.Store_Identifier}</div>
+            <div> Company Code: {this.Company_Code}</div>
+            <div> Number Of Meters: {this.Number_Of_meters}</div>
+
+
+
+
+        </article>
+        {{/each}}
+    </div>
+
+
+</section>
+
+
+
+
+<!--div id="main">
+
+        <h2> Products List </h2>
+
+        <table id="enrolled" align="center">
+            <tr id="titleRow">
+                <th>Course</th>
+                <th>Course Number</th>
+                <th>Room</th>
+            </tr>
+        </table>
+
+
+    </div>
+
+    <footer></footer>
+
+
+
+    <script src 'self' "js/main-products.js"></script>
+
+</body>
+
+</html>
+
+-->
