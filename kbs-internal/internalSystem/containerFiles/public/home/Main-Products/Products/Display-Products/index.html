@@ -34,9 +34,10 @@
 
 <body>
 
-    <form action="/products/display-product">
-        <div class="table-data">
-            <table border="1">
+    <div class="table-data">
+        <table border="1">
+            <form action="/products/display-products">
+                <button id="submit"></button>
                 <tr>
                     <th>S.N</th>
                     <th>Full Name</th>
@@ -73,9 +74,9 @@
                                 <td colspan="7">No Data Found</td>
                             </tr>
                             <% } %>
-            </table>
-        </div>
-    </form>
+        </table>
+        </form>
+    </div>
 </body>
 
 
