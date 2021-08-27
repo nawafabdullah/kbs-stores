@@ -43,6 +43,8 @@ console.log(`listening at ${mServerConfig.HOST}:${mServerConfig.PORT}`);
 
 app.use('/jquery', express.static(__dirname + '../../node_modules/jquery/dist/'));
 
+app.set('view engine', 'ejs');
+
 
 router.route("/")
     .get(function (req, res) {
@@ -171,13 +173,14 @@ router.route("/products/add-product")
 
 
 router.route("/products/display-products")
-    .get(function (req, res) {
-        // res.sendFile(path.join(__dirname + "/public/home/Main-Products/Display-Products"));
-        let productsArr = DisplayProducts();
+    .get(async function (req, res) {
 
+        let productsArr = await DisplayProducts();
         console.log(productsArr[0]);
+        //res.sendFile(path.join(__dirname + "/public/home/Main-Products/Products/Display-Products/"), { productsArr: productsArr });
+
         // res.send(productsArr);
-        res.render(__dirname + "/public/home/Main-Products/Display-Products/index", { productsArr: productsArr });
+        res.render(path.join(__dirname + "/public/home/Main-Products/Products/Display-Products/index"), { productsArr: productsArr });
     })
 
 

@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -33,6 +32,9 @@
 </head>
 
 <body>
+    <form action="/products/display-products">
+        <button type="submit">Load Products</button>
+    </form>
 
     <div class="table-data">
         <table border="1">
@@ -48,32 +50,28 @@
                     <th>Delete</th>
                 </tr>
 
-                <% if(productsArr.length!=0){ var i=1; productsArr.forEach(function(data){ %>
+                <if(%=productsArr%.length!=0){ let i=0; %=productsArr%.forEach(function(data){>
                     <tr>
                         <td>
-                            <%=i; %>
+                            <i;>
                         </td>
                         <td>
-                            <%=data.Company_Code %>
+                            <data.Company_Code>
                         </td>
                         <td>
-                            <%=data.email_adress %>
+                            <data.Company_Code>
                         </td>
                         <td>
-                            <%=data.city %>
+                            <data.Company_Code>
                         </td>
                         <td>
-                            <%=data.country %>
+                            <data.Company_Code>
                         </td>
-                        <td><a href="/edit/<%=data.id%>">Edit</a></td>
-                        <td><a href="/delete/<%=data.id%>">Delete</a></td>
+                        <td><a href="/edit/<=data.id>">Edit</a></td>
+                        <td><a href="/delete/<=data.id>">Delete</a></td>
                     </tr>
-                    <% i++; }) %>
-                        <% } else{ %>
-                            <tr>
-                                <td colspan="7">No Data Found</td>
-                            </tr>
-                            <% } %>
+                    <i++;})>
+
         </table>
         </form>
     </div>
