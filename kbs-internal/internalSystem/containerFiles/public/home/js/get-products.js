@@ -8,7 +8,7 @@ const {
 } = require("../../../../../mongoDB/containerFiles/Models/fabric-model");
 
 
-async function DisplayProducts() {
+async function GetProducts() {
     let database = await GetDatabase();
     let codeCursorFromDB = await database.collection(`${dbConfig.PRODUCTS}`).find().sort({ Entry_Date: -1 }).toArray();
     return codeCursorFromDB;
@@ -33,6 +33,5 @@ async function DisplayProducts() {
 
 
 
-DisplayProducts();
 
-module.exports = { DisplayProducts };
+module.exports = { GetProducts };

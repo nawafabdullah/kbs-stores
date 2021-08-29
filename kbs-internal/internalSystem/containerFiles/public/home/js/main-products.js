@@ -29,13 +29,13 @@ $(document).ready(function () {
                     let val = $(this).val();
                     console.log("VAL IS " + val);
                     if (val == "add-product") {
-                        $("#secondary").load("../Main-Products/Products/Add-Products/index.html");
+                        $("#secondary").load("../Views/add-products.html");
                     } else if (val == "remove-product") {
-                        $("#secondary").load("../Main-Products/Products/Remove-Products/index.html");
+                        $("#secondary").load("../Views/remove-products.html");
                     } else if (val == "modify-product") {
-                        $("#secondary").load("../Main-Products/Products/Modify-Products/index.html");
+                        $("#secondary").load("../Views/modify-products.html");
                     } else if (val == "display-product") {
-                        $("#secondary").load("../Main-Products/Products/Display-Products/index.html");
+                        $("#secondary").load("../Views/display-products.html");
                     } else {
                         $("#secondary").html("<h1> none </h1>");
                     }
@@ -60,11 +60,11 @@ $(document).ready(function () {
                     let val = $(this).val();
                     console.log("VAL IS " + val);
                     if (val == "add-company") {
-                        $("#secondary").load("../Main-Products/Companies/Add-Companies/index.html");
+                        $("#secondary").load("../Views/add-companies.html");
                     } else if (val == "modify-company") {
-                        $("#secondary").load("../Main-Products/Companies/Modify-Companies/index.html");
+                        $("#secondary").load("../Views/modify-companies.html");
                     } else if (val == "display-company") {
-                        $("#secondary").load("../Main-Products/Companies/Display-Companies/index.html");
+                        $("#secondary").load("../Views/display-companies.html");
                     } else {
                         $("#secondary").html("<h1> none </h1>");
                     }

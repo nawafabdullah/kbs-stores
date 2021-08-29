@@ -18,7 +18,9 @@ const { InsertCompany } = require('./public/home/js/add-companies');
 const { InsertProduct } = require('./public/home/js/add-products');
 //const { AddCompaniestoDB } = require('./public/home/Main-Products/Companies/Add-Companies/add-companies');
 
-const { DisplayProducts } = require('./public/home/js/display-products');
+const { GetProducts } = require('./public/home/js/get-products');
+
+const { RenderTables } = require('./public/home/js/render-tables');
 
 const { dbConfig } = require("../../mainConfig/db.config");
 const { RetrieveUser } = require('./public/home/UsersService/sign-in/signin');
@@ -42,8 +44,11 @@ console.log(`listening at ${mServerConfig.HOST}:${mServerConfig.PORT}`);
 
 
 app.use('/jquery', express.static(__dirname + '../../node_modules/jquery/dist/'));
+app.set('views', path.join(__dirname + '/public/home/Views/'));
+
 
 app.set('view engine', 'ejs');
+
 
 
 router.route("/")
@@ -123,7 +128,7 @@ router.route("/downloadTerms")
 
 router.route("/products")
     .get(function (req, res) {
-        res.sendFile(path.join(__dirname + "/public/home/Main-Products/"));
+        res.sendFile(path.join(__dirname + "/public/home/Views/main-products.html"));
     })
 
 /*
@@ -175,18 +180,33 @@ router.route("/products/add-product")
 router.route("/products/display-products")
     .get(async function (req, res) {
 
-        let productsArr = await DisplayProducts();
-        console.log(productsArr[0]);
+        let productsArr = await GetProducts();
+        //console.log(productsArr[0]);
+        //console.log(req.url);
+
+
+        RenderTables(productsArr);
+
+
+        //res.render("render-tables", { productsArr: productsArr });
+
+
+        //res.render(path.join(__dirname + "/public/home/Views/render-tables.html"));
+
         //res.sendFile(path.join(__dirname + "/public/home/Main-Products/Products/Display-Products/"), { productsArr: productsArr });
+        //res.send(productsArr);
+
 
         // res.send(productsArr);
-        res.render(path.join(__dirname + "/public/home/Main-Products/Products/Display-Products/index"), { productsArr: productsArr });
+
+
+        //res.render(path.join(__dirname + "/public/home/Views/display-products.html"), { productsArr: productsArr });
     })
 
 
 router.route("/products/add-company")
     .post(async function (req, res) {
-        //res.sendFile(path.join(__dirname + "/public/home/Main-Products/main-products"));
+        //res.sendFile(path.join(__dirname + "/public/home/Views/add-companies.html"));
         const errors = validationResult(req);
         let companyObj = await req.body;
         if (!errors.isEmpty()) {
@@ -208,7 +228,7 @@ router.route("/products/add-company")
 
 router.route("/products/display-companies")
     .get(function (req, res) {
-        res.sendFile(path.join(__dirname + "/containerFiles/public/home/Main-Products/Companies/Display-Companies"));
+        res.sendFile(path.join(__dirname + "/containerFiles/public/home/Views/display-companies.html"));
     })
 
 
