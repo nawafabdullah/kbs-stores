@@ -20,6 +20,7 @@
     "formidable": "^1.2.2",
     "helmet": "^4.4.1",
     "jquery": "^3.6.0",
+    "jsdom": "^17.0.0",
     "jsonwebtoken": "^8.5.1",
     "jwks-rsa": "^1.12.2",
     "mongodb": "^3.6.3",

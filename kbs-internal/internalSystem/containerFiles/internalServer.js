@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("path");
+const jsdom = require("jsdom");
 const bodyParser = require("body-parser");
 const urlencodedParser = express.urlencoded({ extended: true });
 const cors = require('cors');
@@ -8,6 +9,7 @@ const morgan = require('morgan');
 const app = express();
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
+const { JSDOM } = jsdom;
 
 //const $ = require("jquery"); 
 
@@ -185,10 +187,21 @@ router.route("/products/display-products")
         //console.log(req.url);
 
 
-        RenderTables(productsArr);
+        //RenderTables(productsArr);
+
+        got("render-tables").then(async response => {
+            const dom = await new JSDOM(response.body);
+            const table = await dom.window.document.querySelector('table');
+            //console.log(dom.window.document.querySelector('table').textContent);
+
+            console.log("INSIDE the server::: " + table);
+            return table;
+        }).catch(err => {
+            console.log(err);
+        });
 
 
-        //res.render("render-tables", { productsArr: productsArr });
+        res.render("render-tables", await RenderTables(productsArr, table));
 
 
         //res.render(path.join(__dirname + "/public/home/Views/render-tables.html"));
