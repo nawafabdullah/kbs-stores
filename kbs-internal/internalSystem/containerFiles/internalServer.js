@@ -4,6 +4,7 @@ const jsdom = require("jsdom");
 const bodyParser = require("body-parser");
 const urlencodedParser = express.urlencoded({ extended: true });
 const cors = require('cors');
+const got = require('got');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const app = express();
@@ -189,19 +190,29 @@ router.route("/products/display-products")
 
         //RenderTables(productsArr);
 
-        got("render-tables").then(async response => {
-            const dom = await new JSDOM(response.body);
-            const table = await dom.window.document.querySelector('table');
-            //console.log(dom.window.document.querySelector('table').textContent);
-
-            console.log("INSIDE the server::: " + table);
-            return table;
-        }).catch(err => {
-            console.log(err);
-        });
 
 
-        res.render("render-tables", await RenderTables(productsArr, table));
+        const tableRef = path.join(__dirname + "/public/home/Views/render-tables.ejs");
+
+        console.log(tableRef);
+
+        /*
+         const table = got(tableRef).then(async response => {
+             const dom = await new JSDOM(response.body);
+             const table = await dom.window.document.querySelector('table');
+             //console.log(dom.window.document.querySelector('table').textContent);
+ 
+             //console.log("INSIDE the server::: " + table);
+             //return table;
+         }).catch(err => {
+             console.log(err);
+         });
+ 
+         */
+        const dom = new JSDOM(`<!DOCTYPE html><body><table id="table"></table></body>`);
+        //const table = dom.window.document.getElementById("table");
+        console.log("DOM content is:::: " + dom);
+        res.render("render-tables", await RenderTables(productsArr, dom));
 
 
         //res.render(path.join(__dirname + "/public/home/Views/render-tables.html"));
