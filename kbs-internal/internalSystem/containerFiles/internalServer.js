@@ -209,10 +209,10 @@ router.route("/products/display-products")
          });
  
          */
-        const dom = new JSDOM(`<!DOCTYPE html><body><table id="table"></table></body>`);
+        const dom = await new JSDOM(`<!DOCTYPE html><body><table id="table"></table></body>`);
         //const table = dom.window.document.getElementById("table");
         console.log("DOM content is:::: " + dom);
-        res.render("render-tables", await RenderTables(productsArr, dom));
+        res.render("render-tables", await RenderTables(productsArr, await dom));
 
 
         //res.render(path.join(__dirname + "/public/home/Views/render-tables.html"));
