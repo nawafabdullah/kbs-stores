@@ -13,6 +13,26 @@ async function Retrieve(data) {
 }
 
 
+async function RetrieveData() {
+    let data = GetDatabase;
+
+
+    database.connection.find { productID };
+
+    try {
+        if (productID == null) {
+            console.log("Could not retrieve product ID");
+            return false;
+        } catch (error) {
+            console.error("an error occured \n Error: " + error);
+        }
+
+
+    }
+
+
+}
+
 async function EditProducts(productID) {
 
     let database = GetDatabase;

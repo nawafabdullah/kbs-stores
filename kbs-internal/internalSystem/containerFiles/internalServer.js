@@ -227,6 +227,15 @@ router.route("/products/display-products")
         //res.render(path.join(__dirname + "/public/home/Views/display-products.html"), { productsArr: productsArr });
     })
 
+router.route("/products/modify-products")
+    .get(async function (req, res) {
+
+    })
+
+
+
+
+
 
 router.route("/products/add-company")
     .post(async function (req, res) {
