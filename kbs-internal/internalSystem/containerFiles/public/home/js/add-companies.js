@@ -96,7 +96,7 @@ async function GetLetter(origin) {
 
 
 async function GetNumber(coded) {
-    let examineInt = await coded.substr(3, 3);
+    let examineInt = await coded.substr(7, 3);
     // console.log("EXAMINE AFTER SLICING IS:::::::: " + examineInt);
 
     examineInt = await parseInt(examineInt);
@@ -166,12 +166,12 @@ async function DatabaseInsertion(companyObj) {
 
 
 async function RecoverFromDuplicateError(companyObj, errorString) {
-    let duplicateID = errorString.substr(98, 3);
-    duplicateID = parseInt(duplicateID);
+    //let duplicateID = errorString.substr(101, 3);
+    //duplicateID = parseInt(duplicateID);
     //console.log("SLICE::::::::::::::::::::" + duplicateID);
     let oldID = await companyObj._id;
-    oldNumID = await oldID.substr(3);
-    newLetterID = await oldID.substr(0, 3);
+    oldNumID = await oldID.substr(7,3);
+    newLetterID = await companyObj._id.substr(0, 7);
     oldNumID = await parseInt(oldNumID);
     newNumID = oldNumID + 1;
     //console.log(newNumID);

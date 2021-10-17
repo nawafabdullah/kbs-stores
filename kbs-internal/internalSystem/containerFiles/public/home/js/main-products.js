@@ -2,8 +2,9 @@
 
 //const $ = require("jquery"); 
 
-
 console.log("function called");
+const serverLocation = "http://localhost:8123"
+
 $(document).ready(function () {
 
     $("#product-action").change(function () {
@@ -26,10 +27,31 @@ $(document).ready(function () {
             $(document).ready(function () {
 
                 $("#product-choice").change(function () {
+                    
                     let val = $(this).val();
                     console.log("VAL IS " + val);
                     if (val == "add-product") {
-                        $("#secondary").load("../Views/add-products.html");
+                        $.ajax({
+                            type: 'get',
+                            url: serverLocation + "/signin",
+                            success: function(data, textStatus) {
+                                if (data.redirect) {
+                                    // data.redirect contains the string URL to redirect to
+                                    console.log("redirecting...");
+                                    window.location.href = data.redirect;
+                                } else {
+                                    // data.form contains the HTML for the replacement form
+                                    //$("#myform").replaceWith(data.form);
+                                    console.log("Could not redirect");
+                                }
+                            }
+                        ,
+                            error: function (textStatus, errorThrown) {
+                                console.log('Err');
+
+                            }
+                        });
+
                     } else if (val == "remove-product") {
                         $("#secondary").load("../Views/remove-products.html");
                     } else if (val == "modify-product") {
@@ -114,6 +136,3 @@ $(document).ready(function () {
 });
 
 
-async function ProductOptions () { 
-        
-}
