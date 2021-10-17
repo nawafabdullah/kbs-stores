@@ -8,7 +8,7 @@ I assumed no parallelism and that entries will happen in sequence
 
 *************** */
 async function InsertCompany(companyObj) {
-    let ID = await GetCode(companyObj.companyOrigin);
+    let ID = await GetCode(companyObj.companyName,companyObj.companyOrigin);
     let company = new Company(
         await ID,
         await companyObj.companyName,
@@ -28,7 +28,7 @@ async function SetDate() {
     return dateTime;
 }
 
-async function GetCode(companyOrigin) {
+async function GetCode(companyName,companyOrigin) {
 
     // 
     //  let companyName, companyOrgin, companyCode, codeFromDB, letterCode, numberCode;
@@ -38,10 +38,11 @@ async function GetCode(companyOrigin) {
     //let companyOrigin = await(companyObj.companyOrigin).toString();
 
     // flags are set as 0 for the letter code and 1 to get the number 
+    let nameCode = await GetLetter(companyName);
     let letterCode = await GetFromDB(companyOrigin, 0);
     let numberCode = await GetFromDB(companyOrigin, 1);
     //console.log("Number Code In MAIN IS::::::::::::::::: " + numberCode);
-    let companyCode = await letterCode + "-" + numberCode;
+    let companyCode = await nameCode +"-" + letterCode + "-" + numberCode;
     return companyCode;
 
     //ProcessParsing(companyName, companyOrigin, companyCode)
@@ -190,4 +191,16 @@ async function RecoverFromUndefinedCode(num) {
 }
 
 
-module.exports = { InsertCompany };
+
+/** remove later  */
+async function GetOptions() {
+    let database;
+    database = await GetDatabase();
+    let optionsCursor = await database.collection(`${dbConfig.COUNTRIES}`).find({}).toArray();
+    console.log(optionsCursor[200].name);
+    return optionsCursor;
+
+}
+
+GetOptions();
+module.exports = { InsertCompany, GetOptions };

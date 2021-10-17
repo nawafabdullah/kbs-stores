@@ -1,25 +1,24 @@
-<!DOCTYPE html>
-<html>
+<div id="add-product" style="text-align: center; margin-top: 0px;">
+    <form action="/products/add-company" id="companyForm" method="POST">
 
-<!-- Style is being embedded here until styles.css is fixed -->
+        <label for="companyName">إسم الشركة</label>
+        <input type="text" id="companyName=" name="companyName" required>
 
-<body>
-    <div id="add-product" style="text-align: center; margin-top: 5px;">
-        <form action="/products/add-company" id="companyForm" method="POST">
+        <label for="companyOrigin">البلد</label>
+        <select name="companyOrigin" id="companyOrigin">
+            <!--input type="text" id="companyOrigin" name="companyOrigin" required-->
+            <option value="default">الرجاء الإختيار</option>
+            <option value="India">الهند</option>
+            <option value="Italy">إيطاليـا</option>
+            <option value="France">فرنسـا</option>
+            <option value="Switzerland">ٍسـويسرا</option>
+            <option value="Spain">إسـبانيا</option>
+            <!--option value="">default</option-->
+        </select>
 
-            <label for="companyName">إسم الشركة</label>
-            <input type="text" id="companyName=" name="companyName" required>
-
-            <label for="companyOrigin">البلد</label>
-            <input type="text" id="companyOrigin" name="companyOrigin" required>
-
-            <!--label for="companyCode">رمز الشركة في النظام</label>
+        <input type="submit" value="تنفيذ">
+        <!--label for="companyCode">رمز الشركة في النظام</label>
             <input type="text" id="companyCode" name="companyCode" required-->
-
-            <input type="submit">
-        </form>
-    </div>
-
-</body>
-
-</html>
+    </form>
+ 
+</div>

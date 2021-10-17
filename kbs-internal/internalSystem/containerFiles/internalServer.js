@@ -23,6 +23,8 @@ const { InsertProduct } = require('./public/home/js/add-products');
 
 const { GetProducts } = require('./public/home/js/get-products');
 
+const {DisplayCompanies} = require ("./public/home/js/display-companies");
+
 const { RenderTables } = require('./public/home/js/render-tables');
 
 const { dbConfig } = require("../../mainConfig/db.config");
@@ -175,7 +177,6 @@ router.route("/products/add-product")
             content: "Success",
             Location: "/",
         });
-
         res.end("Success");
     })
 
@@ -212,7 +213,7 @@ router.route("/products/display-products")
         const dom = await new JSDOM(`<!DOCTYPE html><body><table id="table"></table></body>`);
         //const table = dom.window.document.getElementById("table");
         console.log("DOM content is:::: " + dom);
-        res.render("render-tables", await RenderTables(productsArr, await dom));
+        res.render("render-companies", await RenderTables(productsArr, await dom));
 
 
         //res.render(path.join(__dirname + "/public/home/Views/render-tables.html"));
@@ -251,7 +252,7 @@ router.route("/products/add-company")
             //console.log(companyName);
             // console.log(companyObj);
             InsertCompany(companyObj);
-        }
+        } 
         res.writeHead(301, {
             content: "Success",
             Location: "/",
@@ -260,8 +261,10 @@ router.route("/products/add-company")
     })
 
 router.route("/products/display-companies")
-    .get(function (req, res) {
-        res.sendFile(path.join(__dirname + "/containerFiles/public/home/Views/display-companies.html"));
+    .get(async function (req, res) {
+        res.render("render-companies", {companies: await DisplayCompanies()});
+
+       // res.render("display-companies");
     })
 
 
