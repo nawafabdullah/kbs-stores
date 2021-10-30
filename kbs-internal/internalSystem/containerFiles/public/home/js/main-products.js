@@ -2,8 +2,17 @@
 
 //const $ = require("jquery"); 
 
-console.log("function called");
-const serverLocation = "http://localhost:8123"
+const addProducts = "products/add-product"; 
+const modifyProducts = "products/modify-products";
+const displayProducts = "products/display-products";
+const removeProducts = "../Views/remove-products.html";
+const addCompanies = "products/add-company";
+const modifyCompanies = "../Views/modify-companies.html";
+const displayCompanies = "products/display-companies";
+const removeCompanies = "../Views/remove-companies.html";
+
+
+const url = "http://localhost:8123/";
 
 $(document).ready(function () {
 
@@ -27,37 +36,46 @@ $(document).ready(function () {
             $(document).ready(function () {
 
                 $("#product-choice").change(function () {
-                    
+
                     let val = $(this).val();
                     console.log("VAL IS " + val);
                     if (val == "add-product") {
-                        $.ajax({
-                            type: 'get',
-                            url: serverLocation + "/signin",
-                            success: function(data, textStatus) {
-                                if (data.redirect) {
-                                    // data.redirect contains the string URL to redirect to
-                                    console.log("redirecting...");
-                                    window.location.href = data.redirect;
-                                } else {
-                                    // data.form contains the HTML for the replacement form
-                                    //$("#myform").replaceWith(data.form);
-                                    console.log("Could not redirect");
-                                }
-                            }
-                        ,
-                            error: function (textStatus, errorThrown) {
-                                console.log('Err');
+                        let win = window.open(url+addProducts, '_blank');
+                        if (win) {
+                            //Browser has allowed it to be opened
+                            win.focus();
+                        } else {
+                            //Browser has blocked it
+                            alert('Please allow popups for this website');
+                        }
 
-                            }
-                        });
-
-                    } else if (val == "remove-product") {
-                        $("#secondary").load("../Views/remove-products.html");
                     } else if (val == "modify-product") {
-                        $("#secondary").load("../Views/modify-products.html");
+                        let win = window.open(modifyProducts, '_blank');
+                        if (win) {
+                            //Browser has allowed it to be opened
+                            win.focus();
+                        } else {
+                            //Browser has blocked it
+                            alert('Please allow popups for this website');
+                        }
                     } else if (val == "display-product") {
-                        $("#secondary").load("../Views/display-products.html");
+                        let win = window.open(displayProducts, '_blank');
+                        if (win) {
+                            //Browser has allowed it to be opened
+                            win.focus();
+                        } else {
+                            //Browser has blocked it
+                            alert('Please allow popups for this website');
+                        }
+                    } else if (val == "remove-product") {
+                        let win = window.open(removeProducts, '_blank');
+                        if (win) {
+                            //Browser has allowed it to be opened
+                            win.focus();
+                        } else {
+                            //Browser has blocked it
+                            alert('Please allow popups for this website');
+                        }
                     } else {
                         $("#secondary").html("<h1> none </h1>");
                     }

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+
+<head>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        #ar {
+            padding-left: 15px;
+        }
+
+        #review-table {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #review-table td,
+        #revie-table th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #review-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #review-table tr:hover {
+            background-color: #ddd;
+        }
+
+        #review-table th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            /*padding-left: 4%;*/
+            text-align: center;
+            background-color: #04AA6D;
+            color: white;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+    <h1>إضافة شـركة مورده </h1>
+
+    <h1> أنت على وشـك إضافة شركة للقماش على حسـب لمواصفات الآتية </h1>
+
+    <div id="table">
+        <table id="review-table">
+            <thead>
+
+                <tr>
+                    <p id="ar">
+                        <th>رقـم التصـميم</th>
+                    </p>
+                    <p id="ar">
+                        <th>فئـة القماش</th>
+                    </p>
+                    <p id="ar">
+                        <th>فئـة القماش الفرعية</th>
+                    </p>
+                    <p id="ar">
+                        <th>نوع القـماش</th>
+                    </p>
+                    <p id="ar">
+                        <th>لون القماش</th>
+                    </p>
+                    <p id="ar">
+                        <th>عـدد الأمتار المضـافة </th>
+                    </p>
+                    <p id="ar">
+                        <th>سـعر المتر </th>
+                    </p>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td>
+                        <%= data.productObj.designNumber %>
+                    </td>
+                    <td>
+                        <%= data.productObj.fabricPrimaryType %>
+                    </td>
+                    <td>
+                        <%= data.productObj.fabricSecondaryType %>
+                    </td>
+                    <td>
+                        <%= data.productObj.fabricQuality %>
+                    </td>
+                    <td>
+                        <%= data.productObj.fabricColor %>
+                    </td>
+                    <td>
+                        <%= data.productObj.metersAdded %>
+                    </td>
+                    <td>
+                        <%= data.productObj .fabricPrice %>
+                    </td>
+
+            </tbody>
+        </table>
+    </div>
+    <div style="padding-top: 5%;">
+        <form>
+            <label for="product-company"> </label>
+            <h2> إضافة المنتج لشـركة</h2>
+
+            <label> الشركة غير مسـجلة في النظام</label>
+            <input type="checkbox" id="add-company-option" name="add-company-option" value="add-company-option">
+
+    </div>
+    <div style="text-align: center; padding-right: 5%;">
+        <pre id="primary">
+
+                </pre>
+        <pre id="secondary">
+            <div style="display: inline-flex;">
+                <label for="companyOptions"> <h3> قائمة الشركات </h3></label>
+                <select id="companyOptions" name="companyOtions" style="padding-right: 7%;">
+                    <%if (data.companies.length >0){ %>
+                        <% data.companies.forEach(function(row){ %>
+                            
+                            <option value="<%= row._id %>"> <%= row.Company_Name %> </option>
+                    <% })}else{ %>
+                        <p>
+                            <h3>No Record Found<h3>
+                            
+                        </p>
+                        <% } %> %>
+                </select>
+                </div>
+
+
+
+        </pre>
+    </div>
+
+    </div>
+
+    </form>
+
+
+
+
+
+
+
+
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script src="../js/jquery-3.0.0.min.js"></script>
+    <script src="../js/plugin.js"></script>
+    <!-- sidebar -->
+    <script src="../js/custom.js"></script>
+    <!-- javascript -->
+
+    <script src="../js/add-products-jQuery.js" type="text/javascript"></script>
+
+
+    <!--select name="product-company-action" id="product-company-action">
+                <option value="main-options"> الرجاء الإختيار </option>
+                <option value="existing-company-option"> إضـافة لشـركة موجوده في النظام </option>
+                <option value="add-company-option">إضافة شركة جديدة</option>
+            </select>
+        </form>
+    </div>
+    <div style="text-align: center;">
+        <pre id="primary" style="padding-bottom: 10px;">  </pre>
+        <pre id="secondary"> here</pre>
+        <pre id="third"></pre>
+    </div>
+
+
+    <form action="" method="POST">
+        <label for="companyChoice"> الرجـاء إختيار الشركة </label>
+        <select name="companyChoice" id="companyChoice">
+
+        </select>
+
+
+    </form-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--html>
+
+    <head>
+        <style>
+            table, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+            
+            th, td {
+                padding: 20px;
+            }
+            
+            th {
+                text-align: left;
+            }
+        </style>
+    </head>
+    
+    <body>
+    
+        <table style="width:100%">
+            <caption>DETAILS</caption>
+            <tr>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Age</th>
+            </tr>
+        </table>
+    </body>
+    
+    
+
+</body>

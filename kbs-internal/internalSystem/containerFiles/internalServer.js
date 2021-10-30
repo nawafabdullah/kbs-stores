@@ -7,6 +7,7 @@ const cors = require('cors');
 const got = require('got');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const url = require('url');
 const app = express();
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
@@ -23,7 +24,7 @@ const { InsertProduct } = require('./public/home/js/add-products');
 
 const { GetProducts } = require('./public/home/js/get-products');
 
-const {DisplayCompanies} = require ("./public/home/js/display-companies");
+const { DisplayCompanies } = require("./public/home/js/display-companies");
 
 const { RenderTables } = require('./public/home/js/render-tables');
 
@@ -156,6 +157,10 @@ router.route("/products")
  */
 
 router.route("/products/add-product")
+    .get(function (req, res) {
+        res.sendFile(path.join(__dirname + "/public/home/Views/add-products.html"));
+    })
+
     .post(async function (req, res) {
         //res.sendFile(path.join(__dirname + "/public/home/Main-Products/main-products"));
         //const errors = validationResult(req);
@@ -171,14 +176,17 @@ router.route("/products/add-product")
         // res.set("Content-Security-Policy", "default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'")
         //res.send("<html><head></head><body></body></html>");
         // console.log("I am here!!");
-        InsertProduct(productObj);
-        //}
-        res.writeHead(301, {
-            content: "Success",
-            Location: "/",
-        });
-        res.end("Success");
+
     })
+
+
+router.route("/products/add-product/link-company")
+    .post(async function (req, res) {
+        let productObj = await req.body;
+        console.log(productObj.fabricPrimaryType);
+        res.render("fabric-company-link", { data: { productObj: await productObj, companies: await DisplayCompanies() } });
+    })
+
 
 
 router.route("/products/display-products")
@@ -252,19 +260,43 @@ router.route("/products/add-company")
             //console.log(companyName);
             // console.log(companyObj);
             InsertCompany(companyObj);
-        } 
+        }
         res.writeHead(301, {
             content: "Success",
-            Location: "/",
+            Location: "/success",
         });
-        res.end("Success");
+        //res.end("Success");
+        //const url = req.originalUrl;
+        // path = url.parse(req.url).path
+        //let path = req.url; 
+        //console.log("URL IS:: " + url);
+
+        //res.redirect(url.parse(req.url).pathname);
+
+        // res.redirect(url);
+        //res.send("<script>window.close();</script > ");
+        // window.close();
+
+        //res.redirect(`/login/?redirect=${url}`);
+        res.end("success")
+
+
     })
+
+router.route("/success")
+    .get(async function (req, res) {
+        res.render("success");
+
+        // res.render("display-companies");
+    })
+
+
 
 router.route("/products/display-companies")
     .get(async function (req, res) {
-        res.render("render-companies", {companies: await DisplayCompanies()});
+        res.render("render-companies", { companies: await DisplayCompanies() });
 
-       // res.render("display-companies");
+        // res.render("display-companies");
     })
 
 
