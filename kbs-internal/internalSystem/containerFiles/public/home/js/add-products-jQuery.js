@@ -27,7 +27,7 @@ $(document).ready(function () {
         console.log("VAL IS " + val);
         if (val == "Sahrah") {
             $("#fabricSecondaryType").html("<form>" +
-                "<label for='sahrahOptions'> خيارات السـهرة </label> <br /> "+
+                "<label for='sahrahOptions'> خيارات السـهرة </label> <br /> " +
                 "<select name='sahrahOptions' id='sahrahOptions'>" +
                 " <option value='default'> الرجاء الإختيار </option>" +
                 "<option value='dantiel'> دانتيل  </option>" +
@@ -41,7 +41,7 @@ $(document).ready(function () {
 
             $(document).ready(function () {
 
-                $("#sahrahOptions").change(function () {
+                $("#fabricSecondaryType").change(function () {
 
                     let val = $(this).val();
                     console.log("VAL IS " + val);
@@ -54,10 +54,11 @@ $(document).ready(function () {
                             "<option value='tol'>دانتيل </option>" +
                             "<option value='modify-product'>دانتيل </option>" +
                             "<option value='display-product'>دانتيل </option>" +
-                        
+
 
                             "</select>" +
                             "</form>");
+
 
                     } else if (val == "modify-product") {
                         let win = window.open(modifyProducts, '_blank');
@@ -89,9 +90,9 @@ $(document).ready(function () {
                     } else {
                         $("#secondary").html("<h1> none </h1>");
                     }
+
                 })
             })
-
         } else if (val == "Sadah") {
             $("#primary").html("<form>" +
                 "<label for='companies'> خيارات الشركات </label>" +
@@ -169,3 +170,11 @@ $(document).ready(function () {
                  }
              });
         */
+
+
+$(document).ready(function () {
+
+    $(function () {
+        $("#testField").val('gateway_2');
+    })
+})

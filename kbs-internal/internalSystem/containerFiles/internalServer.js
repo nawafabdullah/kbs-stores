@@ -165,9 +165,13 @@ router.route("/products/add-product")
         //res.sendFile(path.join(__dirname + "/public/home/Main-Products/main-products"));
         //const errors = validationResult(req);
         let productObj = await req.body;
+        console.log("PRODUCT:::::: " + productObj.companyCode);
+        InsertProduct(await productObj);
+        res.send("success");
         //if (!errors.isEmpty()) {
         // There are errors. Render form again with sanitized values/errors messages.
         // Error messages can be returned in an array using `errors.array()`.
+
 
         //  console.log("ERRORS EXIST");
         // }
@@ -183,7 +187,7 @@ router.route("/products/add-product")
 router.route("/products/add-product/link-company")
     .post(async function (req, res) {
         let productObj = await req.body;
-        console.log(productObj.fabricPrimaryType);
+        console.log(productObj.testField);
         res.render("fabric-company-link", { data: { productObj: await productObj, companies: await DisplayCompanies() } });
     })
 
@@ -317,4 +321,13 @@ router.route("/products/addProducts/fileupload")
             Location: "/",
         });
         res.end("Success");
+    })
+
+router.route("/sales")
+    .get(async function (req, res) {
+        res.sendFile(path.join(__dirname + "/public/home/Views/sell-products.html"));
+    })
+
+    .post(async function (req, res) {
+        console.log("SOLD::::: " + req.body.productCode[1]);
     })

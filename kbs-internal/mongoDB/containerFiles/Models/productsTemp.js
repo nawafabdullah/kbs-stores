@@ -5,17 +5,17 @@ async function CreateProductsDB(db) {
       validator: {
          $jsonSchema: {
             bsonType: "object",
-            required: ["_id", "Company_Name ", "Number_Of_Meters", "Primary_Type", "Quality", "Entry_Date", "Price"],
+            required: ["_id", "Company_Code", "Design_Number", "Primary_Type", "Secondary_Type", "Quality", "Color", "Number_Of_Meters", "Price", "Entry_Date"],
             properties: {
                _id: {
                   bsonType: "string",
                   description: "must be a string and is required"
                },
-               Company_Name: {
+               Company_Code: {
                   bsonType: "string",
                   description: "must be a string and is required"
                },
-               Number_Of_Meters: {
+               Design_Number: {
                   bsonType: "string",
                   description: "must be a string and is required"
                },
@@ -23,11 +23,23 @@ async function CreateProductsDB(db) {
                   bsonType: "string",
                   description: "must be a string and is required"
                },
+               Secondary_Type: {
+                  bsonType: "string",
+                  description: "must be a string and is required"
+               },
                Quality: {
                   bsonType: "string",
                   description: "must be a string and is required"
                },
+               Color: {
+                  bsonType: "double",
+                  description: "must be a double and is required"
+               },
                Price: {
+                  bsonType: "double",
+                  description: "must be a double and is required"
+               },
+               Number_Of_Meters: {
                   bsonType: "double",
                   description: "must be a double and is required"
                },

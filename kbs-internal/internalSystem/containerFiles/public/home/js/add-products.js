@@ -21,12 +21,13 @@ const {
     try {
       let fabric = new Fabric(
         await AssignStoreIdentifier(),
-        await productObj.designNumber,
         await productObj.companyCode,
-        await productObj.metersAdded,
+        await productObj.designNumber,
         await productObj.fabricPrimaryType,
+        await productObj.fabricSecondaryType,
         await productObj.fabricQuality,
         await productObj.fabricColor,
+        await productObj.metersAdded,
         await productObj.fabricPrice,
         await SetDate()
       );

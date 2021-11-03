@@ -6,6 +6,7 @@ dbConfig = {
     PRODUCTS: "Products",
     COMPANIES: "Companies",
     COUNTRIES: "Countries",
+    SALES: "Sales",
     PRODUCTS_MAINCATAGORIES: "Main-Catagories",
     PRODUCTS_QUALITY: "Fabric-Quality"
 };
