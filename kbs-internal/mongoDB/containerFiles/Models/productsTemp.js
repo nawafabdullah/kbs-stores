@@ -32,7 +32,7 @@ async function CreateProductsDB(db) {
                   description: "must be a string and is required"
                },
                Color: {
-                  bsonType: "double",
+                  bsonType: "string",
                   description: "must be a double and is required"
                },
                Price: {

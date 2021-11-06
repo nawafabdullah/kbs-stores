@@ -6,6 +6,7 @@ const { dbConfig } = require("../../mainConfig/db.config");
 const { GetDatabase, CloseConnection } = require("./mongo");
 const { CreateUsersDB } = require("./Models/users");
 const { CreateCompaniesDB } = require("./Models/companies");
+const { CreateSalesDB } = require("./Models/sales");
 const { CreateCountriesDB } = require("./Models/countries");
 const { CreateProductsDB } = require("./Models/productsTemp");
 const { CreateFabricMainCatagoriesDB } = require("./Models/fabricMainCatagories");
@@ -22,6 +23,7 @@ async function ConstructDatabases() {
   database = await GetDatabase();
   await CreateCompaniesDB(database);
   await CreateProductsDB(database);
+  await CreateSalesDB(database);
   await CreateUsersDB(database);
   await CreateFabricMainCatagoriesDB(database);
   await CreateFabricQualityDB(database);

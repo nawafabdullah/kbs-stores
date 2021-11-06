@@ -42,7 +42,7 @@ async function GetCode(companyName,companyOrigin) {
     let letterCode = await GetFromDB(companyOrigin, 0);
     let numberCode = await GetFromDB(companyOrigin, 1);
     //console.log("Number Code In MAIN IS::::::::::::::::: " + numberCode);
-    let companyCode = await nameCode +"-" + letterCode + "-" + numberCode;
+    let companyCode = await nameCode.toString().toUpperCase() +"-" + letterCode.toString().toUpperCase() + "-" + numberCode.toString().toUpperCase();
     return companyCode;
 
     //ProcessParsing(companyName, companyOrigin, companyCode)

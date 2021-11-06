@@ -20,7 +20,7 @@ const {
   
     try {
       let fabric = new Fabric(
-        await AssignStoreIdentifier(),
+        await AssignStoreIdentifier(productObj),
         await productObj.companyCode,
         await productObj.designNumber,
         await productObj.fabricPrimaryType,
@@ -58,11 +58,11 @@ const {
     //  console.log("INSIDE THE FUNCTION");
     //let companyCode = await productObj.companyCode.toString();
   
-    let companyCode = await productObj.companyCode.toString();
-    let designNumber = await productObj.designNumber.toString();
-    let fabricColor = await productObj.fabricColor.toString();
+    let companyCode = await productObj.companyCode.toString().toUpperCase();
+    let designNumber = await productObj.designNumber.toString().toUpperCase();
+    let fabricColor = await productObj.fabricColor.toString().toUpperCase();
   
-    let storeIdentifier = await companyCode.substr(0, 4) + "-" + await designNumber.substr(0, 4) + "-" + await fabricColor.substr(0, 4);
+    let storeIdentifier = await companyCode.substr(0, 3) + "-" + await designNumber.substr(0, await LengthOfString(designNumber)) + "-" + await fabricColor.substr(0, await LengthOfString(fabricColor));
     console.log(storeIdentifier);
     return storeIdentifier;
   }
@@ -90,7 +90,11 @@ const {
     }
   }
   
-  
+  async function LengthOfString(string) {
+    return string.length;
+  }
+
+
 
   /*
   
@@ -104,7 +108,7 @@ const {
     oldNumID = await parseInt(oldNumID);
     newNumID = oldNumID + 1;
     console.log("Recovery" + newNumID);
-    newID = await newLetterID + newNumID;
+    newID = await newLterID + newNumID;
     //console.log("THE ID IS:::::: " + newID);
     productObj._id = newID;
     DatabaseInsertion(productObj);

@@ -28,6 +28,8 @@ const { DisplayCompanies } = require("./public/home/js/display-companies");
 
 const { RenderTables } = require('./public/home/js/render-tables');
 
+const {MakeSales} = require ('./public/home/js/sell-products');
+
 const { dbConfig } = require("../../mainConfig/db.config");
 const { RetrieveUser } = require('./public/home/UsersService/sign-in/signin');
 const { mServerConfig } = require('../../mainConfig/mainServer.config');
@@ -325,9 +327,19 @@ router.route("/products/addProducts/fileupload")
 
 router.route("/sales")
     .get(async function (req, res) {
-        res.sendFile(path.join(__dirname + "/public/home/Views/sell-products.html"));
+        res.render ("sell-products", {response: "النظام يعمل بشكل طبيعي"});
     })
 
     .post(async function (req, res) {
         console.log("SOLD::::: " + req.body.productCode[1]);
+        let serverResponse = await MakeSales(req.body);
+        console.log ("Server Response is:::::: " + serverResponse);
+    
+        if (serverResponse){
+            res.render("success");
+            //res.send("success");
+        } else {
+            res.render ("sell-products", {response: serverResponse});
+        }
+        
     })
