@@ -52,7 +52,7 @@
     <div id="table">
         <table id="review-table">
             <thead>
-
+                <% let productObj = data.productObj %> 
                 <tr>
                     <p id="ar">
                         <th>رقـم التصـميم</th>
@@ -75,44 +75,36 @@
                     <p id="ar">
                         <th>سـعر المتر </th>
                     </p>
-                    <p id="ar">
-                        <th>TESTING </th>
-                    </p>
                 </tr>
             </thead>
             <tbody>
 
                 <tr>
                     <td>
-                        <%= data.productObj.designNumber %>
+                        <%= productObj.designNumber %>
                     </td>
                     <td>
-                        <%= data.productObj.fabricPrimaryType %>
+                        <%= productObj.fabricPrimaryType %>
                     </td>
                     <td>
-                        <%= data.productObj.fabricSecondaryType %>
+                        <%= productObj.fabricSecondaryType %>
                     </td>
                     <td>
-                        <%= data.productObj.fabricQuality %>
+                        <%= productObj.fabricQuality %>
                     </td>
                     <td>
-                        <%= data.productObj.fabricColor %>
+                        <%= productObj.fabricColor %>
                     </td>
                     <td>
-                        <%= data.productObj.metersAdded %>
+                        <%= productObj.metersAdded %>
                     </td>
                     <td>
-                        <%= data.productObj.fabricPrice %>
+                        <%= productObj.fabricPrice %>
                     </td>
-                    <td>
-                        <%= data.productObj.testField %>
-                    </td>
-
             </tbody>
         </table>
     </div>
     <div style="padding-top: 5%;">
-        <form>
             <label for="product-company"> </label>
             <h2> إضافة المنتج لشـركة</h2>
 
@@ -125,7 +117,14 @@
 
                 </pre>
         <pre id="secondary">
-            <div style="display: inline-flex;">
+            <div style="display: inline-flex; text-align: center;">
+               
+                <form method="POST" action="/products/add-product">
+                   
+                    <label for="productChoice"><h3>المنتـج المضاف</h3></label>
+                    <select id="productChoice" name="productChoice" style="padding-right: 20%;">
+                        <option value="<%= JSON.stringify(productObj) %>"> <%= productObj.designNumber %> </option>></option>
+                    </select>
                 <label for="companyOptions"> <h3> قائمة الشركات </h3></label>
                 <select id="companyOptions" name="companyOtions" style="padding-right: 7%;">
                     <%if (data.companies.length >0){ %>
@@ -140,22 +139,14 @@
                         <% } %> %>
                 </select>
                 </div>
-
-
-
         </pre>
+
+        <input type="submit" value="تنـفيذ"> 
     </div>
 
     </div>
 
     </form>
-
-
-
-
-
-
-
 
     <script src="../js/jquery.min.js"></script>
     <script src="../js/bootstrap.bundle.min.js"></script>

@@ -1,5 +1,5 @@
 const {
-    GetDatabase,
+    GetDatabase, 
     CloseConnection,
   } = require("../../../../../mongoDB/containerFiles/mongo");
   const { dbConfig } = require("../../../../../mainConfig/db.config");
@@ -21,7 +21,6 @@ const {
     try {
       let fabric = new Fabric(
         await AssignStoreIdentifier(productObj),
-        await productObj.companyCode,
         await productObj.designNumber,
         await productObj.fabricPrimaryType,
         await productObj.fabricSecondaryType,
@@ -29,6 +28,7 @@ const {
         await productObj.fabricColor,
         await productObj.metersAdded,
         await productObj.fabricPrice,
+        await productObj.companyCode,
         await SetDate()
       );
       // console.log(fabric);

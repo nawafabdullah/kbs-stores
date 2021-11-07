@@ -2,19 +2,36 @@ const { GetDatabase } = require("../../../../../mongoDB/containerFiles/mongo");
 
 
 async function MakeSales(prooducts) {
-    let inventoryShortage = "لايـوجدأمتـار تكفي في المستودع";
-
+    let inventoryShortage = "لايـوجدأمتـار تكفي في المستودع للقطـعه ";
+    let i = 0;
     try {
-        let loopResult = prooducts.productCode.forEach(async (code, index) => {
+        for (i; i < prooducts.productCode.length; i++) {
+            if (await CheckMetersAvailability(await prooducts.productCode[i], await prooducts.metersSold[i])) {
+                if (i == (prooducts.productCode.length - 1))
+                    return true;
+            } else {
+                console.log(inventoryShortage);
+                break;
+            }
+
+        }
+
+        return inventoryShortage + prooducts.productCode[i];
+
+
+        /*return loopResult = await prooducts.productCode.forEach(async (code, index) => {
             let meters = await prooducts.metersSold[index];
             if (await CheckMetersAvailability(await code, await meters)) {
                 return true;
             } else {
+                console.log (inventoryShortage);
                 return inventoryShortage;
             }
         })
+*/
 
-        return loopResult;
+        /// console.log("From inside the function, meters is::::::: " + loopResult);
+        //return loopResult;
 
 
         //console.log ("INSIDE MAIN:::: " + retrievedProduct);
@@ -42,7 +59,7 @@ async function CheckMetersAvailability(productCode, metersBought) {
         console.log("METERS AVAILABLKE ARE:::: " + productInfo[0].Number_Of_Meters);
 
 
-        if (productInfo[0].Number_Of_Meters > metersBought && productInfo[0].Number_Of_Meters > 0) {
+        if (productInfo[0].Number_Of_Meters >= metersBought && productInfo[0].Number_Of_Meters > 0) {
 
             console.log("GOOD!!!!!!!!!!!!");
 
