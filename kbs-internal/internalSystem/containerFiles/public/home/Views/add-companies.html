@@ -5,7 +5,7 @@
     <form action="/products/add-company" id="companyForm" method="POST">
         <h2 style="padding-right: 5%;" > إضافة شركة للنظام </h2>
         <label for="companyName">إسم الشركة</label>
-        <input type="text" id="companyName=" name="companyName" required>
+        <input type="text" pattern="\S+" id="companyName=" name="companyName" required>
 
         <label for="companyOrigin">البلد</label>
         <select name="companyOrigin" id="companyOrigin">

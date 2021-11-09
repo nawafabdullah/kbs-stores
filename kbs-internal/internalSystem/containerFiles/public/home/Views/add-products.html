@@ -111,7 +111,7 @@
                 <form action="/products/add-product/link-company" id="productForm" method="POST">
 
                     <label for="designNumber"> رقم التصميم </label><br />
-                    <input type="text" id="designNumber" name="designNumber" required>
+                    <input type="text" pattern="\S+" id="designNumber" name="designNumber" required>
                     <br /><br />
 
 
@@ -148,15 +148,15 @@
             </select-->
 
                     <label for="fabricColor"> لون القماش </label><br />
-                    <input type="text" id="fabricColor" name="fabricColor" required>
+                    <input type="text" pattern="\S+" id="fabricColor" name="fabricColor" required>
                     <br /><br />
 
                     <label for="metersAdded">عدد الأمتار المضافة</label><br />
-                    <input type="text" id="metersAdded" name="metersAdded" required>
+                    <input type="text" pattern="\S+" id="metersAdded" name="metersAdded" required>
                     <br /><br />
 
                     <label for="fabricPrice"> سعر المتر </label><br />
-                    <input type="text" id="fabricPrice" name="fabricPrice" required>
+                    <input type="text" pattern="\S+" id="fabricPrice" name="fabricPrice" required>
                     <br /><br />
 
                     <input type="submit" value="إضافة الشـركة الموردة" style="color:white; background-color: green;">

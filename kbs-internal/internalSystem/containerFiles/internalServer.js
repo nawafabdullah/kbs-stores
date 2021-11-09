@@ -343,7 +343,7 @@ router.route("/sales")
     })
 
     .post(async function (req, res) {
-        console.log("SOLD::::: " + req.body.productCode[1]);
+        //console.log("SOLD::::: " + req.body.productCode[1]);
         let serverResponse = await MakeSales(req.body);
         console.log("Server Response is:::::: " + serverResponse);
 
