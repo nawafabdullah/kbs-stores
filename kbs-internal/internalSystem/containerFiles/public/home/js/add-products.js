@@ -32,7 +32,11 @@ const {
         await SetDate()
       );
       // console.log(fabric);
-      DatabaseInsertion(fabric);
+      
+      
+      if (DatabaseInsertion(fabric)) {
+      return true; 
+      }
       //  RetrieveLatestNum(fabric);
       // AssignFabricCode(productObj);
     }
@@ -69,6 +73,8 @@ const {
   
   async function DatabaseInsertion(productObj) {
     //  console.log("Inside the insertion function: " + companyObj.companyName);
+    
+    let productExists = " القطعة مسجلة بالنظام مسبقا";
     try {
       let database;
       database = await GetDatabase();
@@ -80,8 +86,7 @@ const {
       let errorString = (error.message).toString();
       let containsDuplicate = errorString.includes("E11000");
       if (containsDuplicate) {
-        RecoverFromDuplicateError(productObj, errorString);
-        return true;
+        return productExists; 
         //console.log("duplicate");
       } else {
         console.error("failed to insert the company to the Database \n Error: " + error);

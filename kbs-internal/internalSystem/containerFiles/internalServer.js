@@ -166,14 +166,28 @@ router.route("/products/add-product")
     .post(async function (req, res) {
         //res.sendFile(path.join(__dirname + "/public/home/Main-Products/main-products"));
         //const errors = validationResult(req);
+
+        const successMessage = "تم إضافة القطعة بنجاح \n رمز القطعة: ";
+        const errorMessage = "لم نستطع إضافة القطعة";
         let companyCode = await req.body.companyOtions;
         let productObj = await JSON.parse(req.body.productChoice);
 
         productObj.companyCode = await companyCode;
-        
+
         console.log("PRODUCT:::::: " + await productObj.companyCode);
-        InsertProduct(await productObj);
-        res.send("success");
+        if (InsertProduct(await productObj)) {
+            res.render("success", { message: successMessage });
+        } else { 
+
+        }
+
+        /*
+        res.writeHead(301, {
+            content: "Success",
+            Location: "/success",
+        });
+*/
+    
         //if (!errors.isEmpty()) {
         // There are errors. Render form again with sanitized values/errors messages.
         // Error messages can be returned in an array using `errors.array()`.
@@ -199,10 +213,10 @@ router.route("/products/add-product/link-company")
 
 router.route("/products/add-product/fainalize-product")
     .post(async function (req, res) {
-        console.log("INSIDE SERVER ++++ FINALAIZE:" , await productObj);
+        console.log("INSIDE SERVER ++++ FINALAIZE:", await productObj);
         //res.render("fabric-company-link", { data: { productObj: await productObj, companies: await DisplayCompanies() } });
         res.send("success");
-    
+
     })
 
 
