@@ -2,10 +2,10 @@ const { GetDatabase } = require('../mongo');
 
 class Sale {
 
-    constructor(ID, productID, numberOfMeters, totalPrice, Entry_Date) {
+    constructor(ID, Description, Quantity, totalPrice, Entry_Date) {
         this._id = ID;
-        this.Product_ID = productID;
-        this.Number_Of_Meters = numberOfMeters;  
+        this.Description = Description;
+        this.Quantity = Quantity;  
         this.Total_Price = totalPrice;
         this.EntryDate = Entry_Date;
 
