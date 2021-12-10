@@ -25,6 +25,13 @@ const { InsertProduct } = require('./public/home/js/add-products');
 const { GetProducts } = require('./public/home/js/get-products');
 
 const { DisplayCompanies } = require("./public/home/js/display-companies");
+const { DisplayProducts } = require("./public/home/js/display-products");
+const { GetAProduct } = require("./public/home/js/get-product");
+const { GetACompany } = require("./public/home/js/get-company");
+
+
+
+
 
 const { RenderTables } = require('./public/home/js/render-tables');
 
@@ -175,10 +182,16 @@ router.route("/products/add-product")
         productObj.companyCode = await companyCode;
 
         console.log("PRODUCT:::::: " + await productObj.companyCode);
-        if (InsertProduct(await productObj)) {
-            res.render("success", { message: successMessage });
-        } else { 
 
+        let insertionStatus = InsertProduct(await productObj);
+
+        console.log("SERVER:::::: " + (await insertionStatus).result)
+
+
+        if ((await insertionStatus).result != true) {
+            res.render("error", { message: errorMessage + (await insertionStatus).result });
+        } else {
+            res.render("success", { message: successMessage + (await insertionStatus).message });
         }
 
         /*
@@ -187,7 +200,7 @@ router.route("/products/add-product")
             Location: "/success",
         });
 */
-    
+
         //if (!errors.isEmpty()) {
         // There are errors. Render form again with sanitized values/errors messages.
         // Error messages can be returned in an array using `errors.array()`.
@@ -223,49 +236,8 @@ router.route("/products/add-product/fainalize-product")
 
 router.route("/products/display-products")
     .get(async function (req, res) {
+        res.render("render-products", { products: await DisplayProducts() });
 
-        let productsArr = await GetProducts();
-        //console.log(productsArr[0]);
-        //console.log(req.url);
-
-
-        //RenderTables(productsArr);
-
-
-
-        const tableRef = path.join(__dirname + "/public/home/Views/render-tables.ejs");
-
-        console.log(tableRef);
-
-        /*
-         const table = got(tableRef).then(async response => {
-             const dom = await new JSDOM(response.body);
-             const table = await dom.window.document.querySelector('table');
-             //console.log(dom.window.document.querySelector('table').textContent);
- 
-             //console.log("INSIDE the server::: " + table);
-             //return table;
-         }).catch(err => {
-             console.log(err);
-         });
- 
-         */
-        const dom = await new JSDOM(`<!DOCTYPE html><body><table id="table"></table></body>`);
-        //const table = dom.window.document.getElementById("table");
-        console.log("DOM content is:::: " + dom);
-        res.render("render-companies", await RenderTables(productsArr, await dom));
-
-
-        //res.render(path.join(__dirname + "/public/home/Views/render-tables.html"));
-
-        //res.sendFile(path.join(__dirname + "/public/home/Main-Products/Products/Display-Products/"), { productsArr: productsArr });
-        //res.send(productsArr);
-
-
-        // res.send(productsArr);
-
-
-        //res.render(path.join(__dirname + "/public/home/Views/display-products.html"), { productsArr: productsArr });
     })
 
 router.route("/products/modify-products")
@@ -279,38 +251,35 @@ router.route("/products/modify-products")
 
 
 router.route("/products/add-company")
+    .get(async function (req, res) {
+        res.sendFile(path.join(__dirname + "/public/home/Views/add-companies.html"));
+    })
+
+
     .post(async function (req, res) {
-        //res.sendFile(path.join(__dirname + "/public/home/Views/add-companies.html"));
-        const errors = validationResult(req);
+        const successMessage = "تم إضافة القطعة بنجاح \n رمز الشركة: ";
+        const errorMessage = "لم نستطع إضافة الشركة";
+        //let companyCode = await req.body.companyOtions;
+       // let companyObj = await JSON.parse(req.body.productChoice);
+
+        //companyObj.companyCode = await companyCode;
+
+//        console.log("PRODUCT:::::: " + await companyObj.companyCode);
+
         let companyObj = await req.body;
-        if (!errors.isEmpty()) {
-            // There are errors. Render form again with sanitized values/errors messages.
-            // Error messages can be returned in an array using `errors.array()`.
+
+        console.log ("OBJ CREATION::::::: " , companyObj); 
+
+        let insertionStatus = InsertCompany(await companyObj);
+
+        console.log("SERVER:::::: " + (await insertionStatus).result)
+
+
+        if ((await insertionStatus).result != true) {
+            res.render("error", { message: errorMessage + (await insertionStatus).result });
+        } else {
+            res.render("success", { message: successMessage + (await insertionStatus).message });
         }
-        else {
-            // Data from form is valid.
-            //console.log(companyName);
-            // console.log(companyObj);
-            InsertCompany(companyObj);
-        }
-        res.writeHead(301, {
-            content: "Success",
-            Location: "/success",
-        });
-        //res.end("Success");
-        //const url = req.originalUrl;
-        // path = url.parse(req.url).path
-        //let path = req.url; 
-        //console.log("URL IS:: " + url);
-
-        //res.redirect(url.parse(req.url).pathname);
-
-        // res.redirect(url);
-        //res.send("<script>window.close();</script > ");
-        // window.close();
-
-        //res.redirect(`/login/?redirect=${url}`);
-        res.end("success")
 
 
     })
@@ -352,17 +321,19 @@ router.route("/products/addProducts/fileupload")
     })
 
 router.route("/sales")
+    
     .get(async function (req, res) {
         res.render("sell-products", { response: "النظام يعمل بشكل طبيعي" });
     })
 
     .post(async function (req, res) {
         //console.log("SOLD::::: " + req.body.productCode[1]);
+        const successMessage = "تم البيع بنجاح";
         let serverResponse = await MakeSales(req.body);
         console.log("Server Response is:::::: " + serverResponse);
 
         if (serverResponse == true) {
-            res.render("success");
+            res.render("success", { message: successMessage });
             //res.send("success");
         } else {
             res.render("sell-products", { response: serverResponse });

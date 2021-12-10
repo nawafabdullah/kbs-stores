@@ -17,10 +17,11 @@ const {
   
   // Discus whether the ID is assigned by store or by the system ??
   async function InsertProduct(productObj) {
-  
+    let storeIdentifier = await AssignStoreIdentifier(productObj);
+
     try {
       let fabric = new Fabric(
-        await AssignStoreIdentifier(productObj),
+        await storeIdentifier,
         await productObj.designNumber,
         await productObj.fabricPrimaryType,
         await productObj.fabricSecondaryType,
@@ -33,9 +34,18 @@ const {
       );
       // console.log(fabric);
       
-      
-      if (DatabaseInsertion(fabric)) {
-      return true; 
+      let insertionResult = await DatabaseInsertion(fabric); 
+
+      if (insertionResult) {
+        return returnedObj = { 
+        result: insertionResult,
+        message: storeIdentifier
+        }        
+      } else {
+        return returnedObj = { 
+          result: insertionResult,
+          message: insertionResult
+          }
       }
       //  RetrieveLatestNum(fabric);
       // AssignFabricCode(productObj);

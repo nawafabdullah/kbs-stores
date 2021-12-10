@@ -2,12 +2,12 @@
 
 //const $ = require("jquery"); 
 
-const addProducts = "products/add-product"; 
+const addProducts = "products/add-product";
 const modifyProducts = "products/modify-products";
 const displayProducts = "products/display-products";
 const removeProducts = "../Views/remove-products.html";
 const addCompanies = "products/add-company";
-const modifyCompanies = "../Views/modify-companies.html";
+const modifyCompanies = "../Views/modify-companies";
 const displayCompanies = "products/display-companies";
 const removeCompanies = "../Views/remove-companies.html";
 
@@ -40,7 +40,7 @@ $(document).ready(function () {
                     let val = $(this).val();
                     console.log("VAL IS " + val);
                     if (val == "add-product") {
-                        let win = window.open(url+addProducts, '_blank');
+                        let win = window.open(url + addProducts, '_blank');
                         if (win) {
                             //Browser has allowed it to be opened
                             win.focus();
@@ -59,7 +59,7 @@ $(document).ready(function () {
                             alert('Please allow popups for this website');
                         }
                     } else if (val == "display-product") {
-                        let win = window.open(displayProducts, '_blank');
+                        $("#secondary").load("../Views/display-products.html");
                         if (win) {
                             //Browser has allowed it to be opened
                             win.focus();
@@ -100,7 +100,18 @@ $(document).ready(function () {
                     let val = $(this).val();
                     console.log("VAL IS " + val);
                     if (val == "add-company") {
-                        $("#secondary").load("../Views/add-companies.html");
+                        //$("#secondary").load("../Views/add-companies.html");
+
+                        let win = window.open(url + addCompanies, '_blank');
+                        if (win) {
+                            //Browser has allowed it to be opened
+                            win.focus();
+                        } else {
+                            //Browser has blocked it
+                            alert('Please allow popups for this website');
+                        }
+
+
                     } else if (val == "modify-company") {
                         $("#secondary").load("../Views/modify-companies.html");
                     } else if (val == "display-company") {

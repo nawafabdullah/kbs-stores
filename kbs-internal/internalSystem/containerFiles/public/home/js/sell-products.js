@@ -96,29 +96,24 @@ async function GetReciptNumber() {
     let codeCursorFromDB = await database.collection(`${dbConfig.SALES}`).find().sort({ Entry_Date: -1 }).limit(1).toArray();
     let numCode = await codeCursorFromDB[0]._id.toString().substr(2);
     numCode = await parseInt(numCode);
+    let numCodeAdded = numCode + 1;
 
-
-    //console.log ((numCode + 1));
-    return (numCode + 1);
+    console.log ("RECIPTTTTT::::: " + await numCodeAdded);
+    return (numCodeAdded);
 }
 
 async function PrepareReciptParams(productCode, metersBought, price, iterations, counter) {
-
-
     items[counter] = {
         description: productCode,
         quantity: metersBought,
         price: price,
         tax: await CalculateVAT(price, metersBought)
     }
-
     if (counter == (iterations - 1)) {
-
         let invoiceData = {
             invoiceNumber: await GetReciptNumber(),
             items: items
         }
-
         console.log (invoiceData);
         GenerateRecipt(invoiceData);
     }

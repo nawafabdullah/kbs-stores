@@ -8,17 +8,37 @@ I assumed no parallelism and that entries will happen in sequence
 
 *************** */
 async function InsertCompany(companyObj) {
-    let ID = await GetCode(companyObj.companyName,companyObj.companyOrigin);
-    let company = new Company(
-        await ID,
-        await companyObj.companyName,
-        await companyObj.companyOrigin,
-        await SetDate()
-    )
-    // console.log(companyObj.companyOrigin);
-    //console.log(company);
-    await DatabaseInsertion(company);
+
+    try {
+        let storeIdentifier = await AssignStoreIdentifier(companyObj);
+        let company = new Company(
+            await storeIdentifier,
+            await companyObj.companyName,
+            await companyObj.companyOrigin,
+            await SetDate()
+        )
+        let insertionResult = await DatabaseInsertion(companyObj);
+
+        if (insertionResult) {
+            return returnedObj = {
+                result: insertionResult,
+                message: storeIdentifier
+            }
+        } else {
+            return returnedObj = {
+                result: insertionResult,
+                message: insertionResult
+            }
+        }
+    } catch (error) {
+        console.error("Could not create the object \n Error:" + error.message);
+        if (error.message.includes("undefined")) {
+            //  RecoverFromFirstEntryError(productObj.fabricPrimaryType, productObj.quality, productObj.companyName);
+        }
+    }
 }
+
+
 
 async function SetDate() {
     let today = await new Date();
@@ -28,7 +48,7 @@ async function SetDate() {
     return dateTime;
 }
 
-async function GetCode(companyName,companyOrigin) {
+async function AssignStoreIdentifier(companyObj) {
 
     // 
     //  let companyName, companyOrgin, companyCode, codeFromDB, letterCode, numberCode;
@@ -38,12 +58,13 @@ async function GetCode(companyName,companyOrigin) {
     //let companyOrigin = await(companyObj.companyOrigin).toString();
 
     // flags are set as 0 for the letter code and 1 to get the number 
-    let nameCode = await GetLetter(companyName);
-    let letterCode = await GetFromDB(companyOrigin, 0);
-    let numberCode = await GetFromDB(companyOrigin, 1);
+    let nameCode = await companyObj.companyName.toString().toUpperCase();
+    let letterCode = await companyObj.companyOrigin.toString().toUpperCase();
+    //let numberCode = await companyObj.companyOrigin.toString().toUpperCase();
     //console.log("Number Code In MAIN IS::::::::::::::::: " + numberCode);
-    let companyCode = await nameCode.toString().toUpperCase() +"-" + letterCode.toString().toUpperCase() + "-" + numberCode.toString().toUpperCase();
-    return companyCode;
+    let storeIdentifier = await nameCode.substr(0, 3) + "-" + await letterCode.substr(0, 3);
+    console.log(storeIdentifier);
+    return storeIdentifier;
 
     //ProcessParsing(companyName, companyOrigin, companyCode)
     //CloseConnection();
@@ -51,6 +72,8 @@ async function GetCode(companyName,companyOrigin) {
 }
 
 
+
+/*
 
 async function GetFromDB(origin, flag) {
     try {
@@ -140,11 +163,13 @@ async function ProcessParsing(companyName, companyOrigin, companyCode) {
     } catch (error) {
         console.error("failed to parse the company object \n Error: " + error);
     }
-}
-
+} 
+ 
 */
 async function DatabaseInsertion(companyObj) {
     //  console.log("Inside the insertion function: " + companyObj.companyName);
+
+    let companyExists = " الشركة مسجلة بالنظام مسبقا";
     try {
         let database;
         database = await GetDatabase();
@@ -156,21 +181,23 @@ async function DatabaseInsertion(companyObj) {
         let errorString = (error.message).toString();
         let containsDuplicate = errorString.includes("E11000");
         if (containsDuplicate) {
-            RecoverFromDuplicateError(companyObj, errorString);
-            return true;
+            return companyExists;
+            //console.log("duplicate");
+        } else {
+            console.error("failed to insert the company to the Database \n Error: " + error);
+            return false;
         }
-        console.error("failed to insert the company to the Database \n Error: " + error);
-        return false;
     }
 }
 
 
+/*
 async function RecoverFromDuplicateError(companyObj, errorString) {
     //let duplicateID = errorString.substr(101, 3);
     //duplicateID = parseInt(duplicateID);
     //console.log("SLICE::::::::::::::::::::" + duplicateID);
     let oldID = await companyObj._id;
-    oldNumID = await oldID.substr(7,3);
+    oldNumID = await oldID.substr(7, 3);
     newLetterID = await companyObj._id.substr(0, 7);
     oldNumID = await parseInt(oldNumID);
     newNumID = oldNumID + 1;
@@ -193,6 +220,7 @@ async function RecoverFromUndefinedCode(num) {
 
 
 /** remove later  */
+/*
 async function GetOptions() {
     let database;
     database = await GetDatabase();
@@ -201,6 +229,6 @@ async function GetOptions() {
     return optionsCursor;
 
 }
+*/
 
-GetOptions();
-module.exports = { InsertCompany, GetOptions };
+module.exports = { InsertCompany };

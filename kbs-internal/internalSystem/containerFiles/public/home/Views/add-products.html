@@ -148,15 +148,15 @@
             </select-->
 
                     <label for="fabricColor"> لون القماش </label><br />
-                    <input type="text" pattern="\S+" id="fabricColor" name="fabricColor" required>
+                    <input type="text" pattern="^[^\s]+(\s+[^\s]+)*$" id="fabricColor" name="fabricColor" required>
                     <br /><br />
 
                     <label for="metersAdded">عدد الأمتار المضافة</label><br />
-                    <input type="text" pattern="\S+" id="metersAdded" name="metersAdded" required>
+                    <input type="text" pattern="^[^\s]+(\s+[^\s]+)*$" id="metersAdded" name="metersAdded" required>
                     <br /><br />
 
                     <label for="fabricPrice"> سعر المتر </label><br />
-                    <input type="text" pattern="\S+" id="fabricPrice" name="fabricPrice" required>
+                    <input type="number" pattern="^[^\s]+(\s+[^\s]+)*$" id="fabricPrice" name="fabricPrice" min="0" step=".01" required>
                     <br /><br />
 
                     <input type="submit" value="إضافة الشـركة الموردة" style="color:white; background-color: green;">
