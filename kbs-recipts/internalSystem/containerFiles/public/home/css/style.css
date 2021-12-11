@@ -49,6 +49,16 @@ a {
   transition: all 0.3s ease-in-out;
 }
 
+#pdf {
+  text-align: center;
+}
+
+#pdf canvas {
+  border: 1px solid black;
+  width: 95%;
+}
+
+
 h1,
 h2,
 h3,

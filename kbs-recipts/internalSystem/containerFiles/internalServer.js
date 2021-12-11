@@ -73,3 +73,18 @@ router.route("/success")
         // res.render("display-companies");
     })
 
+router.route("/sales")
+    .post(async function (req, res) {
+        console.log("SOLD::::: " + req.body.productCode[0]);
+        const successMessage = "تم البيع بنجاح";
+        let serverResponse = await MakeSales(req.body);
+        console.log("Server Response is:::::: " + serverResponse);
+
+        if (serverResponse == true) {
+            res.render("success", { message: successMessage });
+            //res.send("success");
+        } else {
+            res.render("sell-products", { response: serverResponse });
+        }
+
+    })

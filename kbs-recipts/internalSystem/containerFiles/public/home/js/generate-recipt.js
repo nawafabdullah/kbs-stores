@@ -26,25 +26,47 @@ async function GenerateRecipt(invoiceData) {
         data.marginLeft = 25;
         data.marginBottom = 25;
         data.sender = {
-            company: "مركز خالد عمر بن صديق ",
-            address: "المربع , طريق الملك فيصل",
-            zip: "JPW7+X6",
+            company: "مركز خالد عمر بن صديق",
+            address: " طريق الملك فهد",
+            zip: "",
             city: "الرياض",
             country: "المملكة العربية السعودية"
         };
+        
         //data.logo = "./images/logo.png"
         //data.logo = "/mnt/c/Users/nawaf/Personal_Projects/recipt/images/logo.png";
-       
-        data.invoiceNumber = "r-" + await invoiceData.invoiceNumber;
+
+        data.logo= fs.readFileSync('internalSystem/containerFiles/public/home/images/logo.png', 'base64');
+
+        data.invoiceNumber = await invoiceData.invoiceNumber;
         data.invoiceDate = await SetDate();
 
         data.products = invoiceData.items || '';
+
+        //data.locale = "ar-AR";
+
+        /*
+        data.translate = {
+            "vat": "ضريبة القيمة المضافة",
+            "invoiceNumber": "رقم الفاتورة ",
+            "invoiceDate": "تاريخ الفاتورة",
+            "products": "المشتريات",
+            "quantity": "عدد الأمتار",
+            "price": "السعر",
+            "subtotal": "المجموع الفرعي",
+            "total": "المجموع"
+        };
+        */
 
         // data.products = [
         //   {
         //     items.productCode, 
         //}
         //]
+
+        data.bottomNotice= "شكرا لزيارتكم مركز خالد عمر بن صديق";
+
+
         console.log(data);
 
 
@@ -54,7 +76,7 @@ async function GenerateRecipt(invoiceData) {
         DatabaseInsertion(data);
 
 
-         
+
 
     } catch (error) {
 
@@ -68,7 +90,8 @@ async function SetDate() {
     let date = await today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     let time = await today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     let dateTime = await (date + ' ' + time).toString();
-    return dateTime;
+
+    return date;
 }
 
 
@@ -99,7 +122,7 @@ async function DatabaseInsertion(invoiceData) {
 
 
 
-
+//async function StoreRecipt() 
 
 
 /*

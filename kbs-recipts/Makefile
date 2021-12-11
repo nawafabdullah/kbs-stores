@@ -8,7 +8,6 @@ init:
 	@#==================================================================================#
 	@echo "Starting Application's Main Server... "
 	@echo ""
-	@sleep 2
 	@nodemon ./internalSystem/containerFiles/internalServer.js
 	
 clean:

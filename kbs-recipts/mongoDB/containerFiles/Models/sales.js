@@ -1,4 +1,5 @@
 const { dbConfig } = require("../../../mainConfig/db.config");
+const {GetDatabase} = require("../mongo");
 
 async function CreateSalesDB(db) {
    console.log(`Creating ${dbConfig.SALES}...`);
@@ -20,7 +21,12 @@ async function CreateSalesDB(db) {
          }
       }, validationAction: "warn"
    })
+
+   let database = await GetDatabase();
+   let status = await database.collection(`${dbConfig.SALES}`).insertOne({_id:1000000});
+
    return true;
 }
+
 
 module.exports = { CreateSalesDB };

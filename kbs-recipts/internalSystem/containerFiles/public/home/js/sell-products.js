@@ -10,10 +10,10 @@ async function MakeSales(products) {
     let iterations = products.productCode.length;
     try {
         for (i; i < iterations; i++) {
-            PrepareReciptParams(products.productCode [i], products.metersBought[i], products.meterPrice[i], iterations,counter);
+            PrepareReciptParams(await products.productCode[i], await products.metersSold[i], await products.meterPrice[i], iterations, i);
         }
-
-      //  return inventoryShortage + products.productCode[i];
+        return true;
+        //  return inventoryShortage + products.productCode[i];
 
     } catch (error) {
         console.error("Could not extract information from object \n" + error);
@@ -21,11 +21,16 @@ async function MakeSales(products) {
 
 }
 
-
+/*
 async function CalculateVAT(price, metersBought) {
     try {
-        console.log(" The price for the product is::: " + price * metersBought);
-        return (price * metersBought) * 0.15;
+        let productPrice = await price*metersBought;
+
+        const taxPercentage = 0.15;
+        let totalPrice = (productPrice * taxPercentage);        
+        //return totalPrice;
+
+        return 0.15;
     }
     catch (error) {
         console.error("Could not calculate price");
@@ -33,16 +38,17 @@ async function CalculateVAT(price, metersBought) {
     }
 }
 
+*/
 
 async function GetReciptNumber() {
     let database = await GetDatabase();
-    let codeCursorFromDB = await database.collection(`${dbConfig.SALES}`).find().sort({ Entry_Date: -1 }).limit(1).toArray();
-    let numCode = await codeCursorFromDB[0]._id.toString().substr(2);
-    numCode = await parseInt(numCode);
+    let numCursorFromDB = await database.collection(`${dbConfig.SALES}`).find().sort({ _id: -1 }).limit(1).toArray();
+
+    numCode = await parseInt(numCursorFromDB[0]._id);
     let numCodeAdded = numCode + 1;
 
-    console.log ("RECIPTTTTT::::: " + await numCodeAdded);
-    return (numCodeAdded);
+    console.log("RECIPTTTTT::::: " + await numCodeAdded);
+    return numCodeAdded;
 }
 
 async function PrepareReciptParams(productCode, metersBought, price, iterations, counter) {
@@ -50,20 +56,20 @@ async function PrepareReciptParams(productCode, metersBought, price, iterations,
         description: productCode,
         quantity: metersBought,
         price: price,
-        tax: await CalculateVAT(price, metersBought)
+        tax: 15
     }
     if (counter == (iterations - 1)) {
         let invoiceData = {
             invoiceNumber: await GetReciptNumber(),
             items: items
         }
-        console.log (invoiceData);
+        console.log(invoiceData);
         GenerateRecipt(invoiceData);
     }
-   
-    
+
+
     return true;
-    
+
 
 }
 module.exports = { MakeSales };

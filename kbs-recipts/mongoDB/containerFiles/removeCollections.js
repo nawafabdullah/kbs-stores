@@ -1,5 +1,5 @@
 const { MongoClient } = require("mongodb");
-const stringify = require('stringify-object')
+const stringify = require('stringify-object');
 const { dbConfig } = require("../../mainConfig/db.config");
 const { roleConfig } = require("../../mainConfig/roles.config");
 const dbUrl = `${dbConfig.HOST}:${dbConfig.PORT}/`;
@@ -9,18 +9,6 @@ async function DeleteAll() {
 
     try {
         let database = await GetDatabase();
-        await database.dropCollection(dbConfig.INTERNAL_USERS, { capped: false });
-        console.log(`Deleting ${dbConfig.INTERNAL_USERS}..`);
-        await database.dropCollection(dbConfig.PRODUCTS, { capped: false });
-        console.log(`Deleting ${dbConfig.PRODUCTS}..`);
-        await database.dropCollection(dbConfig.COMPANIES, { capped: false });
-        console.log(`Deleting ${dbConfig.COMPANIES}..`);
-        await database.dropCollection(dbConfig.COUNTRIES, { capped: false });
-        console.log(`Deleting ${dbConfig.COUNTRIES}..`);
-        await database.dropCollection(dbConfig.PRODUCTS_MAINCATAGORIES, { capped: false });
-        console.log(`Deleting ${dbConfig.PRODUCTS_MAINCATAGORIES}..`);
-        await database.dropCollection(dbConfig.PRODUCTS_QUALITY, { capped: false });
-        console.log(`Deleting ${dbConfig.PRODUCTS_QUALITY}..`);
         await database.dropCollection(dbConfig.SALES, { capped: false });
         console.log(`Deleting ${dbConfig.SALES}..`);
         EXIT();

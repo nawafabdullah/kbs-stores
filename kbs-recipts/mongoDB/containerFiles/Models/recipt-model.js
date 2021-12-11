@@ -1,5 +1,6 @@
 let data = {
     "documentTitle": "فاتورة شراء", //Defaults to INVOICE
+    //"locale": "ar-AR",
     "currency": "SAR",
     "taxNotation": "vat", //or gst
     "marginTop": 25,
@@ -11,7 +12,7 @@ let data = {
     "sender": {
         "company": "",
         "address": "",
-        "zip": "-",
+      //"zip": "-",
         "city": "",
         "country": "السـعودية"
         //"custom1": "custom value 1",
@@ -34,12 +35,11 @@ let data = {
         [
             {
                 "description": "",
-                "quantity": Number,
-                "price": Number,
-                "VAT": Number
+                "quantity": "",
+                "price": "",
+                "VAT": ""
             },
         ],
-    "bottomNotice": "Kindly pay your invoice within 15 days.",
 
     "translate": {
         "vat": "ضريبة القيمة المضافة",
@@ -50,6 +50,10 @@ let data = {
         "price": "السعر",
         "subtotal": "المجموع الفرعي",
         "total": "المجموع"
-    }
+    },
 
-}
+
+    "bottomNotice": "Kindly pay your invoice within 15 days.",
+
+
+};
